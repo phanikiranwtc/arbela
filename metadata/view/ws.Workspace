@@ -1,0 +1,121 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "wsworkspace",
+        "designer|userClassName": "ws.Workspace",
+        "header": false,
+        "layout": "border",
+        "title": "My Panel"
+    },
+    "name": "MyPanel",
+    "designerId": "84931892-ebf4-4170-baf3-1cb88499ef94",
+    "viewControllerInstanceId": "530513ec-6abf-4811-a550-0bb6eb5f45cf",
+    "viewModelInstanceId": "aa5e2889-52f4-4c62-a189-01a8e1b89023",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "ws.toolbar",
+            "designerId": "a663fadf-c8e4-44bd-b3c1-43effac01c6d",
+            "masterInstanceId": "b09d23a5-6156-4154-a493-3a456048e7fb"
+        },
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "collapsed": true,
+                "collapsible": true,
+                "layout|region": "east",
+                "layout|split": true,
+                "titleCollapse": true
+            },
+            "name": "ds.list",
+            "designerId": "e7886770-3813-4f38-b44e-79bd5c27b189",
+            "masterInstanceId": "ffa5608e-f177-47db-bfaf-ffcec10184c6"
+        },
+        {
+            "type": "Ext.tab.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|displayName": "Dasboards",
+                "layout|region": "center",
+                "tabPosition": "left",
+                "tabRotation": [
+                    "0"
+                ]
+            },
+            "name": "MyTabPanel",
+            "designerId": "3d46d378-a447-46d2-9b9a-7dda773ffefa",
+            "cn": [
+                {
+                    "type": "linkedinstance",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "name": "db.dashboard",
+                    "designerId": "da3dade0-783c-4b90-b350-218d6c6bf22e",
+                    "masterInstanceId": "df9efdd1-5dec-46e5-8141-0b6a801b530b",
+                    "cn": [
+                        {
+                            "type": "Ext.tab.Tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "TabConfig1",
+                            "designerId": "934b3ab4-5d91-4224-bc85-e2692bd3bac4"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.panel.Panel",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "title": "Add"
+                    },
+                    "name": "MyPanel",
+                    "designerId": "f6cbe77d-ea10-493b-9916-5fee1f2e1f2e",
+                    "cn": [
+                        {
+                            "type": "Ext.tab.Tab",
+                            "reference": {
+                                "name": "tabConfig",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "name": "TabConfig",
+                            "designerId": "f4a6d936-679f-4548-8fc8-0fc1f291bb4f"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

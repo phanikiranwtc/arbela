@@ -1,0 +1,88 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "dbdashboard",
+        "designer|userClassName": "db.Dashboard",
+        "title": "My Dashboard"
+    },
+    "name": "MyPanel1",
+    "designerId": "df9efdd1-5dec-46e5-8141-0b6a801b530b",
+    "viewControllerInstanceId": "71aa3f9e-b91a-4a8b-804f-4d40ba08c481",
+    "viewModelInstanceId": "e3b5b01d-2da3-407e-9299-6938dac85fee",
+    "cn": [
+        {
+            "type": "linkedinstance",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "db.toolbar",
+            "designerId": "446a383f-4054-402d-92e0-7d5efddf2f06",
+            "masterInstanceId": "1ff6fbec-042d-45c0-bd4d-eb0c235b0d1b",
+            "cn": [
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onToolbarAddcard",
+                        "implHandler": [
+                            "var classes = Ext.ClassManager.classes;",
+                            "var dses = [];",
+                            "",
+                            "for (var key in classes) {",
+                            "  if (classes.hasOwnProperty(key)) {",
+                            "    if (Ext.String.startsWith(key, 'Arbela.view.blades')) {",
+                            "       dses.push([key, classes[key].name]);",
+                            "    }",
+                            "  }",
+                            "}",
+                            "",
+                            "console.log('DATA: ', dses);",
+                            "",
+                            "Ext.create('Arbela.view.db.NewCard', {",
+                            "    title: 'New Card',",
+                            "    y: 0,",
+                            "    typeData: dses",
+                            "});"
+                        ],
+                        "name": "addcard",
+                        "scope": "me"
+                    },
+                    "name": "onToolbarAddcard",
+                    "designerId": "3520c2ec-d57a-4da9-a6ef-ef737630badc"
+                },
+                {
+                    "type": "viewcontrollereventbinding",
+                    "reference": {
+                        "name": "listeners",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "fn": "onToolbarClonedashboard",
+                        "implHandler": [
+                            "alert('Clone Dashboard');"
+                        ],
+                        "name": "clonedashboard",
+                        "scope": "me"
+                    },
+                    "name": "onToolbarClonedashboard",
+                    "designerId": "1e86dc5e-bec5-4820-9a90-086edfa57257"
+                }
+            ]
+        }
+    ]
+}

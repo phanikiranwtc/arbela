@@ -1,0 +1,38 @@
+{
+    "type": "class",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "datasources.Dummy",
+        "extend": "Arbela.view.api.DataSource"
+    },
+    "name": "MyClass",
+    "designerId": "64e25c5b-494f-430c-8f24-f1942eaeb122",
+    "cn": [
+        {
+            "type": "staticfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "getMetaData",
+                "implHandler": [
+                    "return [{",
+                    "    xtype: 'textfield',",
+                    "    fieldLabel: 'Thing Name'",
+                    "}, {",
+                    "    xtype: 'textfield',",
+                    "    fieldLabel: 'URL'",
+                    "}];"
+                ]
+            },
+            "name": "getMetaData",
+            "designerId": "b6351ba9-dfdb-4fc0-9273-b1e76933bd6f"
+        }
+    ]
+}

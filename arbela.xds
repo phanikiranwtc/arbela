@@ -1,0 +1,80 @@
+{
+    "name": "arbela",
+    "settings": {
+        "cmd": {
+            "license": "commercial",
+            "cmdVersion": "5.1.1.39",
+            "frameworkVersion": "5.1.0.107"
+        },
+        "canvasControls": {
+            "viewportSize": {
+                "name": "Auto Expand",
+                "builtIn": true,
+                "height": null,
+                "width": null
+            }
+        },
+        "urlPrefix": "http://localhost:1841",
+        "exportPath": "",
+        "spacesToIndent": 4,
+        "sdkPath": "",
+        "lineEnding": "LF",
+        "genTimestamps": false,
+        "cacheBust": false,
+        "buildShouldOverwriteIndex": true,
+        "generateArchitectVersion": true,
+        "projectHasEnabledWebServer": true
+    },
+    "xdsVersion": "3.2.0",
+    "xdsBuild": 75,
+    "schemaVersion": 1,
+    "upgradeVersion": 310000000001,
+    "framework": "ext51",
+    "viewOrderMap": {
+        "view": [
+            "9c5bc49c-9131-4e0d-80c7-1cccbfbf1aa5",
+            "711a9473-74a5-4e40-b52b-8b7594a28628",
+            "92b5eaa4-da36-4079-bcbe-50668ec58aa0",
+            "1ff6fbec-042d-45c0-bd4d-eb0c235b0d1b",
+            "5c559595-5296-449f-8ec7-d67d8b6dfe5d",
+            "08e2ee9c-4c2f-430e-8e85-b12bddfa3dd7",
+            "b09d23a5-6156-4154-a493-3a456048e7fb",
+            "1174def5-e540-43c2-82f0-eb1a108e07be",
+            "b10f0edf-ca6c-4022-b282-41aeb5a0e4c1",
+            "84931892-ebf4-4170-baf3-1cb88499ef94",
+            "aa5e2889-52f4-4c62-a189-01a8e1b89023",
+            "530513ec-6abf-4811-a550-0bb6eb5f45cf",
+            "df9efdd1-5dec-46e5-8141-0b6a801b530b",
+            "e3b5b01d-2da3-407e-9299-6938dac85fee",
+            "71aa3f9e-b91a-4a8b-804f-4d40ba08c481",
+            "ffa5608e-f177-47db-bfaf-ffcec10184c6",
+            "e7cd6fbf-2d12-4aaa-8726-0d7c0a6db451",
+            "c4dc70b6-c8d7-42b3-82f1-260d56a2d02b",
+            "645a8924-1ba4-4cfe-bd18-e5f87961b816",
+            "58384407-12b4-477c-9e7d-a408f16e3df1",
+            "6fa86f54-4eff-406a-95ff-ac2077dfe565",
+            "b74bfa94-7651-4cab-8ffe-72e26dc65696",
+            "f978ec42-b591-4e91-9a9b-592322e15fa6",
+            "6df55ab7-f6be-4ae7-9256-67dbbeb60d78",
+            "f2fccbea-736f-4d0e-a7ac-2da778c1d434",
+            "7fb2ca9e-4847-44b9-a7bd-efb306c25399",
+            "64e25c5b-494f-430c-8f24-f1942eaeb122",
+            "2a4a1511-e128-4b9e-9601-2b14953cf203",
+            "71a3e23c-328f-4c86-ad15-4cae3e176075",
+            "403036b5-8cd2-48a5-99e4-f79cb18df704",
+            "c503c5df-5169-45e4-8cb6-bac4510f97c0",
+            "d3f12f97-cf5f-4422-bb7d-b12f4c2dcea8",
+            "f86f1e57-7a12-409e-93f1-350faef54e24"
+        ],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "d74b2983-ce9f-41c1-9f5e-41b1368edb09",
+            "c1c8aabd-07b0-484c-a0c4-44f3a3cd838e"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

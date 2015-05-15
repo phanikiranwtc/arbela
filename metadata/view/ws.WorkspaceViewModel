@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "wsworkspace",
+        "designer|userClassName": "ws.WorkspaceViewModel"
+    },
+    "designerId": "aa5e2889-52f4-4c62-a189-01a8e1b89023"
+}

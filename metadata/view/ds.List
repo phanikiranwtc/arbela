@@ -1,0 +1,89 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "collapsed": false,
+        "collapsible": false,
+        "designer|userAlias": "dslist",
+        "designer|userClassName": "ds.List",
+        "title": "Data Sources",
+        "titleCollapse": false,
+        "width": 150
+    },
+    "name": "MyPanel2",
+    "designerId": "ffa5608e-f177-47db-bfaf-ffcec10184c6",
+    "viewControllerInstanceId": "c4dc70b6-c8d7-42b3-82f1-260d56a2d02b",
+    "viewModelInstanceId": "e7cd6fbf-2d12-4aaa-8726-0d7c0a6db451",
+    "cn": [
+        {
+            "type": "Ext.toolbar.Toolbar",
+            "reference": {
+                "name": "dockedItems",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "dock": "top"
+            },
+            "name": "MyToolbar",
+            "designerId": "c637ce5b-c28c-4947-891c-eb503c5a7a3e",
+            "cn": [
+                {
+                    "type": "Ext.button.Button",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "layout|flex": null,
+                        "text": "Add"
+                    },
+                    "name": "MyButton4",
+                    "designerId": "21600380-5abc-4dd6-b640-04905bb96cbc",
+                    "cn": [
+                        {
+                            "type": "viewcontrollereventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onAddBtnClick",
+                                "implHandler": [
+                                    "var classes = Ext.ClassManager.classes;",
+                                    "var dses = [];",
+                                    "",
+                                    "for (var key in classes) {",
+                                    "  if (classes.hasOwnProperty(key)) {",
+                                    "    if (Ext.String.startsWith(key, 'Arbela.view.datasources')) {",
+                                    "       dses.push([key, classes[key].name]);",
+                                    "    }",
+                                    "  }",
+                                    "}",
+                                    "",
+                                    "console.log('DATA: ', dses);",
+                                    "",
+                                    "Ext.create('Arbela.view.common.NewWindow', {",
+                                    "    title: 'New Datasource',",
+                                    "    y: 0,",
+                                    "    typeData: dses",
+                                    "});"
+                                ],
+                                "name": "click",
+                                "scope": "me"
+                            },
+                            "name": "onAddBtnClick",
+                            "designerId": "4a352292-c889-46d9-a277-721acc317390"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

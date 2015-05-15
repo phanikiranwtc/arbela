@@ -1,0 +1,47 @@
+{
+    "type": "Ext.toolbar.Toolbar",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|pack": "end",
+        "designer|userAlias": "commonwindowtoolbar",
+        "designer|userClassName": "common.WindowToolbar"
+    },
+    "name": "MyToolbar1",
+    "designerId": "f978ec42-b591-4e91-9a9b-592322e15fa6",
+    "viewControllerInstanceId": "f2fccbea-736f-4d0e-a7ac-2da778c1d434",
+    "viewModelInstanceId": "6df55ab7-f6be-4ae7-9256-67dbbeb60d78",
+    "cn": [
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": null,
+                "text": "Save"
+            },
+            "name": "MyButton5",
+            "designerId": "e6b412f3-2087-4b62-b7d7-77e313454b4b"
+        },
+        {
+            "type": "Ext.button.Button",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|flex": null,
+                "text": "Cancel"
+            },
+            "name": "MyButton6",
+            "designerId": "a7736637-f2d5-4b95-bdfe-eb90379d85af"
+        }
+    ]
+}

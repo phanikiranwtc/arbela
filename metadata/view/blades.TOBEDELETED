@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "bladesdummy",
+        "designer|userClassName": "blades.TOBEDELETED"
+    },
+    "designerId": "d3f12f97-cf5f-4422-bb7d-b12f4c2dcea8"
+}

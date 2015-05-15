@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "bladesdummy",
+        "designer|userClassName": "blades.DummyViewController"
+    },
+    "designerId": "f86f1e57-7a12-409e-93f1-350faef54e24"
+}

@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "commonwindowtoolbar",
+        "designer|userClassName": "common.WindowToolbarViewController"
+    },
+    "designerId": "f2fccbea-736f-4d0e-a7ac-2da778c1d434"
+}

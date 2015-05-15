@@ -1,0 +1,14 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "dbnewcard",
+        "designer|userClassName": "common.NewWindowViewController1"
+    },
+    "name": "common.NewWindowViewController1",
+    "designerId": "b74bfa94-7651-4cab-8ffe-72e26dc65696"
+}

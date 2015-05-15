@@ -1,0 +1,28 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "Arbela",
+        "requires": [
+            "Arbela.view.datasources.Dummy"
+        ],
+        "views": [
+            "MyViewport",
+            "db.Toolbar",
+            "ws.Toolbar",
+            "ws.Workspace",
+            "db.Dashboard",
+            "ds.List",
+            "common.NewWindow",
+            "common.WindowToolbar",
+            "db.NewCard",
+            "blades.Dummy"
+        ]
+    },
+    "name": "Application",
+    "designerId": "application"
+}

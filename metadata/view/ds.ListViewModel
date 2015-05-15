@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewModel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "dslist",
+        "designer|userClassName": "ds.ListViewModel"
+    },
+    "designerId": "e7cd6fbf-2d12-4aaa-8726-0d7c0a6db451"
+}

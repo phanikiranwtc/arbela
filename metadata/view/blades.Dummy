@@ -1,0 +1,43 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "bladesdummy",
+        "designer|userClassName": "blades.Dummy",
+        "height": 250,
+        "title": "My Panel",
+        "width": 400
+    },
+    "name": "MyPanel1",
+    "designerId": "c503c5df-5169-45e4-8cb6-bac4510f97c0",
+    "viewControllerInstanceId": "f86f1e57-7a12-409e-93f1-350faef54e24",
+    "viewModelInstanceId": "d3f12f97-cf5f-4422-bb7d-b12f4c2dcea8",
+    "cn": [
+        {
+            "type": "staticfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "getMetaData",
+                "implHandler": [
+                    "return [{",
+                    "    xtype: 'textfield',",
+                    "    fieldLabel: 'Value1'",
+                    "}, {",
+                    "    xtype: 'textfield',",
+                    "    fieldLabel: 'Value2'",
+                    "}];"
+                ]
+            },
+            "name": "getMetaData",
+            "designerId": "63059ab1-afc5-499d-88e9-b949c1ccf9db"
+        }
+    ]
+}

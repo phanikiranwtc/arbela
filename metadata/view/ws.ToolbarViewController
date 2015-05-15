@@ -1,0 +1,13 @@
+{
+    "type": "Ext.app.ViewController",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userAlias": "wstoolbar",
+        "designer|userClassName": "ws.ToolbarViewController"
+    },
+    "designerId": "b10f0edf-ca6c-4022-b282-41aeb5a0e4c1"
+}
