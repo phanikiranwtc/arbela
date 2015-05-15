@@ -1,12 +1,11 @@
-Ext.define('Arbela.view.db.Dashboard', {
+Ext.define('Arbela.view.db.main.Dashboard', {
     extend: 'Ext.dashboard.Dashboard',
     alias: 'widget.dbdashboard',
 
     requires: [
-        'Arbela.view.db.DashboardViewModel',
-        'Arbela.view.db.DashboardViewController',
-        'Arbela.view.db.Toolbar',
-        'Ext.toolbar.Toolbar'
+        'Arbela.view.db.main.DashboardViewModel',
+        'Arbela.view.db.main.DashboardViewController',
+        'Arbela.view.db.tb.Toolbar'
     ],
 
     controller: 'dbdashboard',

@@ -1,4 +1,4 @@
-Ext.define('Arbela.view.db.DashboardViewController', {
+Ext.define('Arbela.view.db.main.DashboardViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.dbdashboard',
 
@@ -29,7 +29,7 @@ Ext.define('Arbela.view.db.DashboardViewController', {
             this.columnIdx = 0;
         }
 
-        Ext.create('Arbela.view.db.NewCard', {
+        Ext.create('Arbela.view.db.card.NewCard', {
             title: 'New Card',
             y: 0,
             typeData: dses,

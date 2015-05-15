@@ -1,4 +1,4 @@
-Ext.define('Arbela.view.db.DashboardViewModel', {
+Ext.define('Arbela.view.db.main.DashboardViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.dbdashboard',
 

@@ -1,10 +1,10 @@
-Ext.define('Arbela.view.db.NewCard', {
+Ext.define('Arbela.view.db.card.NewCard', {
     extend: 'Ext.window.Window',
     alias: 'widget.dbnewcard',
 
     requires: [
-        'Arbela.view.common.NewWindowViewModel1',
-        'Arbela.view.common.NewWindowViewController1',
+        'Arbela.view.db.card.NewCardViewModel',
+        'Arbela.view.db.card.NewCardViewController',
         'Arbela.view.common.WindowToolbar',
         'Arbela.view.common.BladePanel',
         'Ext.form.field.ComboBox',

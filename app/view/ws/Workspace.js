@@ -18,18 +18,14 @@ Ext.define('Arbela.view.ws.Workspace', {
     alias: 'widget.wsworkspace',
 
     requires: [
-        'Arbela.view.ws.WorkspaceViewModel',
         'Arbela.view.ws.Toolbar',
         'Arbela.view.ds.List',
-        'Arbela.view.db.Dashboard',
+        'Arbela.view.db.main.Dashboard',
         'Ext.toolbar.Toolbar',
         'Ext.tab.Panel',
         'Ext.tab.Tab'
     ],
 
-    viewModel: {
-        type: 'wsworkspace'
-    },
     layout: 'border',
     header: false,
     title: 'My Panel',
