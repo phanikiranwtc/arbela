@@ -2,10 +2,7 @@
 Rich, Extensible, Customizable, and Configurable Dashboard
 
 
-#Copyright
-
+### Copyright
 Copyright (c) 2015 Ajit Kumar
-
-Copyright (c) 2015 Walking Tree
-
+Copyright (c) 2015 [Walking Tree](http://walkingtree.in)
 Licensed under the [MIT license](http://en.wikipedia.org/wiki/MIT_License)
