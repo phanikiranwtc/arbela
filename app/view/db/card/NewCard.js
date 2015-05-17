@@ -16,6 +16,8 @@ Ext.define('Arbela.view.db.card.NewCard', {
         values: {}
     },
 
+    dirtyMsg: 'There are unsaved changes. Do you want to ignore them and continue?',
+
     controller: 'dbnewcard',
     viewModel: {
         type: 'dbnewcard'
