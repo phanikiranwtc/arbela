@@ -7,6 +7,12 @@ Ext.define('Arbela.view.blades.BooksList', {
     ],
     extend: 'Arbela.view.api.Blade',
 
+    settings: [{
+        xtype: 'textfield',
+        fieldLabel: 'URL',
+        name: 'url'
+    }],
+
     config: {
         height: 350,
         xtype: 'container',
@@ -25,11 +31,11 @@ Ext.define('Arbela.view.blades.BooksList', {
            ],
             store: {
                 storeId: 'books',
-                autoLoad: true,
+                autoLoad: false,
                 fields: ['id', 'title', 'imgurl', 'desc'],
                 proxy: {
                     type: 'ajax',
-                    url: 'resources/data/senchabooks.json',
+                    url: '', //'resources/data/senchabooks.json',
                     reader: {
                         rootProperty: 'books'
                     }
@@ -37,5 +43,9 @@ Ext.define('Arbela.view.blades.BooksList', {
             },
             itemSelector: 'div.thumb-wrap'
         }
+    },
+    setBladeData: function(dataCfg) {
+        this.down('dataview').getStore().getProxy().setUrl(dataCfg.url);
+        this.down('dataview').getStore().load();
     }
 });
