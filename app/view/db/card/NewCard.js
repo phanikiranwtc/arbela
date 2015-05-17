@@ -12,7 +12,6 @@ Ext.define('Arbela.view.db.card.NewCard', {
     ],
 
     config: {
-        autoGrow: true,
         typeData: [],
         values: {}
     },
@@ -22,11 +21,11 @@ Ext.define('Arbela.view.db.card.NewCard', {
         type: 'dbnewcard'
     },
     autoShow: true,
-    height: 280,
+    autoHeight: true,
     width: 400,
     bodyPadding: 10,
     layout: 'fit',
-    title: 'New',
+    title: 'New Card',
 
     modal: true,
 

@@ -4,7 +4,7 @@ Ext.define('Arbela.view.blades.InventoryChart', {
     ],
     extend: 'Arbela.view.api.Blade',
 
-    viewTemplate: {
+    config: {
         height: 400,
         // layout: 'fit',
         title: 'Inventory',

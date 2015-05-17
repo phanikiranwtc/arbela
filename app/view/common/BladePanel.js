@@ -17,19 +17,6 @@ Ext.define('Arbela.view.common.BladePanel', {
     },
 
 	viewModel: {
-		// formulas: {
-		// 	title: {
-		// 		bind: '{typeCombo.selection}',
-		// 		get: function(selection) {
-		// 			if (!selection) {
-		// 				return 'Blade';
-		// 			}
-		// 			console.log('====> NAME: ' , selection);
-		// 			return selection.name;
-		// 		}
-		// 	}
-		// },
-
 		stores: {
 			types: {
 	            fields: ['name', 'klass'],

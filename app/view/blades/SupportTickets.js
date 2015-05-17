@@ -6,16 +6,31 @@ Ext.define('Arbela.view.blades.SupportTickets', {
     ],
     extend: 'Arbela.view.api.Blade',
 
-    viewTemplate: {
+    name: 'Total Support Tickets',
+    desc: 'Shows month wise tickets and the total tickets as on today',
+
+    settings: [{
+        xtype: 'textfield',
+        fieldLabel: 'Value1',
+        name: 'value1',
+        processRawValue: function(rawValue) {
+            console.log('===>>> processRawValue called: ', rawValue.split(','));
+            return rawValue.split(',');
+        }
+    }, {
+        // xtype: 'calculatedfield',
+        xtype: 'textfield',
+        fieldLabel: 'Value2',
+        name: 'value2'
+    }],
+
+    config: {
         height: 90,
         layout: {
             type: 'hbox',
             align: 'stretch'
         },
-        header: false,
-        draggable: false,
-        resizable: false,
-        bodyCls: 'greenbg',
+        cls: 'greenbg',
         items: [{
             xtype: 'sparklineline',
             lineColor: '#FFFFFF',
@@ -23,12 +38,16 @@ Ext.define('Arbela.view.blades.SupportTickets', {
             margin: 20,
             height: 50,
             width: 90,
-            values: [2, 4, 6, -3, 7, 10, 3, 5, 9, 2, 4, 6, -3, 7, 10, 3, 5, 9]
+            values: [] //[2, 4, 6, -3, 7, 10, 3, 5, 9, 2, 4, 6, -3, 7, 10, 3, 5, 9]
         }, {
             xtype: 'component',
             flex: 1,
-            //align: 'stretch',
-            html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Support Tickets</small><span class="bigtext">23,856</span></div>'
+            bind: {
+                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Support Tickets</small><span class="bigtext">{value2}</span></div>'
+            }
         }]
+    },
+    setBladeData: function(dataCfg) {
+        this.down('sparklineline').setValues(dataCfg.value1);
     }
 });

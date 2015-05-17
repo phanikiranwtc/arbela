@@ -7,7 +7,7 @@ Ext.define('Arbela.view.blades.BooksList', {
     ],
     extend: 'Arbela.view.api.Blade',
 
-    viewTemplate: {
+    config: {
         height: 350,
         xtype: 'container',
         scrollable: true,

@@ -30,44 +30,54 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         }
 
         Ext.create('Arbela.view.db.card.NewCard', {
-            title: 'New Card',
             y: 0,
             typeData: dses,
             // values: data,
             listeners: {
-                addcard: function(win, values) {
-                    // console.log('View Template:', values.typeObj.getViewTemplate());
-                    console.log('Adding to column: ' + me.columnIdx);
-                    var height = 0;
-
-                    var blades = values.blades;
-                    var l = blades.length;
-                    var items = [];
-
-                    for (var i = 0; i < l; i++) {
-                        var vt = blades[i].typeObj.getViewTemplate();
-                        items.push(vt);
-                        height += vt.height;
-                    }
-
-                    me.getView().on('add', function(ct, cmp, idx) {
-                        console.log('ARGUMENTS: ', arguments);
-
-                        cmp.add(items);
-                        
-                    }, this, {single: true});
-
-                    me.getView().addView({
-                        title: values.name,
-                        type: 'card',
-                        columnIndex: me.columnIdx,
-                        height: height,
-                    }, me.columnIdx);
-
-                    me.columnIdx++;
-                }
+                addcard: me.handleAddCardEvent,
+                scope: me
             }
         });
+    },
+
+    handleAddCardEvent: function(win, values) {
+        var me = this;
+
+        // console.log('View Template:', values.typeObj.getViewTemplate());
+        console.log('Adding to column: ' + me.columnIdx);
+
+        var blades = values.blades;
+        var l = blades.length;
+        var items = [];
+
+        //initialize the height based on showTitle value
+        //36px for the card header if we need to show it
+        //NOTE: this may need to be modified based on the theme being used
+        var height = values.showTitle ? 36 : 0; 
+
+
+        for (var i = 0; i < l; i++) {
+            var vt = blades[i].typeObj; //.getViewTemplate();
+            items.push(vt);
+            height += vt.height;
+        }
+
+        me.getView().on('add', function(ct, cmp, idx) {
+            console.log('ARGUMENTS: ', arguments);
+
+            cmp.add(items);
+            
+        }, this, {single: true});
+
+        var card = me.getView().addView({
+            title: values.name,
+            // header: values.showTitle ? true : false, 
+            type: 'card',
+            columnIndex: me.columnIdx,
+            height: height,
+        }, 0);
+
+        me.columnIdx++;
     },
 
     onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) {

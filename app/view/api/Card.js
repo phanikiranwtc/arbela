@@ -5,20 +5,12 @@ Ext.define('Arbela.view.api.Card', {
     extend: 'Ext.dashboard.Part',
     alias: 'part.card',
 
-    viewModel: {
-        data: {
-            title: 'New Card'
-        }
-    },
-
-    title: '{title}',
-
     viewTemplate: {
+        // header: false,
         layout: {
             type: 'vbox',
             align: 'stretch'
         },
-        title: '{title}',
         items: [],
         tools: [{
             type: 'gear',

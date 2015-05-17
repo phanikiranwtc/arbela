@@ -8,21 +8,12 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         console.log('Meta Data: ', md);
 
         var win = this.getView();
-        var fs = win.down('fieldset');
         var form = combo.up('bladeform');
+        var fs = form.down('fieldset');
 
         if (fs) {
-            console.log('Reducing window dimension!');
-            win.setHeight(win.getHeight() - 32*(fs.items.length));
             form.remove(fs);
             fs = null;            
-        }
-
-        if (win.getAutoGrow()) {
-            console.log('Changing window dimension!');
-            win.setHeight(win.getHeight() + 32*md.length + 10);
-        } else {
-            win.setScrollable(true);
         }
 
         if (md.length > 0) {
@@ -51,7 +42,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     onComboboxChange: function(combo, newVal, oldVal, eOpts) {
         var record = combo.getStore().findRecord('klass', newVal);
         
-        this.onComboboxSelect(combo, record);
+        // this.onComboboxSelect(combo, record);
     },
 
     onToolbarBtnClick: function(btn, e, eOpts) {
@@ -89,6 +80,15 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         for (var i = 0; i < l; i++) {
             var val = blades[i].getValues();
             val.typeObj = Ext.create(val.type, {});
+
+            console.log('====> Blade Values: ', val);
+
+            //set the data on the viewModel so that the bindings are evaluated properly
+            val.typeObj.getViewModel().setData(val);
+
+            //set the data on the view for any custom data handling specific to the blade
+            val.typeObj.setBladeData(val);
+
             values.blades.push(val);
         }
 
@@ -123,15 +123,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var l = form.items.length;
 
         form.insert(l - 1, {xtype: 'bladeform'});
-
-        var win = this.getView();
-
-        if (win.getAutoGrow()) {
-            console.log('Changing window dimension!');
-            win.setHeight(win.getHeight() + 80 + 10 + 10 + 24);
-        } else {
-            win.setScrollable(true);
-        }
     }
 
 });

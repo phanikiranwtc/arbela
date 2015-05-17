@@ -3,7 +3,7 @@ Ext.define('Arbela.view.blades.Dummy', {
 
     settings: [],
 
-    viewTemplate: {
+    config: {
         height: 80,
         xtype: 'component',
         html: 'Hello World!!'

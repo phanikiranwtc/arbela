@@ -5,7 +5,13 @@ Ext.define('Arbela.view.api.Blade', {
 	    settings: [],
 	    viewTemplate: {}
 	},
-    
+
+    viewModel: {
+        data: {}
+    },
+
+    setBladeData: Ext.emptyFn,
+
     initialise: function(settings, successCallback, errorCallback, afterUpdateCallback) {
         
     },

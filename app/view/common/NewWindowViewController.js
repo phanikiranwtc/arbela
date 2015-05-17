@@ -12,17 +12,8 @@ Ext.define('Arbela.view.common.NewWindowViewController', {
         var form = win.down('form');
 
         if (fs) {
-            console.log('Reducing window dimension!');
-            win.setHeight(win.getHeight() - 32*(fs.items.length));
             form.remove(fs);
             fs = null;            
-        }
-
-        if (win.getAutoGrow()) {
-            console.log('Changing window dimension!');
-            win.setHeight(win.getHeight() + 32*md.length);
-        } else {
-            win.setScrollable(true);
         }
 
         if (md.length > 0) {
@@ -52,7 +43,7 @@ Ext.define('Arbela.view.common.NewWindowViewController', {
     onComboboxChange: function(combo, newVal, oldVal, eOpts) {
         var record = combo.getStore().findRecord('klass', newVal);
 
-        this.onComboboxSelect(combo, record);
+        // this.onComboboxSelect(combo, record);
     },
 
     onToolbarBtnClick: function(btn, e, eOpts) {
