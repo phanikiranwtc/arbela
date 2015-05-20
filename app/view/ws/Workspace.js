@@ -2,8 +2,6 @@ Ext.define('Arbela.view.ws.Workspace', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.wsworkspace',
 
-    singleton: true,
-
     requires: [
         'Arbela.view.ws.WorkspaceViewController',
         'Arbela.view.ws.WorkspaceViewModel',
