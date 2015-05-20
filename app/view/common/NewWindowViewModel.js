@@ -4,7 +4,7 @@ Ext.define('Arbela.view.common.NewWindowViewModel', {
 
     stores: {
         types: {
-            fields: ['name', 'klass'],
+            fields: ['name', 'niceName', 'klass'],
             data: []
         }
     }

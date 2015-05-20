@@ -48,7 +48,7 @@ Ext.define('Arbela.view.common.NewWindow', {
                 emptyText: 'Select a type',
                 queryMode: 'local',
                 valueField: 'klass',
-                displayField: 'name',
+                displayField: 'niceName',
                 triggerAction: 'all',
                 bind: {
                     store: '{types}'

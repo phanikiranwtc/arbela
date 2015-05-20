@@ -20,7 +20,8 @@ Ext.define('Arbela.view.ds.ListViewController', {
                     // dses.push([key, arr[arr.length - 1]]);
                     dses.push({
                         klass: key, 
-                        name: arr[arr.length - 1]
+                        name: arr[arr.length - 1],
+                        niceName: classes[key].niceName
                     });
                 }
             }
@@ -36,7 +37,9 @@ Ext.define('Arbela.view.ds.ListViewController', {
             listeners: {
                 adddatasource: function(win, values) {
                     v.getStore().add(values);
-                }
+                    v.fireEvent('addeddatasource', v, values);
+                },
+                single: true
             }
         });
 

@@ -7,21 +7,22 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     onToolbarAddcard: function(tb, btn, e, eOpts, eventOptions) {
         //TODO: move this to a common util as it is used for Datasource as well as Card/Blade
         var classes = Ext.ClassManager.classes;
-        var dses = [];
+        var blades = [];
 
         for (var key in classes) {
             if (classes.hasOwnProperty(key)) {
                 if (Ext.String.startsWith(key, 'Arbela.view.blades')) {
                     var arr = key.split('.');
-                    dses.push({
+                    blades.push({
                         klass: key, 
-                        name: arr[arr.length - 1]
+                        name: arr[arr.length - 1],
+                        niceName: classes[key].niceName
                     });
                 }
             }
         }
 
-        console.log('DATA: ', dses);
+        console.log('DATA: ', blades);
 
         var me = this;
 
@@ -31,7 +32,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
 
         Ext.create('Arbela.view.db.card.NewCard', {
             y: 0,
-            typeData: dses,
+            typeData: blades,
             // values: data,
             listeners: {
                 addcard: me.handleAddCardEvent,
@@ -74,7 +75,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             // header: values.showTitle ? true : false, 
             type: 'card',
             columnIndex: me.columnIdx,
-            height: height,
+            height: height
         }, 0);
 
         me.columnIdx++;

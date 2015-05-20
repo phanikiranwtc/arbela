@@ -19,7 +19,7 @@ Ext.define('Arbela.view.common.BladePanel', {
 	viewModel: {
 		stores: {
 			types: {
-	            fields: ['name', 'klass'],
+	            fields: ['name', 'niceName', 'klass'],
 	            data: []
 	        }
 		}
@@ -39,7 +39,7 @@ Ext.define('Arbela.view.common.BladePanel', {
         emptyText: 'Select a type',
         queryMode: 'local',
         valueField: 'klass',
-        displayField: 'name',
+        displayField: 'niceName',
         triggerAction: 'all',
         // reference: 'typeCombo',
         bind: {

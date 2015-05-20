@@ -6,12 +6,14 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
     ],
     extend: 'Arbela.view.api.Blade',
 
-    name: 'Website Traffics',
-    desc: 'Shows month wise traffic and the total traffic as on today',
+    statics: {
+        niceName: 'Website Traffics',
+        desc: 'Shows month wise traffic and the total traffic as on today'
+    },
 
     settings: [{
         xtype: 'textfield',
-        fieldLabel: 'Value1',
+        fieldLabel: 'Month-wise Traffic Data',
         name: 'value1',
         processRawValue: function(rawValue) {
             console.log('===>>> processRawValue called: ', rawValue.split(','));
@@ -20,7 +22,7 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
     }, {
         // xtype: 'calculatedfield',
         xtype: 'textfield',
-        fieldLabel: 'Value2',
+        fieldLabel: 'Total hits',
         name: 'value2'
     }],
 

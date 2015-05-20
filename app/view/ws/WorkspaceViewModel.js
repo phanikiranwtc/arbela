@@ -5,4 +5,5 @@ Ext.define('Arbela.view.ws.WorkspaceViewModel', {
 	data: {
 		datasources: {}
 	}
+
 });

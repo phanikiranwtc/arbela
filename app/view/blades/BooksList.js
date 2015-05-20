@@ -7,6 +7,11 @@ Ext.define('Arbela.view.blades.BooksList', {
     ],
     extend: 'Arbela.view.api.Blade',
 
+    statics: {
+        niceName: 'Books List',
+        desc: 'Shows the list of books based on the specified URL'
+    },
+
     settings: [{
         xtype: 'textfield',
         fieldLabel: 'URL',

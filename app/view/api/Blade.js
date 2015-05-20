@@ -1,6 +1,11 @@
 Ext.define('Arbela.view.api.Blade', {
     extend: 'Ext.container.Container',
 
+    statics: {
+        niceName: 'Example Blade',
+        desc: 'Example description'
+    },
+
     config: {
 	    settings: [],
 	    viewTemplate: {}

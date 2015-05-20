@@ -4,6 +4,11 @@ Ext.define('Arbela.view.blades.InventoryChart', {
     ],
     extend: 'Arbela.view.api.Blade',
 
+    statics: {
+        niceName: 'Inventory Chart',
+        desc: '3D bar chart showing user-wise inventory'
+    },
+
     config: {
         height: 400,
         // layout: 'fit',

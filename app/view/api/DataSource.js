@@ -1,8 +1,12 @@
 Ext.define('Arbela.view.api.DataSource', {
     extend: 'Ext.Base',
 
+    statics: {
+        niceName: 'Base Datasource',
+        desc: 'Base datasource'
+    },
+
     config: {
-    	desc: 'Base datasource',
 	    settings: null,
 	    dataFields: null
 	},

@@ -3,6 +3,11 @@ Ext.define('Arbela.view.blades.Dummy', {
 
     settings: [],
 
+    statics: {
+	    niceName: 'Dummy',
+	    desc: 'This is a dummy blade'
+	},
+
     config: {
         height: 80,
         xtype: 'component',

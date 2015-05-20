@@ -2,7 +2,10 @@ Ext.define('Arbela.view.ws.Workspace', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.wsworkspace',
 
+    singleton: true,
+
     requires: [
+        'Arbela.view.ws.WorkspaceViewController',
         'Arbela.view.ws.WorkspaceViewModel',
         'Arbela.view.ws.Toolbar',
         'Arbela.view.ds.List',
@@ -16,6 +19,7 @@ Ext.define('Arbela.view.ws.Workspace', {
     header: false,
     title: 'My Panel',
 
+    controller: 'workspaceviewcontroller',
     viewModel: {
         type: 'workspaceviewmodel'
     },
@@ -32,7 +36,10 @@ Ext.define('Arbela.view.ws.Workspace', {
             collapsible: true,
             titleCollapse: true,
             region: 'east',
-            split: true
+            split: true,
+            listeners: {
+                addeddatasource: 'onDatasourceAdded'
+            }
         },
         {
             xtype: 'tabpanel',
@@ -41,7 +48,13 @@ Ext.define('Arbela.view.ws.Workspace', {
             tabRotation: 0,
             items: [
                 {
-                    xtype: 'dbdashboard'
+                    xtype: 'dbdashboard',
+                    bind: {
+                        datasources: {
+                            bindTo: '{datasources}',
+                            deep: true
+                        }
+                    }
                 },
                 {
                     xtype: 'panel',

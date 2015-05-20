@@ -1,12 +1,14 @@
 Ext.define('Arbela.view.blades.TotalSales', {
     extend: 'Arbela.view.api.Blade',
 
-    name: 'Total Sales',
-    desc: 'Shows month wise sales and the total sales as on today',
+    statics: {
+        niceName: 'Total Sales',
+        desc: 'Shows month wise sales and the total sales as on today'
+    },
 
     settings: [{
         xtype: 'textfield',
-        fieldLabel: 'Value1',
+        fieldLabel: 'Month-wise Sales Data',
         name: 'value1',
         processRawValue: function(rawValue) {
             console.log('===>>> processRawValue called: ', rawValue.split(','));
@@ -15,8 +17,12 @@ Ext.define('Arbela.view.blades.TotalSales', {
     }, {
         // xtype: 'calculatedfield',
         xtype: 'textfield',
-        fieldLabel: 'Value2',
+        fieldLabel: 'Total Sales (in $)',
         name: 'value2'
+    }, {
+        xtype: 'textarea',
+        fieldLabel: 'Expression',
+        name: 'value3'
     }],
 
     config: {

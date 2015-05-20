@@ -19,7 +19,14 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         // columnWidths: [0.25, 0.25, 0.25],
         parts: {
             'card': 'card'
-        }
+        },
+        datasources: null
+
+    },
+
+    applyDatasources: function(dses) {
+        console.log('Dashboard: dses=>', dses);
+        return dses;
     },
 
     defaultContent: [{

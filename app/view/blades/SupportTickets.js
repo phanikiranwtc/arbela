@@ -6,21 +6,22 @@ Ext.define('Arbela.view.blades.SupportTickets', {
     ],
     extend: 'Arbela.view.api.Blade',
 
-    name: 'Total Support Tickets',
-    desc: 'Shows month wise tickets and the total tickets as on today',
+    statics: {
+        niceName: 'Total Support Tickets',
+        desc: 'Shows month wise tickets and the total tickets as on today'
+    },
 
     settings: [{
         xtype: 'textfield',
-        fieldLabel: 'Value1',
+        fieldLabel: 'Month-wise Tickets Data',
         name: 'value1',
         processRawValue: function(rawValue) {
             console.log('===>>> processRawValue called: ', rawValue.split(','));
             return rawValue.split(',');
         }
     }, {
-        // xtype: 'calculatedfield',
         xtype: 'textfield',
-        fieldLabel: 'Value2',
+        fieldLabel: 'Total tickets',
         name: 'value2'
     }],
 

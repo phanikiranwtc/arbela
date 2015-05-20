@@ -1,12 +1,16 @@
 Ext.define('Arbela.view.datasources.Sales', {
     extend: 'Arbela.view.api.DataSource',
 
-    desc: 'This is dummy datasource to demonstrate how a datasource need to be implemented',
+    statics: {
+        niceName: 'Sales Data',
+        desc: 'Provide sales data'
+    },
 
     settings: [{
-        xtype: 'textfield',
-        fieldLabel: 'Sales Amount',
-        name: 'salesamt'
+        xtype: 'numberfield',
+        fieldLabel: 'Data refresh frequency',
+        name: 'refreshfrequency',
+        value: 5  //in seconds
     }],
 
     dataFields: [{
