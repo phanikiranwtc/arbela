@@ -15,11 +15,11 @@ Ext.define('Arbela.view.blades.TotalSales', {
             return rawValue.split(',');
         }
     }, {
-        // xtype: 'calculatedfield',
         xtype: 'textfield',
         fieldLabel: 'Total Sales (in $)',
         name: 'value2'
     }, {
+        xtype: 'expressionfield',
         xtype: 'textarea',
         fieldLabel: 'Expression',
         name: 'value3'

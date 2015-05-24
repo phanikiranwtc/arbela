@@ -1,4 +1,4 @@
-Ext.define('Arbela.view.common.NewWindowViewModel', {
+Ext.define('Arbela.view.ds.new.NewWindowViewModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.commonnewwindow',
 

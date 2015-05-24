@@ -53,7 +53,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
 
         //initialize the height based on showTitle value
         //36px for the card header if we need to show it
-        //NOTE: this may need to be modified based on the theme being used
+        //TODO: this may need to be modified based on the theme being used
         var height = values.showTitle ? 36 : 0; 
 
 

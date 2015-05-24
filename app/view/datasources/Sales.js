@@ -1,10 +1,10 @@
 Ext.define('Arbela.view.datasources.Sales', {
     extend: 'Arbela.view.api.DataSource',
 
-    // statics: {
-    //     niceName: 'Sales Data',
-    //     desc: 'Provide sales data'
-    // },
+    statics: {
+        niceName: 'Sales Data',
+        desc: 'Provide sales data'
+    },
 
     settings: [{
         xtype: 'numberfield',
@@ -20,7 +20,7 @@ Ext.define('Arbela.view.datasources.Sales', {
 
     getData: function() {
         return {
-            amt: '$43149.50'
+            amt: 43149.50
         };
     }
 });

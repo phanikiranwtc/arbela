@@ -9,7 +9,8 @@ Ext.application({
     requires: [
         'Arbela.view.datasources.Dummy',
         'Arbela.view.datasources.Sales',
-        'Arbela.view.common.CalculatedField'
+        'Arbela.view.common.CalculatedField',
+        'Arbela.view.common.ExpressionField'
     ],
     views: [
         'MyViewport',
@@ -18,7 +19,7 @@ Ext.application({
         'ws.Workspace',
         'db.main.Dashboard',
         'ds.List',
-        'common.NewWindow',
+        'ds.new.NewWindow',
         'common.WindowToolbar',
         'db.card.NewCard',
         'api.Card',

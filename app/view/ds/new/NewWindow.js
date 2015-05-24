@@ -1,10 +1,10 @@
-Ext.define('Arbela.view.common.NewWindow', {
+Ext.define('Arbela.view.ds.new.NewWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.commonnewwindow',
 
     requires: [
-        'Arbela.view.common.NewWindowViewModel',
-        'Arbela.view.common.NewWindowViewController',
+        'Arbela.view.ds.new.NewWindowViewModel',
+        'Arbela.view.ds.new.NewWindowViewController',
         'Arbela.view.common.WindowToolbar',
         'Ext.form.field.ComboBox',
         'Ext.toolbar.Toolbar'
@@ -18,9 +18,9 @@ Ext.define('Arbela.view.common.NewWindow', {
     dirtyMsg: 'There are unsaved changes. Do you want to ignore them and continue?',
 
     controller: 'commonnewwindow',
-    publishes: [
-        'typeData'
-    ],
+    // publishes: [
+    //     'typeData'
+    // ],
     reference: 'newwindow',
 
     viewModel: {

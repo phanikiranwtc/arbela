@@ -1,4 +1,4 @@
-Ext.define('Arbela.view.common.NewWindowViewController', {
+Ext.define('Arbela.view.ds.new.NewWindowViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.commonnewwindow',
 
