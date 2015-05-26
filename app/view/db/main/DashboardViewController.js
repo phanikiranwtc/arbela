@@ -84,6 +84,11 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
 
     onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) {
         alert('Clone Dashboard');
+    },
+
+    onRemoveDashboard: function(button, e, eOpts) {
+        var v = this.getView();
+        v.fireEvent('removedashboard', v);
     }
 
 });

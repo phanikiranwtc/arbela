@@ -1,0 +1,9 @@
+@include extjs-panel-ui(
+    $ui: 'list',
+    $ui-header-color: #fff,
+    $ui-header-glyph-color: #fff,
+    $ui-header-font-size: 16px,
+    $ui-header-background-color: lighten($arbela-header-color, 20),
+    $ui-body-background-color: $arbela-bg-color,
+    $ui-body-color: #fff
+);

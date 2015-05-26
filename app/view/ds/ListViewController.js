@@ -29,7 +29,7 @@ Ext.define('Arbela.view.ds.ListViewController', {
 
         console.log('DATA: ', dses);
 
-        var win = Ext.create('Arbela.view.ds.new.NewWindow', {
+        var win = Ext.create('Arbela.view.ds.add.NewWindow', {
             title: 'New Datasource',
             y: 0,
             typeData: dses,

@@ -16,6 +16,7 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         title: 'My Dashboard',
         scrollable: true,
         maxColumns: 3,
+        // closable: true,
         // columnWidths: [0.25, 0.25, 0.25],
         parts: {
             'card': 'card'
@@ -23,6 +24,7 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         datasources: null
 
     },
+    ui: 'navigation',
 
     applyDatasources: function(dses) {
         console.log('Dashboard: dses=>', dses);
@@ -43,16 +45,15 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         height: 80
     }],
 
-    dockedItems: [
-        {
-            xtype: 'dbtoolbar',
-            dock: 'top',
-            listeners: {
-                addcard: 'onToolbarAddcard',
-                clonedashboard: 'onToolbarClonedashboard'
-            }
+    tbar: {
+        xtype: 'dbtoolbar',
+        dock: 'top',
+        listeners: {
+            addcard: 'onToolbarAddcard',
+            clonedashboard: 'onToolbarClonedashboard',
+            removedashboard: 'onRemoveDashboard'
         }
-    ],
+    },
 
     afterRender: function() {
         this.callParent(arguments);

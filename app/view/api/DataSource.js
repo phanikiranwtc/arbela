@@ -11,7 +11,7 @@ Ext.define('Arbela.view.api.DataSource', {
     config: {
 	    settings: null,
 	    dataFields: null,
-        data: null,
+        data: null
 	},
 
     events: ['dataupdated'],

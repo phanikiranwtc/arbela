@@ -1,0 +1,23 @@
+$arbela-header-color: #273E48;
+$arbela-bg-color: #71B1D1;
+
+
+$tabbar-base-color: $arbela-bg-color !default;
+$tabbar-strip-height: 0px !default;
+
+$tab-base-color: $arbela-bg-color;
+$tab-border-color: $arbela-bg-color;
+
+$grid-header-border-width: 0px !default;
+$grid-header-background-color: darken($arbela-bg-color,10) !default;
+$grid-header-border-color: $grid-header-background-color !default;
+$grid-column-header-focus-background-color: $grid-header-background-color !default;
+$grid-column-header-color: #fff !default;
+$grid-header-over-background-color: $grid-header-background-color !default;
+
+$grid-body-background-color: $arbela-bg-color !default;
+$grid-row-cell-background-color: $arbela-bg-color !default;
+$grid-row-cell-focus-background-color: $grid-row-cell-background-color !default;
+$grid-row-cell-over-background-color: $grid-row-cell-background-color !default;
+$grid-empty-background-color: $grid-body-background-color !default;
+$grid-empty-color: #fff !default;

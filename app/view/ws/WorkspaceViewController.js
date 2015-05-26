@@ -9,6 +9,18 @@ Ext.define('Arbela.view.ws.WorkspaceViewController', {
 		record.typeObj.startRefreshTimer();
 
 		console.log('Net Datasources: ', data.datasources);
+	},
+
+	onRemoveDashboard: function(pnl) {
+		var v = this.getView();
+		Ext.Msg.confirm('Confirm', 
+            v.removeDbConfirmMsg, 
+            function(btnId) {
+                if (btnId === 'yes') {
+                    var tabPnl = v.down('tabpanel');
+					tabPnl.remove(pnl);
+                }
+        });
 	}
 
 });

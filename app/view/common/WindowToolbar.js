@@ -14,12 +14,15 @@ Ext.define('Arbela.view.common.WindowToolbar', {
         {
             xtype: 'button',
             name: 'save',
-            text: 'Save'
+            text: 'Save',
+            ui: 'primary',
+            width: 60
         },
         {
             xtype: 'button',
             name: 'cancel',
-            text: 'Cancel'
+            text: 'Cancel',
+            width: 60
         }
     ],
 

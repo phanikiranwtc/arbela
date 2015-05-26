@@ -23,6 +23,7 @@ Ext.define('Arbela.view.db.card.NewCard', {
     },
 
     dirtyMsg: 'There are unsaved changes. Do you want to ignore them and continue?',
+    ui: 'blue',
 
     controller: 'dbnewcard',
     viewModel: {
@@ -54,6 +55,8 @@ Ext.define('Arbela.view.db.card.NewCard', {
                 xtype: 'button',
                 text: 'Add Blade',
                 cls: 'add-blade-btn',
+                icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+                ui: 'plain',
                 handler: 'onAddBladeBtnClick'
             } 
         ]

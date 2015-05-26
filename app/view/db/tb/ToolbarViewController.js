@@ -10,6 +10,11 @@ Ext.define('Arbela.view.db.tb.ToolbarViewController', {
     onCloneBtnClick: function(button, e, eOpts) {
         var v = this.getView();
         v.fireEvent('clonedashboard', v, button, e, eOpts);
+    },
+
+    onRemoveDashboardBtnClick: function(button, e, eOpts) {
+        var v = this.getView();
+        v.fireEvent('removedashboard', v, button, e, eOpts);
     }
 
 });

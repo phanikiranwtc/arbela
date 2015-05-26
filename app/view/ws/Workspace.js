@@ -16,6 +16,7 @@ Ext.define('Arbela.view.ws.Workspace', {
     layout: 'border',
     header: false,
     title: 'My Panel',
+    removeDbConfirmMsg: 'Are you sure you want to remove this dashboard from the workspace?',
 
     controller: 'workspaceviewcontroller',
     viewModel: {
@@ -44,7 +45,15 @@ Ext.define('Arbela.view.ws.Workspace', {
             region: 'center',
             tabPosition: 'left',
             tabRotation: 0,
+            ui: 'navigation',
+            activeTab: 1,
             items: [
+                {
+                    xtype: 'panel',
+                    title: 'Add',
+                    addTab: true,
+                    icon: 'resources/images/add-24.png'
+                },
                 {
                     xtype: 'dbdashboard',
                     bind: {
@@ -52,28 +61,30 @@ Ext.define('Arbela.view.ws.Workspace', {
                             bindTo: '{datasources}',
                             deep: true
                         }
+                    },
+                    listeners: {
+                        removedashboard: 'onRemoveDashboard'
                     }
-                },
-                {
-                    xtype: 'panel',
-                    title: 'Add',
-                    addTab: true
                 }
             ],
             listeners: {
                 beforetabchange: function(tabPnl, newCard, oldeCard) {
                     if (newCard.addTab) {
                         var count = tabPnl.items.getCount();
-                        tabPnl.insert(count - 1, {
+                        var db = Ext.create({
                             xtype: 'dbdashboard',
                             bind: {
                                 datasources: {
                                     bindTo: '{datasources}',
                                     deep: true
                                 }
+                            },
+                            listeners: {
+                                removedashboard: 'onRemoveDashboard'
                             }
                         });
-                        tabPnl.setActiveItem(count - 1);
+                        tabPnl.add(db);
+                        tabPnl.setActiveItem(db);
                         return false;
                     }
                 }

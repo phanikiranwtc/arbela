@@ -11,15 +11,23 @@ Ext.define('Arbela.view.ws.Toolbar', {
         type: 'hbox',
         pack: 'end'
     },
+    cls: 'branding-header',
     items: [
         {
+            xtype: 'image',
+            src: 'resources/images/arbela_basic_blue.png',
+            width: 48,
+            height: 48
+        },
+        {
             xtype: 'label',
-            text: 'ARBELA'
+            text: 'arbela',
+            cls: 'product-name'
         },
         {
             xtype: 'label',
             flex: 1
-        },
+        }/*,
         {
             xtype: 'button',
             text: 'Notifications'
@@ -27,7 +35,7 @@ Ext.define('Arbela.view.ws.Toolbar', {
         {
             xtype: 'button',
             text: 'Data Sources'
-        }
+        }*/
     ]
 
 });

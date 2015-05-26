@@ -18,6 +18,7 @@ Ext.define('Arbela.view.ds.List', {
     collapsible: false,
     title: 'Data Sources',
     titleCollapse: false,
+    header: false,
     // data: [],
     bind: {
         store: '{datasources}'
@@ -25,9 +26,16 @@ Ext.define('Arbela.view.ds.List', {
     emptyText: 'No Datasource found. Click on Add to start adding datasources!',
     forceFit: true,
 
+    rowLines: false,
+    disableSelection: true,
+    ui: 'list',
+
     columns: [{
         text: 'Name',
         dataIndex: 'name',
+        menuDisabled: true,
+        sortable: false,
+        resizable: false,
         flex: 1,
         renderer: function(value, metaData, record) {
             return '<a href="" class="editable-link">' + value + '</a>';
@@ -35,20 +43,29 @@ Ext.define('Arbela.view.ds.List', {
     }, {
         text: 'Last Updated',
         dataIndex: 'updatedOn',
-        width: 100
+        menuDisabled: true,
+        sortable: false,
+        resizable: false,
+        width: 120
     }, {
         xtype: 'actioncolumn',
         width: 20,
+        menuDisabled: true,
+        sortable: false,
+        resizable: false,
         items: [{
-            icon: 'https://cdn3.iconfinder.com/data/icons/faticons/32/sync-01-32.png',
+            icon: 'resources/images/sync.png',
             tooltip: 'Refresh',
             handler: 'onRefreshDatasource'
         }]
     }, {
         xtype: 'actioncolumn',
         width: 20,
+        menuDisabled: true,
+        sortable: false,
+        resizable: false,
         items: [{
-            icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/delete-32.png',
+            icon: 'resources/images/delete.png',
             tooltip: 'Remove',
             handler: 'onRemoveDatasource'
         }]
@@ -61,7 +78,10 @@ Ext.define('Arbela.view.ds.List', {
             items: [
                 {
                     xtype: 'button',
-                    text: 'Add',
+                    ui: 'plain',
+                    icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+                    text: 'Add Datasource',
+                    tooltip: 'Add Datasource',
                     listeners: {
                         click: 'onAddBtnClick'
                     }
