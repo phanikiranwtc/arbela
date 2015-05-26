@@ -18,7 +18,8 @@ Ext.define('Arbela.view.db.card.NewCardViewModel', {
     alias: 'viewmodel.dbnewcard',
 
     data: {
-    	typeData: []
+    	typeData: [],
+        datasources: null,
     },
 
     stores: {

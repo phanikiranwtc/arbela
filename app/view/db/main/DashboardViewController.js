@@ -30,14 +30,15 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             this.columnIdx = 0;
         }
 
-        Ext.create('Arbela.view.db.card.NewCard', {
+        var newCard = Ext.create('Arbela.view.db.card.NewCard', {
             y: 0,
             typeData: blades,
             // values: data,
             listeners: {
                 addcard: me.handleAddCardEvent,
                 scope: me
-            }
+            },
+            datasources: this.getViewModel().getData().datasources
         });
     },
 

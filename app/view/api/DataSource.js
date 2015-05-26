@@ -1,6 +1,8 @@
 Ext.define('Arbela.view.api.DataSource', {
     extend: 'Ext.Base',
 
+    mixins: ['Ext.mixin.Observable'],
+
     statics: {
         niceName: 'Base Datasource',
         desc: 'Base datasource'
@@ -8,12 +10,18 @@ Ext.define('Arbela.view.api.DataSource', {
 
     config: {
 	    settings: null,
-	    dataFields: null
+	    dataFields: null,
+        data: null,
 	},
 
+    events: ['dataupdated'],
+
 	constructor: function(config) {
-		this.initConfig(config);
-		this.callParent(arguments);
+		// this.initConfig(config);
+		// this.callParent(arguments);
+
+        //mixin constructor does the initConfig, so we don't have to do it
+        this.mixins.observable.constructor.call(this, config);
 	},
     
     initialise: function(settings, successCallback, errorCallback, dataUpdateCallback) {
@@ -64,9 +72,14 @@ Ext.define('Arbela.view.api.DataSource', {
 
     },
 
-    dispose: Ext.emptyFn,
+    updateData: function(oldData, newData) {
+        if (newData) {
+            console.log('Firing........dataupdated.....with: ', this, newData);
+            this.fireEvent('dataupdated', this, newData);
+        }
+    },
 
-    getData: Ext.emptyFn,
+    dispose: Ext.emptyFn,
 
     startRefreshTimer: Ext.emptyFn,
 

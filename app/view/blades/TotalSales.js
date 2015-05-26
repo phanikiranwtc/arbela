@@ -11,16 +11,12 @@ Ext.define('Arbela.view.blades.TotalSales', {
         fieldLabel: 'Month-wise Sales Data',
         name: 'value1',
         processRawValue: function(rawValue) {
-            console.log('===>>> processRawValue called: ', rawValue.split(','));
+            // console.log('===>>> processRawValue called: ', rawValue.split(','));
             return rawValue.split(',');
         }
     }, {
-        xtype: 'textfield',
-        fieldLabel: 'Total Sales (in $)',
-        name: 'value2'
-    }, {
         xtype: 'expressionfield',
-        xtype: 'textarea',
+        // xtype: 'textarea',
         fieldLabel: 'Expression',
         name: 'value3'
     }],
@@ -45,11 +41,13 @@ Ext.define('Arbela.view.blades.TotalSales', {
             xtype: 'component',
             flex: 1,
             bind: {
-                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Total Sales</small><span class="bigtext">{value2}</span></div>'
+                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Total Sales</small><span class="bigtext">{value3}</span></div>'
             }
         }]
     },
     setBladeData: function(dataCfg) {
+        console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         this.down('sparklineline').setValues(dataCfg.value1);
+        this.getViewModel().setData(dataCfg);
     }
 });

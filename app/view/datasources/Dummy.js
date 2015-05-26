@@ -6,15 +6,7 @@ Ext.define('Arbela.view.datasources.Dummy', {
         desc: 'This is dummy datasource to demonstrate how a datasource need to be implemented'
     },
 
-    settings: [{
-        xtype: 'textfield',
-        fieldLabel: 'Thing Name',
-        name: 'thingname'
-    }, {
-        xtype: 'textfield',
-        fieldLabel: 'URL',
-        name: 'url'
-    }],
+    settings: [],
 
     dataFields: [{
         name: 'name',

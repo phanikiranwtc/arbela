@@ -1,7 +1,11 @@
 Ext.define('Arbela.view.blades.Dummy', {
     extend: 'Arbela.view.api.Blade',
 
-    settings: [],
+    settings: [{
+        xtype: 'expressionfield',
+        fieldLabel: 'Expression',
+        name: 'value1'
+    }],
 
     statics: {
 	    niceName: 'Dummy',
@@ -11,6 +15,8 @@ Ext.define('Arbela.view.blades.Dummy', {
     config: {
         height: 80,
         xtype: 'component',
-        html: 'Hello World!!'
+        bind: {
+            html: 'Hello {value1}!'
+        }
     }
 });

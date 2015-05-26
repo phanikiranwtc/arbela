@@ -11,9 +11,15 @@ Ext.define('Arbela.view.db.card.NewCard', {
         'Ext.toolbar.Toolbar'
     ],
 
+    // twoWayBindable: ['datasources'],
+
     config: {
         typeData: [],
-        values: {}
+        values: {},
+        datasources: null
+        // bind: {
+        //     datasources: '{datasources}'
+        // }
     },
 
     dirtyMsg: 'There are unsaved changes. Do you want to ignore them and continue?',

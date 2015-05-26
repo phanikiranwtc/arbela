@@ -52,6 +52,22 @@ Ext.define('Arbela.view.db.main.Dashboard', {
                 clonedashboard: 'onToolbarClonedashboard'
             }
         }
-    ]
+    ],
+
+    afterRender: function() {
+        this.callParent(arguments);
+
+        var editor = new Ext.Editor({
+            updateEl: true,
+            alignment: 'l-l',
+            autoSize: {
+                width: 'boundEl'
+            },
+            field: {
+                xtype: 'textfield'
+            }
+        });
+
+    }
 
 });

@@ -6,6 +6,8 @@ Ext.define('Arbela.view.ws.WorkspaceViewController', {
 		var data = this.getViewModel().getData();
 		data.datasources[record.name] = record;
 
+		record.typeObj.startRefreshTimer();
+
 		console.log('Net Datasources: ', data.datasources);
 	}
 

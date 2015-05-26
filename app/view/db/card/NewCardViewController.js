@@ -83,11 +83,36 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
             console.log('====> Blade Values: ', val);
 
+            // console.log('=====> Datasources: ', v.getDatasources());
+
+            //check if we have expressions, if so, prepare them for evaluation
+            // var exprFields = Ext.ComponentQuery.query('expressionfield', blades[i]);
+            // for (var j = 0; j < exprFields.length; j++) {
+            //     var name = exprFields[j].getName();
+            //     var value = exprFields[j].getValue();
+
+            //     console.log('Processing expression field: ' + name + ' with value: ' + value);
+
+            //     var d = {};
+            //     // d[name] = 0;
+
+            //     var retVal = Arbela.view.common.ExprParser.parse(value, v.getDatasources(), function(data) {
+            //         d[name] = data.amt;
+            //         this.setBladeData(d);
+            //     }, val.typeObj);
+
+            //     console.log('retVal: ', retVal);
+            //     val[name] = retVal;
+
+            // }
+
+            this.processExpressions(blades[i], val);
+
             //set the data on the viewModel so that the bindings are evaluated properly
-            val.typeObj.getViewModel().setData(val);
+            // val.typeObj.getViewModel().setData(val);
 
             //set the data on the view for any custom data handling specific to the blade
-            val.typeObj.setBladeData(val);
+            // val.typeObj.setBladeData(val);
 
             values.blades.push(val);
         }
@@ -98,6 +123,50 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
         v.fireEvent('addcard', v, values, e, eOpts);
         v.close();
+    },
+
+    processExpressions: function(blade, bladeVal) {
+        var v = this.getView();
+        var me = this;
+
+        //check if we have expressions, if so, prepare them for evaluation
+        var exprFields = Ext.ComponentQuery.query('expressionfield', blade);
+        for (var j = 0; j < exprFields.length; j++) {
+            var name = exprFields[j].getName();
+            var value = exprFields[j].getValue();
+
+            console.log('Processing expression field: ' + name + ' with value: ' + value);
+
+            var d = {};
+            // d[name] = 0;
+
+            console.log('=====> Datasources: ', v.getDatasources());
+
+            var retVal = Arbela.view.common.ExprParser.parse(value, v.getDatasources(), function(cmp, data) {
+                
+                //re-evaluate the expression and set the value on the blade
+                d[name] = Arbela.view.common.ExprParser.parse(value, v.getDatasources());
+                this.setBladeData(d);
+
+            }, bladeVal.typeObj);
+
+            console.log('retVal: ', retVal);
+            bladeVal[name] = retVal;
+
+        }
+
+        //set the data on the viewModel so that the bindings are evaluated properly
+        bladeVal.typeObj.getViewModel().setData(bladeVal);
+
+        //set the data on the view for any custom data handling specific to the blade
+        bladeVal.typeObj.setBladeData(bladeVal);
+
+    },
+
+    handleDataUpdate: function(o, data) {
+        console.log('======> DATA UPDATED <======= ', data);
+
+
     },
 
     handleCancelBtnClick: function(btn, e, eOpts) {

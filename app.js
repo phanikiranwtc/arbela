@@ -10,7 +10,8 @@ Ext.application({
         'Arbela.view.datasources.Dummy',
         'Arbela.view.datasources.Sales',
         'Arbela.view.common.CalculatedField',
-        'Arbela.view.common.ExpressionField'
+        'Arbela.view.common.ExpressionField',
+        'Arbela.view.common.ExprParser'
     ],
     views: [
         'MyViewport',

@@ -3,7 +3,10 @@ Ext.define('Arbela.view.common.ExprParser', {
 
 	singleton: true,
 
-	parse: function(exprStr) {
+	datasources: null,
+	updateCallback: Ext.emptyFn,
+
+	parse: function(exprStr, datasources, updateCallback, clbkScope) {
 		try {
 			var parseTree = jsep(exprStr);
 			console.log(parseTree);
@@ -12,20 +15,30 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return;
 		}
 
+		this.datasources = datasources;
+		this.updateCallback = updateCallback;
+		this.clbkScope = clbkScope;
+
 		//let us parse the AST and calculate the value
 		var str = this.processNode(parseTree);
 		return str;
 	},
 
 	privates: {
+		math: {
+			'+': function(x, y) { return x + y},
+			'-': function(x, y) { return x - y},
+			'*': function(x, y) { return x * y},
+			'/': function(x, y) { return x / y}
+		},
+
 		processNode: function(node) {
 			var obj;
-			var str = '';
 			console.log('Processing....' + node.type);
 
-			str = this['process' + node.type](node);
+			obj = this['process' + node.type](node);
 
-			return str;
+			return obj;
 		},
 
 		processBinaryExpression: function(node) {
@@ -34,10 +47,10 @@ Ext.define('Arbela.view.common.ExprParser', {
 			var left = node.left,
 				right = node.right;
 
-			var lStr = this.processNode(left);
-			var rStr = this.processNode(right);
+			var lObj = this.processNode(left);
+			var rObj = this.processNode(right);
 
-			return lStr + node.operator + rStr;
+			return this.math[node.operator](lObj*1, rObj*1);
 
 		},
 
@@ -48,42 +61,49 @@ Ext.define('Arbela.view.common.ExprParser', {
 		processMemberExpression: function(node) {
 			var obj = node.object, prop = node.property;
 
-			var str = '';
+			var mObj = null;
 
 			if (node.computed) {
-				str += this.processComputedMemberExpression(node);
+				mObj = this.processComputedMemberExpression(node);
 			}
 
 			if (!node.computed) {
 
 				if (obj.type === 'MemberExpression') {
-					str += this.processMemberExpression(obj);
+					mObj = this.processMemberExpression(obj);
 				}
 
 				if (prop.type === 'Identifier') {
-					str += '.' + prop.name;	
+					mObj =  mObj[prop.name];	
 				}
 
 			}
 
-			return str;
+			return mObj;
 		},
 
 		processComputedMemberExpression: function(node) {
 			var obj = node.object, prop = node.property;
 
-			var str = '';
+			var mObj = null;
 
 			if (obj.type === 'Identifier') {
-				str += obj.name;	
+				// str += obj.name;	
+				mObj = this[obj.name];
 			}
 
 			if (prop.type === 'Literal') {
-				str += '[\'' + prop.value + '\']';
+				// mObj[prop.value].typeObj.on('dataupdated', this.updateCallback, this.clbkScope);
+				if (this.updateCallback) {
+					mObj[prop.value].typeObj.on('dataupdated', this.updateCallback, this.clbkScope);
+				}
+
+				// str += '[\'' + prop.value + '\']';
+				mObj = mObj[prop.value].typeObj.getData();
 			}
 			
 
-			return str;
+			return mObj;
 		}
 	}
 });

@@ -18,9 +18,37 @@ Ext.define('Arbela.view.datasources.Sales', {
         niceName: 'Amount'
     }],
 
-    getData: function() {
-        return {
-            amt: 43149.50
-        };
+    //default data
+    data: {
+        amt: 12345
+    },
+
+    // getData: function() {
+    //     return this.getData();
+    // },
+
+    startRefreshTimer: function() {
+        var me = this;
+        // task = {
+        //     run: function() {
+        //         me.setData({
+        //             amt: (new Date()).getTime()
+        //         })
+        //     },
+        //     interval: 10000,
+        //     scope: me
+        // };
+
+        var task = Ext.TaskManager.newTask({
+            run: function() {
+                me.setData({
+                    amt: (new Date()).getTime()
+                });
+            },
+            interval: 10000,
+            scope: me
+        });
+
+        task.start();
     }
 });

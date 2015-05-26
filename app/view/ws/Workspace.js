@@ -56,9 +56,28 @@ Ext.define('Arbela.view.ws.Workspace', {
                 },
                 {
                     xtype: 'panel',
-                    title: 'Add'
+                    title: 'Add',
+                    addTab: true
                 }
-            ]
+            ],
+            listeners: {
+                beforetabchange: function(tabPnl, newCard, oldeCard) {
+                    if (newCard.addTab) {
+                        var count = tabPnl.items.getCount();
+                        tabPnl.insert(count - 1, {
+                            xtype: 'dbdashboard',
+                            bind: {
+                                datasources: {
+                                    bindTo: '{datasources}',
+                                    deep: true
+                                }
+                            }
+                        });
+                        tabPnl.setActiveItem(count - 1);
+                        return false;
+                    }
+                }
+            }
         }
     ]
 
