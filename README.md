@@ -1,6 +1,6 @@
 # Arbela
 
-Rich, Extensible, Customizable, and Configurable Dashboard
+**Rich, Extensible, Customizable, and Configurable Dashboard**
 
 MIT License
 Copyright(c) [Walking Tree](http://walkingtree.in) and [Ajit Kumar](https://github.com/ajit-kumar-azad)
