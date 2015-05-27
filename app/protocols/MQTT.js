@@ -1,58 +1,69 @@
-// Create a client instance
-// client = new Paho.MQTT.Client(location.hostname, Number(location.port), "clientId");
-// client = new Paho.MQTT.Client("test.mosquitto.org", Number("8080"), "clientId");
-client = new Paho.MQTT.Client("127.0.0.1", Number("8000"), "/mqtt", "AJITKUMAR");  //HiveMQ config
-// client = new Paho.MQTT.Client("localhost", Number("8080"), "/mqtt", "AJITKUMAR");
+Ext.define('Arbela.protocols.MQTT', {
+	extend: 'Ext.Base',
 
-// set callback handlers
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
-client.onMessageDelivered = onMessageDelivered;
+	mixins: ['Ext.mixin.Mashup'],
 
-// connect the client
-client.connect({onSuccess:onConnect, mqttVersion: 3});
+	requiredScripts: ['lib/paho.javascript-1.0.1/mqttws31.js'],
 
+	singleton: true,
 
-// called when the client connects
-function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  console.log("onConnect");
-  // client.startTrace();
+	connect: function(host, port, clientId, topic, onMessageArrived) {
+		this.client = new Paho.MQTT.Client(host, Number(port), "/mqtt", clientId);  //HiveMQ config
 
-  client.subscribe("/World", {
-    timeout: 10,
-    onSuccess: onSubSuccess,
-    onFailure: onSubFailure
-  });
-  message = new Paho.MQTT.Message("Hello Duniya!");
-  message.destinationName = "/World";
-  // message.retained = true;
+		this.topic = topic;
+		this.onMsgArrivedcallback = onMessageArrived;
 
-  client.send(message); 
-  // console.log('Trace log:', client.getTraceLog());
-  // client.stopTrace();
-}
+		this.client.onConnectionLost = this.onConnectionLost;
+		this.client.onMessageArrived = this.onMessageArrived;
+		this.client.onMessageDelivered = this.onMessageDelivered;
 
-function onSubSuccess() {
-  console.log('subscribe: onSuccess');
-}
+		this.client.connect({
+			onSuccess:this.onConnect,
+			invocationContext: this, 
+			mqttVersion: 3});
+	},
 
-function onSubFailure() {
-  console.log('subscribe: onFailure');
-}
+	onConnect: function() {
+	  console.log("onConnect");
 
-function onMessageDelivered() {
-  console.log('onMessageDelivered');
-}
+	  var me = this.invocationContext;
 
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:"+responseObject.errorMessage);
-  }
-}
+	  me.client.subscribe(me.topic, {
+	    // timeout: 10,
+	    onSuccess: me.onSubSuccess,
+	    onFailure: me.onSubFailure,
+	    invocationContext: me
+	  });
+	  message = new Paho.MQTT.Message("{temp: 42.5}");
+	  message.destinationName = me.topic;
 
-// called when a message arrives
-function onMessageArrived(message) {
-  console.log("onMessageArrived:"+message.payloadString);
-}
+	  me.client.send(message); 
+	},
+
+	onSubSuccess: function() {
+	  console.log('subscribe: onSuccess');
+	},
+
+	onSubFailure: function() {
+	  console.log('subscribe: onFailure');
+	},
+
+	onMessageDelivered: function() {
+	  console.log('onMessageDelivered');
+	},
+
+	// called when the client loses its connection
+	onConnectionLost: function(responseObject) {
+	  if (responseObject.errorCode !== 0) {
+	    console.log("onConnectionLost:"+responseObject.errorMessage);
+	  }
+	},
+
+	// called when a message arrives
+	onMessageArrived: function(message) {
+		var me = this.connectOptions.invocationContext;
+	  console.log("onMessageArrived:"+message.payloadString);
+
+	  me.onMsgArrivedcallback(Ext.JSON.decode(message.payloadString));
+	}
+});

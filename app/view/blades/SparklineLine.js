@@ -14,21 +14,26 @@ Ext.define('Arbela.view.blades.SparklineLine', {
 
     config: {
         height: 90,
-        // cls: 'orangebg',
-        // layout: {
-        //     type: 'hbox',
-        //     align: 'stretch'
-        // },
-        layout: 'fit',
+        cls: 'orangebg',
+        layout: {
+            type: 'hbox',
+            align: 'stretch'
+        },
         items: [{
             xtype: 'sparklineline',
-            lineColor: '#000000',
+            lineColor: '#ffffff',
             lineWidth: 1,
             margin: 20,
             height: 50,
             width: 90,
             name: 'sparkline',
             values: []
+        }, {
+            xtype: 'component',
+            flex: 1,
+            bind: {
+                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Current Value</small><span class="bigtext">{value1}</span></div>'
+            }
         }]
     },
     setBladeData: function(dataCfg) {
