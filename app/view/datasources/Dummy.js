@@ -8,11 +8,6 @@ Ext.define('Arbela.view.datasources.Dummy', {
 
     settings: [],
 
-    dataFields: [{
-        name: 'name',
-        niceName: 'Name'
-    }],
-
     getData: function() {
         return {
             name: 'Arbela'

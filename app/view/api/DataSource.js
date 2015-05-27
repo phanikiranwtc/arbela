@@ -10,8 +10,9 @@ Ext.define('Arbela.view.api.DataSource', {
 
     config: {
 	    settings: null,
-	    dataFields: null,
-        data: null
+	    // dataFields: null,
+        data: null,
+        params: {}
 	},
 
     events: ['dataupdated'],
@@ -43,6 +44,7 @@ Ext.define('Arbela.view.api.DataSource', {
 
     	var me = this;
     	var settings = me.config.settings;
+        var params = me.getParams();
 
     	if (!Ext.isEmpty(newSettings)) {
     		var l = settings.length;
@@ -53,12 +55,10 @@ Ext.define('Arbela.view.api.DataSource', {
     			var val = newSettings[key];
 
     			if (val) {
-    				if (item.xtype === 'calculatedfield') {
-    					item.valueData = val;	
-    				} else {
-						item.value = val;
-					}
+					item.value = val;
     			}
+
+                params[key] = val;
     		}
 
     		return settings;
@@ -81,10 +81,28 @@ Ext.define('Arbela.view.api.DataSource', {
 
     dispose: Ext.emptyFn,
 
-    startRefreshTimer: Ext.emptyFn,
+    loadData: Ext.emptyFn,
 
-    refresh: function() {
-    	console.log('Datasource: refresh');
-    	this.getData();
+    // refresh: function() {
+    // 	console.log('Datasource: refresh');
+    // 	this.getData();
+    // },
+
+    startRefreshTimer: function() {
+        var me = this;
+        var params = me.getParams();
+        var freq = params.refreshfrequency;
+
+        console.log('FREQ: ' + freq);
+
+        var task = Ext.TaskManager.newTask({
+            run: function() {
+                me.loadData();
+            },
+            interval: 1000 * (freq*1),
+            scope: me
+        });
+
+        task.start();
     }
 });

@@ -13,7 +13,8 @@ Ext.define('Arbela.Application', {
         'Arbela.view.datasources.Sales',
         'Arbela.view.common.CalculatedField',
         'Arbela.view.common.ExpressionField',
-        'Arbela.view.common.ExprParser'
+        'Arbela.view.common.ExprParser',
+        'Arbela.view.datasources.Dweetio'
     ],
     views: [
         'MyViewport',
@@ -31,7 +32,8 @@ Ext.define('Arbela.Application', {
         'blades.WebsiteTraffics',
         'blades.SupportTickets',
         'blades.BooksList',
-        'blades.InventoryChart'
+        'blades.InventoryChart',
+        'blades.SparklineLine'
     ],
 
 
