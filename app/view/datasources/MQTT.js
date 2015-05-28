@@ -23,12 +23,9 @@ Ext.define('Arbela.view.datasources.MQTT', {
         xtype: 'textfield',
         fieldLabel: 'Topic',
         name: 'topic'
-    }, {
-        xtype: 'numberfield',
-        fieldLabel: 'Data refresh frequency',
-        name: 'refreshfrequency',
-        value: 5  //in seconds
     }],
+
+    // startRefreshTimer: Ext.emptyFn,
 
     loadData: function() {
         var me = this;

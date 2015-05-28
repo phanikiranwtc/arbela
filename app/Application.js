@@ -16,7 +16,8 @@ Ext.define('Arbela.Application', {
         'Arbela.view.common.ExprParser',
         'Arbela.view.datasources.Dweetio',
         'Arbela.protocols.MQTT',
-        'Arbela.view.datasources.MQTT'
+        'Arbela.view.datasources.MQTT',
+        'Arbela.view.datasources.PubNub'
     ],
     views: [
         'MyViewport',

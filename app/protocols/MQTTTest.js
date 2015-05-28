@@ -19,26 +19,15 @@ function onConnect() {
   console.log("onConnect");
   // client.startTrace();
 
-  client.subscribe("/World", {
-    timeout: 10,
-    onSuccess: onSubSuccess,
-    onFailure: onSubFailure
-  });
-  message = new Paho.MQTT.Message("Hello Duniya!");
-  message.destinationName = "/World";
+  message = new Paho.MQTT.Message("{temp: 27.45}");
+  message.destinationName = "TEMP";
   // message.retained = true;
 
   client.send(message); 
   // console.log('Trace log:', client.getTraceLog());
   // client.stopTrace();
-}
 
-function onSubSuccess() {
-  console.log('subscribe: onSuccess');
-}
-
-function onSubFailure() {
-  console.log('subscribe: onFailure');
+  client.disconnect();
 }
 
 function onMessageDelivered() {

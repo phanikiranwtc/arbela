@@ -8,19 +8,23 @@ Ext.define('Arbela.protocols.MQTT', {
 	singleton: true,
 
 	connect: function(host, port, clientId, topic, onMessageArrived) {
-		this.client = new Paho.MQTT.Client(host, Number(port), "/mqtt", clientId);  //HiveMQ config
+		if (!this.client) {
+			console.log('initializing MQTT client....');
 
-		this.topic = topic;
-		this.onMsgArrivedcallback = onMessageArrived;
+			this.client = new Paho.MQTT.Client(host, Number(port), "/mqtt", clientId);  //HiveMQ config
 
-		this.client.onConnectionLost = this.onConnectionLost;
-		this.client.onMessageArrived = this.onMessageArrived;
-		this.client.onMessageDelivered = this.onMessageDelivered;
+			this.topic = topic;
+			this.onMsgArrivedcallback = onMessageArrived;
 
-		this.client.connect({
-			onSuccess:this.onConnect,
-			invocationContext: this, 
-			mqttVersion: 3});
+			this.client.onConnectionLost = this.onConnectionLost;
+			this.client.onMessageArrived = this.onMessageArrived;
+			this.client.onMessageDelivered = this.onMessageDelivered;
+
+			this.client.connect({
+				onSuccess:this.onConnect,
+				invocationContext: this, 
+				mqttVersion: 3});
+		}
 	},
 
 	onConnect: function() {
@@ -34,10 +38,6 @@ Ext.define('Arbela.protocols.MQTT', {
 	    onFailure: me.onSubFailure,
 	    invocationContext: me
 	  });
-	  message = new Paho.MQTT.Message("{temp: 42.5}");
-	  message.destinationName = me.topic;
-
-	  me.client.send(message); 
 	},
 
 	onSubSuccess: function() {
@@ -57,6 +57,8 @@ Ext.define('Arbela.protocols.MQTT', {
 	  if (responseObject.errorCode !== 0) {
 	    console.log("onConnectionLost:"+responseObject.errorMessage);
 	  }
+		var me = this.connectOptions.invocationContext;
+		me.client = null;
 	},
 
 	// called when a message arrives

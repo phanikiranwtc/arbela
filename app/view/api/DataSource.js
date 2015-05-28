@@ -11,7 +11,7 @@ Ext.define('Arbela.view.api.DataSource', {
     config: {
 	    settings: null,
 	    // dataFields: null,
-        data: null,
+        data: {},
         params: {}
 	},
 
@@ -93,16 +93,18 @@ Ext.define('Arbela.view.api.DataSource', {
         var params = me.getParams();
         var freq = params.refreshfrequency;
 
-        console.log('FREQ: ' + freq);
+        if (!freq) {
+            me.loadData();
+        } else {
+            var task = Ext.TaskManager.newTask({
+                run: function() {
+                    me.loadData();
+                },
+                interval: 1000 * (freq*1),
+                scope: me
+            });
 
-        var task = Ext.TaskManager.newTask({
-            run: function() {
-                me.loadData();
-            },
-            interval: 1000 * (freq*1),
-            scope: me
-        });
-
-        task.start();
+            task.start();
+        }
     }
 });
