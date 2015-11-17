@@ -9,8 +9,24 @@ Ext.define('Arbela.view.blades.SparklineLine', {
     settings: [{
         xtype: 'expressionfield',
         fieldLabel: 'Expression',
-        name: 'value1'
-    }],
+        name: 'value1',
+        allowBlank:false
+    },{
+        xtype: 'combobox',
+        itemId:'dataCombo',
+        fieldLabel: 'DataSources',
+        name: 'datasources',
+        emptyText: 'Select a datasources',
+        queryMode: 'local',
+        store:'',
+        valueField: 'name',
+        displayField: 'name',
+        triggerAction: 'all',
+        listeners: {
+            select: 'onComboboxSelect',
+            change: 'onComboboxChange'
+        }
+}],
 
     config: {
         height: 90,
@@ -36,14 +52,29 @@ Ext.define('Arbela.view.blades.SparklineLine', {
             }
         }]
     },
-    setBladeData: function(dataCfg) {
+    setBladeData: function(dataCfg) {  
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         var values = this.down('sparklineline').getValues();
-        values.push(dataCfg.value1);
+
+        if(dataCfg.value1.length){
+            var valueLength = dataCfg.value1.length;
+
+            for(var i=0;i<=valueLength-1;i++){
+                values.push(dataCfg.value1[i]);
+            }
+
+            dataCfg.value1 = dataCfg.value1[valueLength-1];
+
+        }else {
+            values.push(dataCfg.value1);
+             
+        }
+        
         console.log('BLADE VALUES: ', values);
 
         this.down('sparklineline').setValues(values);
 
+        //dataCfg.value1 = dataCfg.value1[valueLength-1];
         // this.down('sparklineline').setValues(dataCfg.value1);
         this.getViewModel().setData(dataCfg);
     }

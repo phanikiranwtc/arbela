@@ -6,9 +6,19 @@ Ext.define('Arbela.view.common.ExprParser', {
 	datasources: null,
 	updateCallback: Ext.emptyFn,
 
-	parse: function(exprStr, datasources, updateCallback, clbkScope) {
-		try {
-			var parseTree = jsep(exprStr);
+	parse: function(exprStr, datasources,datavalue,updateCallback, clbkScope) { //debugger;
+		if(datavalue){ 
+			if(exprStr){
+				var exp ="datasources["+"'"+datavalue+"'"+"]."+exprStr;  	
+			}
+			else{
+				var exp ="datasources["+"'"+datavalue+"'"+"]";
+			}
+		}else{  
+			var exp = exprStr;  
+		} 
+		try { 
+			var parseTree = jsep(exp);
 			console.log(parseTree);
 		} catch (e) {
 			console.log(e.message);
@@ -32,7 +42,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			'/': function(x, y) { return x / y}
 		},
 
-		processNode: function(node) {
+		processNode: function(node) {//debugger;
 			var obj;
 			console.log('Processing....' + node.type);
 
@@ -41,7 +51,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return obj;
 		},
 
-		processBinaryExpression: function(node) {
+		processBinaryExpression: function(node) {//debugger;
 
 			//this will have left and right nodes
 			var left = node.left,
@@ -54,11 +64,38 @@ Ext.define('Arbela.view.common.ExprParser', {
 
 		},
 
-		processLiteral: function(node) {
+		processLiteral: function(node) {//debugger;
 			return node.value;
 		},
+		processIdentifier: function(node){//debugger;
+			return node.name;
+		},
+		processUnaryExpression: function(node){//debugger;
+			return node.value;
+		},
+		processCompound: function(node){//debugger;
 
-		processMemberExpression: function(node) {
+			var nodeLength = node.body.length;
+			var identifier = [];
+			var literal = [];
+
+			for(var i=0;i<=nodeLength-1;i++){
+				if(node.body[i].type == "Identifier"){
+					identifier.push(node.body[i].name);
+				}else if(node.body[i].type == "Literal"){
+					literal.push(node.body[i].value)
+				}
+			}
+
+			if(identifier.length>0){
+				return identifier;
+			}
+			
+			if(literal.length>0){
+				return literal;
+			}
+		},
+		processMemberExpression: function(node) {//debugger;
 			var obj = node.object, prop = node.property;
 
 			var mObj = null;
@@ -82,7 +119,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return mObj;
 		},
 
-		processComputedMemberExpression: function(node) {
+		processComputedMemberExpression: function(node) {//debugger;
 			var obj = node.object, prop = node.property;
 
 			var mObj = null;

@@ -7,7 +7,7 @@ Ext.define('Arbela.Application', {
     extend: 'Ext.app.Application',
     
     name: 'Arbela',
-
+    
     requires: [
         'Arbela.view.datasources.Dummy',
         'Arbela.view.datasources.Sales',
@@ -17,7 +17,8 @@ Ext.define('Arbela.Application', {
         'Arbela.view.datasources.Dweetio',
         'Arbela.protocols.MQTT',
         'Arbela.view.datasources.MQTT',
-        'Arbela.view.datasources.PubNub'
+        'Arbela.view.datasources.PubNub',
+	'Arbela.view.datasources.GridData'
     ],
     views: [
         'MyViewport',
@@ -36,7 +37,9 @@ Ext.define('Arbela.Application', {
         'blades.SupportTickets',
         'blades.BooksList',
         'blades.InventoryChart',
-        'blades.SparklineLine'
+        'blades.SparklineLine',
+        'blades.Chart',
+        'blades.Grid'
     ],
 
 

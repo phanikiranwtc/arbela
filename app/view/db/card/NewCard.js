@@ -11,18 +11,14 @@ Ext.define('Arbela.view.db.card.NewCard', {
         'Ext.toolbar.Toolbar'
     ],
 
-    // twoWayBindable: ['datasources'],
-
     config: {
         typeData: [],
         values: {},
         datasources: null
-        // bind: {
-        //     datasources: '{datasources}'
-        // }
     },
 
     dirtyMsg: 'There are unsaved changes. Do you want to ignore them and continue?',
+    addSeries : 0,
     ui: 'blue',
 
     controller: 'dbnewcard',
@@ -30,7 +26,9 @@ Ext.define('Arbela.view.db.card.NewCard', {
         type: 'dbnewcard'
     },
     autoShow: true,
+    scrollable: true,
     autoHeight: true,
+    height: 400,
     width: 400,
     bodyPadding: 10,
     layout: 'fit',
@@ -40,38 +38,44 @@ Ext.define('Arbela.view.db.card.NewCard', {
 
     items: {
         xtype: 'form',
+        scrollable: 'vertical',
         items: [{
                 xtype: 'checkbox',
                 fieldLabel: 'Show Title?',
                 name: 'showTitle',
+		        reference: 'isTitleShow',
                 checked: true
+            },{
+                xtype: 'textfield',
+                fieldLabel: 'Title Style',
+                name: 'titleStyle',
+                bind:{
+                    hidden : '{!isTitleShow.checked}'
+                }
+            },{
+                xtype: 'checkbox',
+                fieldLabel: 'Auto Hide?',
+                name: 'hideTitleBar',
+                checked: false
             }, {
                 xtype: 'textfield',
-                fieldLabel: 'Name',
+                fieldLabel: 'Title',
                 name: 'name'
             }, {
-                xtype: 'bladeform'
-            }, {
-                xtype: 'button',
-                text: 'Add Blade',
-                cls: 'add-blade-btn',
-                icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
-                ui: 'plain',
-                handler: 'onAddBladeBtnClick'
-            } 
+                xtype: 'bladeform',
+                allowBlank: false
+            }
+        ],
+        dockedItems: [
+            {
+                xtype: 'commonwindowtoolbar',
+                dock: 'bottom',
+                listeners: {
+                    click: 'onToolbarBtnClick'
+                }
+            }
         ]
     },
-
-    dockedItems: [
-        {
-            xtype: 'commonwindowtoolbar',
-            dock: 'bottom',
-            listeners: {
-                click: 'onToolbarBtnClick'
-            }
-        }
-    ],
-
     setTypeData: function(typeData) {
         this.getViewModel().setData({typeData: typeData});
     }

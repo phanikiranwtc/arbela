@@ -10,16 +10,32 @@ Ext.define('Arbela.view.blades.TotalSales', {
         xtype: 'textfield',
         fieldLabel: 'Month-wise Sales Data',
         name: 'value1',
+        allowBlank:false,
         processRawValue: function(rawValue) {
             // console.log('===>>> processRawValue called: ', rawValue.split(','));
             return rawValue.split(',');
         }
     }, {
         xtype: 'expressionfield',
-        // xtype: 'textarea',
+        allowBlank:false,
         fieldLabel: 'Expression',
         name: 'value3'
-    }],
+    },{
+        xtype: 'combobox',
+        itemId:'dataCombo',
+        fieldLabel: 'DataSources',
+        name: 'datasources',
+        emptyText: 'Select a datasources',
+        queryMode: 'local',
+        store:'',
+        valueField: 'name',
+        displayField: 'name',
+        triggerAction: 'all',
+        listeners: {
+            select: 'onComboboxSelect',
+            change: 'onComboboxChange'
+        }
+}],
 
     config: {
         height: 90,

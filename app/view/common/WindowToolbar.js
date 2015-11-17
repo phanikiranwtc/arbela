@@ -10,13 +10,22 @@ Ext.define('Arbela.view.common.WindowToolbar', {
         type: 'hbox',
         pack: 'end'
     },
-    items: [
-        {
+    items: [{
+            xtype: 'button',
+            text: 'Add Blade',
+            cls: 'add-blade-btn',
+            icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+            ui: 'plain',
+            handler: 'onAddBladeBtnClick'
+        },{
+            xtype: 'tbfill'
+        },{
             xtype: 'button',
             name: 'save',
             text: 'Save',
             ui: 'primary',
-            width: 60
+            width: 60,
+            formBind: true
         },
         {
             xtype: 'button',
@@ -30,7 +39,9 @@ Ext.define('Arbela.view.common.WindowToolbar', {
         console.log('onAfterRender');
         var items = this.items.items;
         var l = items.length;
-
+	if(this.up().up().getTitle() == "New Datasource"){
+            items[0].hide();
+        }
         for (var i = 0; i < l; i++) {
             this.relayEvents(items[i], ['click']);    
         }

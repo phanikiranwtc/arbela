@@ -13,11 +13,10 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         type: 'dbdashboard'
     },
     config: {
-        title: 'My Dashboard',
+        title:'<span class ="mytitle">My Dashboard</span>',
         scrollable: true,
         maxColumns: 3,
-        // closable: true,
-        // columnWidths: [0.25, 0.25, 0.25],
+        closable: true,
         parts: {
             'card': 'card'
         },
@@ -31,19 +30,7 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         return dses;
     },
 
-    defaultContent: [{
-        type: 'card',
-        columnIndex: 0,
-        height: 80
-    }, {
-        type: 'card',
-        columnIndex: 1,
-        height: 80
-    }, {
-        type: 'card',
-        columnIndex: 2,
-        height: 80
-    }],
+    defaultContent: [],
 
     tbar: {
         xtype: 'dbtoolbar',
@@ -57,18 +44,6 @@ Ext.define('Arbela.view.db.main.Dashboard', {
 
     afterRender: function() {
         this.callParent(arguments);
-
-        var editor = new Ext.Editor({
-            updateEl: true,
-            alignment: 'l-l',
-            autoSize: {
-                width: 'boundEl'
-            },
-            field: {
-                xtype: 'textfield'
-            }
-        });
-
     }
 
 });

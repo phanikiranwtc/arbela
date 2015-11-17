@@ -20,13 +20,6 @@ Ext.define('Arbela.view.db.card.NewCardViewModel', {
     data: {
     	typeData: [],
         datasources: null
-    },
-
-    stores: {
-        // types: {
-        //     fields: ['name', 'klass'],
-        //     data: []
-        // }
     }
 
 });

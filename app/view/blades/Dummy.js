@@ -4,8 +4,24 @@ Ext.define('Arbela.view.blades.Dummy', {
     settings: [{
         xtype: 'expressionfield',
         fieldLabel: 'Expression',
-        name: 'value1'
-    }],
+        name: 'value1',
+        allowBlank:false
+    },{
+        xtype: 'combobox',
+        itemId:'dataCombo',
+        fieldLabel: 'DataSources',
+        name: 'datasources',
+        emptyText: 'Select a datasources',
+        queryMode: 'local',
+        store:'',
+        valueField: 'name',
+        displayField: 'name',
+        triggerAction: 'all',
+        listeners: {
+            select: 'onComboboxSelect',
+            change: 'onComboboxChange'
+        }
+}],
 
     statics: {
 	    niceName: 'Dummy',

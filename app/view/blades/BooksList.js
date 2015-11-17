@@ -15,7 +15,8 @@ Ext.define('Arbela.view.blades.BooksList', {
     settings: [{
         xtype: 'textfield',
         fieldLabel: 'URL',
-        name: 'url'
+        name: 'url',
+        allowBlank:false
     }],
 
     config: {

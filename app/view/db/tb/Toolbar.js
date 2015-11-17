@@ -26,7 +26,7 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
             listeners: {
                 click: 'onCloneBtnClick'
             }
-        }, '->'*/, {
+        }, '->'*//*, {
             xtype: 'button',
             icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/delete-16.png',
             tooltip: 'Remove Dashboard',
@@ -35,7 +35,7 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
             listeners: {
                 click: 'onRemoveDashboardBtnClick'
             }
-        }
+        }*/
     ]
 
 });

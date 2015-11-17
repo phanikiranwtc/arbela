@@ -47,6 +47,39 @@ Ext.define('Arbela.view.ws.Workspace', {
             tabRotation: 0,
             ui: 'navigation',
             activeTab: 1,
+            defaults:{
+                tabConfig: {
+                    listeners:{
+                        boxready: function(){
+                            var editor = new Ext.Editor({
+                                updateEl: true,
+                                alignment: 'l-l',
+                                autoSize: {
+                                   width: 'boundEl'
+                                },
+                                field: {
+                                   xtype: 'textfield'
+                                },
+                                listeners:{  
+                                    complete:{
+                                        scope:this,
+                                        fn:function( me, value, startValue, eOpts){
+                                            this.card.up('tabpanel').updateLayout();
+                                        }
+                                    }
+                                }
+                            });
+                            if(this.el.down('.mytitle')){
+                                editor.startEdit(this.el.down('.mytitle').dom);
+                                this.el.down('.mytitle').on('dblclick', function(e, t) {
+                                    editor.startEdit(t);
+                                    editor.field.focus(50, true);
+                                });
+                            }
+                        }
+                    }
+                }
+            },
             items: [
                 {
                     xtype: 'panel',

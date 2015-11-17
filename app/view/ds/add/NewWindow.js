@@ -41,7 +41,8 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
         items: [{
                 xtype: 'textfield',
                 fieldLabel: 'Name',
-                name: 'name'
+                name: 'name',
+                allowBlank: false
             }, {
                 xtype: 'combobox',
                 fieldLabel: 'Type',
@@ -57,20 +58,22 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
                 listeners: {
                     select: 'onComboboxSelect',
                     change: 'onComboboxChange'
-                }
+                },
+                allowBlank: false
+            }
+        ],
+
+        dockedItems: [
+            {
+                xtype: 'commonwindowtoolbar',
+                dock: 'bottom',
+                listeners: {
+                    click: 'onToolbarBtnClick'
+                },
+                formBind: true
             }
         ]
     },
-
-    dockedItems: [
-        {
-            xtype: 'commonwindowtoolbar',
-            dock: 'bottom',
-            listeners: {
-                click: 'onToolbarBtnClick'
-            }
-        }
-    ],
 
     updateValues: function(newValues) {
         console.log('Appying: ', newValues);

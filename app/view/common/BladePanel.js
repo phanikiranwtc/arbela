@@ -36,6 +36,7 @@ Ext.define('Arbela.view.common.BladePanel', {
         xtype: 'combobox',
         fieldLabel: 'Type',
         name: 'type',
+        allowBlank: false,
         emptyText: 'Select a type',
         queryMode: 'local',
         valueField: 'klass',
@@ -51,7 +52,7 @@ Ext.define('Arbela.view.common.BladePanel', {
         }
     },
 
-    setTypeData: function(typeData) {
+    setTypeData: function(typeData) {//debugger;
         this.getViewModel().getStore('types').setData(typeData);
     }
 });

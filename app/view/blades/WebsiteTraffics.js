@@ -15,6 +15,7 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
         xtype: 'textfield',
         fieldLabel: 'Month-wise Traffic Data',
         name: 'value1',
+        allowBlank:false,
         processRawValue: function(rawValue) {
             console.log('===>>> processRawValue called: ', rawValue.split(','));
             return rawValue.split(',');
@@ -22,6 +23,7 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
     }, {
         // xtype: 'calculatedfield',
         xtype: 'textfield',
+        allowBlank:false,
         fieldLabel: 'Total hits',
         name: 'value2'
     }],

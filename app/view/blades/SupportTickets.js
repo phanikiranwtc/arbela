@@ -15,6 +15,7 @@ Ext.define('Arbela.view.blades.SupportTickets', {
         xtype: 'textfield',
         fieldLabel: 'Month-wise Tickets Data',
         name: 'value1',
+        allowBlank:false,
         processRawValue: function(rawValue) {
             console.log('===>>> processRawValue called: ', rawValue.split(','));
             return rawValue.split(',');
@@ -22,7 +23,8 @@ Ext.define('Arbela.view.blades.SupportTickets', {
     }, {
         xtype: 'textfield',
         fieldLabel: 'Total tickets',
-        name: 'value2'
+        name: 'value2',
+        allowBlank:false
     }],
 
     config: {
