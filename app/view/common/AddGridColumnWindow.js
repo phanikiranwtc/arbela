@@ -41,11 +41,18 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                 allowBlank: false,
                 listeners:{
                     change:function (combo, newValue, oldValue, eOpts ){ 
-                        if(newValue == 'date'){
-                            this.up().down('textfield[name=Format]').setDisabled(false);
-                        }else{
-                            this.up().down('textfield[name=Format]').setDisabled(true);
-                        }
+                       this.up().down('textfield[name=DataIndex]').setDisabled(false);
+                       this.up().down('textfield[name=Format]').setDisabled(true);             
+                       if(newValue == 'date'){
+                           this.up().down('textfield[name=Format]').setDisabled(false);
+                       }else if(newValue == 'rownumber' ){
+                           this.up().down('textfield[name=DataIndex]').setDisabled(true);
+                           this.up().down('textfield[name=DataIndex]').reset();
+                           this.up().down('textfield[name=Format]').reset();
+
+                       }else{
+                           this.up().down('textfield[name=Format]').reset();
+                       }
                     }
                 }
                
@@ -55,6 +62,30 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                 name: 'Format',
                 disabled :true
                 
+            },{
+                xtype:'checkbox',
+                fieldLabel:'Group Field',
+                name:'GroupField'
+            },{
+                xtype:'combobox',
+                 fieldLabel:'Summary Type',
+                name:'SummaryType',
+                queryMode:'local',
+                displayField:'summarytype',
+                store:Ext.create('Ext.data.Store',{
+                    fields:['name','summarytype'],
+                    data:[{
+                        name:'count',summarytype:'count'
+                    },{
+                        name:'sum',summarytype:'sum'
+                    },{
+                        name:'min',summarytype:'min'
+                    },{
+                        name:'max',summarytype:'max'
+                    },{
+                        name:'average',summarytype:'average',
+                    }]
+                })
             }],
              dockedItems: [{
                 dock: 'bottom',
@@ -72,17 +103,18 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                     listeners: {
                         click:function(button){ 
                             var formData = this.up('form').getValues();
-                            var gridStore = this.up('window').values.getStore();
-                            //var count = gridStore.getCount();
-                            //var record = gridStore.getAt(count - 1);
+                            var gridStore = this.up('window').values.down('grid').getStore();
                             var records = {
                                 ColumnHeader:formData.ColumnHeader,
                                 DataIndex:formData.DataIndex,
                                 ColumnType:formData.ColumnType,
-                                Format:formData.Format
+                                Format:formData.Format,
+                                GroupField:formData.GroupField,
+                                SummaryType:formData.SummaryType
                             }
                             gridStore.add(records);
                             this.up('window').hide();
+                            this.up('window').values.down('grid')
                         }
                     }
                 },{ 
@@ -101,5 +133,4 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
             }]
         }
 
-       // }    
 });

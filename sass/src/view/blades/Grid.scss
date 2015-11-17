@@ -1,0 +1,25 @@
+@include extjs-progress-ui(
+    $ui: 'gridcss',
+    $ui-bar-background-color:#00C03F,
+    $ui-color-back:black,
+    $ui-color-front:black
+    );
+
+.x-panel-gridcss .x-grid-header-ct, .x-panel-gridcss .x-column-header, .x-panel-gridcss .x-column-header-over {
+    background-color: #F4F6FB;
+    }
+    .x-panel-gridcss .x-column-header-text{
+    color:black
+    }
+  .x-panel-gridcss .x-column-header{
+      border-right: 1px solid #EEEEEE
+  }
+  .x-panel-gridcss .x-grid-item{
+      background-color: #FFFFFF;
+  }
+  .x-panel-gridcss .x-grid-with-row-lines .x-grid-item:first-child {
+  border-top-color: #FFFFFF;
+  }
+  .x-panel-gridcss .x-grid-body{
+  background-color: #FFFFFF;
+  }

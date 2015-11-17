@@ -222,7 +222,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         }
     },
     onAddColumnButtonClick:function(button){ 
-        var grid = button.up('fieldset').down('grid');
+        var fieldset = button.up('fieldset');
         var typeArr = [];
              typeArr.push({
                     'type': 'string'
@@ -248,7 +248,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 data: typeArr
             });
         var win = Ext.create('Arbela.view.common.AddGridColumnWindow',{
-            values: grid
+            values: fieldset
         });
         win.down('form').down('combobox[name=ColumnType]').setStore(typeStore);
         win.show();
