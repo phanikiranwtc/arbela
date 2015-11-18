@@ -23,6 +23,9 @@ Ext.define('Arbela.view.ds.List', {
     bind: {
         store: '{datasources}'
     },
+    viewConfig: {
+        markDirty: false
+    },
     emptyText: 'No Datasource found. Click on Add to start adding datasources!',
     forceFit: true,
 

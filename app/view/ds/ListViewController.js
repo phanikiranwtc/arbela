@@ -36,8 +36,16 @@ Ext.define('Arbela.view.ds.ListViewController', {
             values: data,
             listeners: {
                 adddatasource: function(win, values) {
-                    v.getStore().add(values);
-                    v.fireEvent('addeddatasource', v, values);
+                    var selectedRec = v.getStore().findRecord('isSelected',true);
+                    if(selectedRec){
+                        v.getStore().setAutoSync(true);
+                        selectedRec.set('name',values.name);
+                        selectedRec.set('updatedOn',values.updatedOn);
+                        v.getView().refresh();
+                    }else{
+                        v.getStore().add(values);
+                        v.fireEvent('addeddatasource', v, values);
+                    }
                 },
                 single: true
             }
@@ -62,6 +70,7 @@ Ext.define('Arbela.view.ds.ListViewController', {
 
             e.preventDefault();
             var win = this.showWindow();
+            record.data.isSelected = true;
             win.setValues(record);            
         }
 

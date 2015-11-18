@@ -3,7 +3,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     alias: 'controller.dbdashboard',
 
     columnIdx: 0,
-    handleChageSettings:function(panel){
+    handleChageSettings:function(panel){debugger;
         var me = this;
         var blades= this.getAvailableBlades();
         var newCard = Ext.create('Arbela.view.db.card.NewCard', {
@@ -91,6 +91,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         var pfbl = panel.formvalues.blades.length;
         for(var p = 0; p<=pfbl-1; p++){
             var panelValues = panel.formvalues.blades[p];
+            this.setGridColumnType(newCard);
             arr[p].getForm().setValues(panelValues);
             var setRef = arr[p].down('fieldset'),
             store = Ext.ComponentQuery.query('dslist')[0].getStore(); 
@@ -100,6 +101,14 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     if(datasrcCombo.hidden == false){
                         if(panelValues.type !== "Arbela.view.blades.Grid"){
                             arr[p].down('fieldset').down('textfield[fieldLabel="Expression"]').setValue(panelValues.exprVal);
+                        }else{
+                            /* setting grid store and columns of grid in fieldset settings while editing */
+                            if(gridstore){
+                                for(var i=0; i<colGridfields.length; i++){
+                                    form.down('grid').getColumns()[i].dataIndex = colGridfields[i];
+                                }
+                                form.down('grid').setStore(gridstore);
+                            }
                         }
                         datasrcCombo.setStore(store);
                     }
@@ -107,12 +116,46 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     if(datasrcCombo !== null){
                         datasrcCombo.hide();
                         datasrcCombo.reset();
+                        if(panelValues.type == "Arbela.view.blades.Grid"){
+                            var labelRef = newCard.down('bladeform').down('fieldset[title="Settings"]').down('label');
+                            if(!labelRef.hidden){
+                                labelRef.hide();
+                            }
+                        }
                     }
                 }
             }
         }
         
         newCard.show();
+    },
+
+    setGridColumnType: function(newCard){
+        debugger;
+        var gridStore = newCard.down('form').down('fieldset').down('grid').getStore();
+        var storeData = gridStore.getData();
+        var gridItems = storeData.items;
+        var fields = [];
+        for (var j = 0; j < gridItems.length; j++) {
+            var items = gridItems[j].data;
+            switch (items.ColumnType) {
+                case "gridcolumn":
+                    items.ColumnType = 'string';
+                    break;
+                case "numbercolumn":
+                    items.ColumnType = 'number';
+                    break;
+                case "rownumberer":
+                    flag = true;
+                    items.ColumnType = 'rownumber';
+                    break;
+                case "datecolumn":
+                    items.ColumnType = 'date';
+                    break;
+            }
+            gridStore.commitChanges();
+        }
+        newCard.down('form').down('fieldset').down('grid').getView().refresh();
     },
     /**
     ** fetch the avaiable baldes in the application and return them in an array with

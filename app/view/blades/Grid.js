@@ -376,7 +376,7 @@ Ext.define('Arbela.view.blades.Grid', {
     setBladeData: function(datacfg) {
         var me = this;
         var grid = this.items.items[0];
-        if(datacfg.griddata){ //this condition not executing presently.....
+        /*if(datacfg.griddata){ //this condition not executing presently.....
             var frstrw = datacfg.griddata.data[0];
             var fields = Ext.Object.getAllKeys(frstrw),
                 fieldsLen = fields.length;
@@ -394,7 +394,7 @@ Ext.define('Arbela.view.blades.Grid', {
                 }
             }
             me.createGrid(datacfg.griddata, fields);
-        }else{                //this condition presently working......
+        }else{                //this condition presently working......*/
             var settings = datacfg.typeObj.getSettings();
             var flag;
             grid.getView().getFeature('groupingsummaryField').disable();
@@ -481,32 +481,39 @@ Ext.define('Arbela.view.blades.Grid', {
                 }
                 grid.columnManager.headerCt.insert(index++, column);
             }
-            if (datacfg.url) {
-                Ext.Ajax.request({
-                    url: datacfg.url,
-                    params: {},
-                    success: function(response) {
-                        var text = response.responseText;
-                        me.createGrid(text, fields);
-                    },
-                    failure: function(error) {
-                        return Ext.Msg.show({
-                            title: 'Request Failed',
-                            message: 'Error: we are not able to load the URL ',
-                            buttons: Ext.Msg.OK,
-                            icon: Ext.Msg.ERROR,
-                        });
-                    }
-                });
-            } else {
-                return Ext.Msg.show({
-                    title: 'Message for you',
-                    message: 'Please enter URL for Sales By Year data Visual',
-                    buttons: Ext.Msg.OK,
-                    icon: Ext.Msg.INFO,
-                });
+            if(!datacfg.datasources){
+                if (datacfg.url) {
+                    Ext.Ajax.request({
+                        url: datacfg.url,
+                        params: {},
+                        success: function(response) {
+                            var text = response.responseText;
+                            me.createGrid(text, fields);
+                        },
+                        failure: function(error) {
+                            return Ext.Msg.show({
+                                title: 'Request Failed',
+                                message: 'Error: we are not able to load the URL ',
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.ERROR,
+                            });
+                        }
+                    });
+                } else {
+                    return Ext.Msg.show({
+                        title: 'Message for you',
+                        message: 'Please enter URL for Sales By Year data Visual',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.INFO,
+                    });
+                }
             }
-        }
+             else{
+                var frstrw = datacfg.griddata.data[0];
+                var fields = Ext.Object.getAllKeys(frstrw);
+                me.createGrid(datacfg.griddata, fields);
+            }
+        //}
     },
     createGrid: function(responceText, fields) { 
         if(responceText.data){
