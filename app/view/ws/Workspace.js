@@ -47,10 +47,13 @@ Ext.define('Arbela.view.ws.Workspace', {
             tabRotation: 0,
             ui: 'navigation',
             activeTab: 1,
+            cls:'workspace_tabpanel',
             defaults:{
                 tabConfig: {
                     listeners:{
                         boxready: function(){
+                            var tabPanel = this.up('tabpanel');
+                            
                             var editor = new Ext.Editor({
                                 updateEl: true,
                                 alignment: 'l-l',
@@ -69,8 +72,11 @@ Ext.define('Arbela.view.ws.Workspace', {
                                     }
                                 }
                             });
+                            tabPanel.editor = editor;
+
                             if(this.el.down('.mytitle')){
-                                editor.startEdit(this.el.down('.mytitle').dom);
+                                tabPanel.presentEditTab = this.el.down('.mytitle').dom;
+                                //editor.startEdit(this.el.down('.mytitle').dom);
                                 this.el.down('.mytitle').on('dblclick', function(e, t) {
                                     editor.startEdit(t);
                                     editor.field.focus(50, true);
@@ -101,6 +107,18 @@ Ext.define('Arbela.view.ws.Workspace', {
                 }
             ],
             listeners: {
+                afterlayout:function(){
+                    var editor = this.editor;
+                    var tabBarElement = this.presentEditTab;
+
+                    if(editor && tabBarElement){
+
+                            editor.startEdit(tabBarElement);
+                            this.editor = null;
+                            this.presentEditTab = null;
+                    }
+                    
+                },
                 beforetabchange: function(tabPnl, newCard, oldeCard) {
                     if (newCard.addTab) {
                         var count = tabPnl.items.getCount();

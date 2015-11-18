@@ -106,3 +106,61 @@ border-bottom: none!important;
 .arbelaCard .x-panel-header-title-default-framed > .x-title-text-default-framed {
 padding: 5px!important;
 }
+/*
+Grid Css Starts Here
+*/
+.x-grid-item.x-grid-item-alt.x-grid-item-over{
+   background-color:#c1ddf1 !important;
+}
+.x-grid-item.x-grid-item-alt.x-grid-item-selected{
+   background-color:#c1ddf1 !important;
+}
+.x-grid-item.x-grid-item-over{
+   background-color:#c1ddf1 !important;
+}
+.x-grid-item.x-grid-item-selected{
+   background-color:#c1ddf1 !important;
+}
+.x-grid-item-focused .x-grid-cell-inner:before{
+   border: none !important;
+}
+.dslist {
+.x-grid-item-focused{
+   background-color:#71b1d1 !important;
+}
+.x-grid-item.x-grid-item-selected{
+   background-color:#71b1d1 !important;
+}
+.x-grid-item.x-grid-item-over{
+   background-color:#71b1d1 !important;
+}
+.x-grid-item.x-grid-item-alt.x-grid-item-over{
+   background-color:#71b1d1 !important;
+}
+.x-grid-item.x-grid-item-alt.x-grid-item-selected{
+   background-color:#71b1d1 !important;
+}
+}
+.x-grid-item-focused{
+   background-color:#c1ddf1 !important;
+}
+/*
+.x-column-header.x-column-header-focus .x-column-header-inner:before{
+   border: none !important;
+}
+Grid Css Ends Here
+*/
+.workspace_tabpanel{
+.x-tab{
+    .x-tab-wrap span{
+      word-wrap: break-word; 
+      white-space: normal; 
+      max-width: 200px; 
+    }
+}
+}
+xmp{
+    margin: 0px;
+    font: 300 13px/15px helvetica,arial,verdana,sans-serif;
+}
+

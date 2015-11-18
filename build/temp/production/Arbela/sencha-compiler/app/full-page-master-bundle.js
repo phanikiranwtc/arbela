@@ -1,2 +1,2 @@
 // @tag full-page
-// @require /var/www/html/steven/arbela-git/app.js
+// @require /Applications/XAMPP/xamppfiles/htdocs/sandeep/Arbela/arbelaGit18Nov/app.js

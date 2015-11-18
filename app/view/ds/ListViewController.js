@@ -59,12 +59,22 @@ Ext.define('Arbela.view.ds.ListViewController', {
     },
 
     onRefreshDatasource: function(grid, rowIdx, colIdx) {
-        var rec = grid.getStore().getAt(rowIdx);
 
-        rec.data.typeObj.refresh();
+        var rec = grid.getStore().getAt(rowIdx);
+        var updatedOn = Ext.Date.format(new Date(), 'h:i:s A');
+        if( rec ){
+            rec.set('updatedOn',updatedOn);
+            rec.commit();
+            if(rec.data && rec.data.typeObj && rec.data.typeObj.refresh){
+                rec.data.typeObj.refresh();
+            }
+            
+        }
+        
     },
 
     onEdtiableCellClick: function(grid, td, cellIndex, record, tr, rowIndex, e, eOpts) {
+       
 
         if (e.target.className == "editable-link") {
 

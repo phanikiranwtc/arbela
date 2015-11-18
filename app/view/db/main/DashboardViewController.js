@@ -3,7 +3,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     alias: 'controller.dbdashboard',
 
     columnIdx: 0,
-    handleChageSettings:function(panel){debugger;
+    handleChageSettings:function(panel){//debugger;
         var me = this;
         var blades= this.getAvailableBlades();
         var newCard = Ext.create('Arbela.view.db.card.NewCard', {
@@ -131,7 +131,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     },
 
     setGridColumnType: function(newCard){
-        debugger;
+       // debugger;
         var gridStore = newCard.down('form').down('fieldset').down('grid').getStore();
         var storeData = gridStore.getData();
         var gridItems = storeData.items;

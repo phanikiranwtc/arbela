@@ -14,6 +14,7 @@ Ext.define('Arbela.view.ds.List', {
         type: 'dslist'
     },
     width: 350,
+    cls:'dslist',
     collapsed: false,
     collapsible: false,
     title: 'Data Sources',
@@ -41,7 +42,7 @@ Ext.define('Arbela.view.ds.List', {
         resizable: false,
         flex: 1,
         renderer: function(value, metaData, record) {
-            return '<a href="" class="editable-link">' + value + '</a>';
+            return '<a href="javascript:void(0);" class="editable-link"><xmp class="editable-link">' + value + '</xmp></a>';
         }        
     }, {
         text: 'Last Updated',
