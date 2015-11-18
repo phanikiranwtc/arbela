@@ -91,6 +91,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     },
 
     handleSaveBtnClick: function(btn, e, eOpts) {
+         
 
         var v = this.getView();
         var form = v.down('form');
@@ -122,31 +123,32 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             this.processExpressions(blades[i], val);
             values.blades.push(val);
         }
-        var gridRef = this.getView().down('bladeform').down('grid');
-        if(gridRef.getStore().data.length == 0){
-            var dataSrc = val.griddata.data[0];
-            var gridFields = Ext.Object.getAllKeys(dataSrc),
-                fieldsLen = gridFields.length, gridArr = [];
-            window.colGridfields = ["header", "dataIndex", "type"],
-                window.gridColmns = gridRef.getColumns();
-            for(var i=0; i<colGridfields.length; i++){
-                gridColmns[i].dataIndex = colGridfields[i];
-            }
-            for(var i=0; i<fieldsLen-1; i++){
-                var gridObj = {};
-                gridObj["header"] = gridFields[i];
-                gridObj["dataIndex"] = gridFields[i];
-                gridObj["type"] = "gridcolumn"
-                gridArr.push(gridObj);
-            }
-            console.log(gridArr);
-            var store = Ext.create('Ext.data.Store', {
-                fields:gridFields,
-                data: gridArr
-            });
-            gridRef.setStore(store);
-            window.gridstore = gridRef.getStore(); // store for grid
-        }
+        
+        // var gridRef = this.getView().down('bladeform').down('grid');
+        // if(gridRef.getStore().data.length == 0){
+        //     var dataSrc = val.griddata.data[0];
+        //     var gridFields = Ext.Object.getAllKeys(dataSrc),
+        //         fieldsLen = gridFields.length, gridArr = [];
+        //     window.colGridfields = ["header", "dataIndex", "type"],
+        //         window.gridColmns = gridRef.getColumns();
+        //     for(var i=0; i<colGridfields.length; i++){
+        //         gridColmns[i].dataIndex = colGridfields[i];
+        //     }
+        //     for(var i=0; i<fieldsLen-1; i++){
+        //         var gridObj = {};
+        //         gridObj["header"] = gridFields[i];
+        //         gridObj["dataIndex"] = gridFields[i];
+        //         gridObj["type"] = "gridcolumn"
+        //         gridArr.push(gridObj);
+        //     }
+        //     console.log(gridArr);
+        //     var store = Ext.create('Ext.data.Store', {
+        //         fields:gridFields,
+        //         data: gridArr
+        //     });
+        //     gridRef.setStore(store);
+        //     window.gridstore = gridRef.getStore(); // store for grid
+        // }
         values.updatedOn = Ext.Date.format(new Date(), 'h:i:s A');
 
         v.fireEvent('addcard', v, values, e, eOpts);

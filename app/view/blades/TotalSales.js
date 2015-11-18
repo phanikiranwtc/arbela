@@ -48,6 +48,7 @@ Ext.define('Arbela.view.blades.TotalSales', {
             xtype: 'sparklineline',
             lineColor: '#FFFFFF',
             lineWidth: 3,
+            tooltipSkipNull:false,
             margin: 20,
             height: 50,
             width: 90,
@@ -63,6 +64,12 @@ Ext.define('Arbela.view.blades.TotalSales', {
     },
     setBladeData: function(dataCfg) {
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
+        if(dataCfg.value1.length == 1 ){
+            var sparkTooltip = Ext.getCmp('sparklines-tooltip');
+            if(sparkTooltip && sparkTooltip.destroy){
+                sparkTooltip.destroy();
+            }
+        }
         this.down('sparklineline').setValues(dataCfg.value1);
         this.getViewModel().setData(dataCfg);
     }

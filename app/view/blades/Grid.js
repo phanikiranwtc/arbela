@@ -121,8 +121,7 @@ Ext.define('Arbela.view.blades.Grid', {
         store: Ext.create('Ext.data.Store',{
            fields: [
                'ColumnHeader', 
-               'DataIndex', 
-               'ColumnType',
+               'DataIndex','ColumnType',
                'Format',
                {
                    name : 'GroupField',
@@ -181,6 +180,26 @@ Ext.define('Arbela.view.blades.Grid', {
                 text: 'Column Type', 
                 menuDisabled: true, 
                 dataIndex: 'ColumnType',
+                renderer:function(value){
+
+                     switch (value) {
+                        case "gridcolumn":
+                            return 'string';
+                            break;
+                        case "numbercolumn":
+                            return 'number';
+                            break;
+                        case "rownumberer":
+                            //flag = true;
+                            return 'rownumber';
+                            break;
+                        case "datecolumn":
+                            return 'date';
+                            break;
+                        }
+                                return value;
+
+                }
             },{
                 text: 'Format', 
                 dataIndex: 'Format',
@@ -213,6 +232,21 @@ Ext.define('Arbela.view.blades.Grid', {
         }],
         listeners:{
             celldblclick:function( row, td, cellIndex, record, tr, rowIndex, e, eOpts ){
+                switch (record.data.ColumnType) {
+                        case "gridcolumn":
+                            record.data.ColumnType = 'string';
+                            break;
+                        case "numbercolumn":
+                            record.data.ColumnType = 'number';
+                            break;
+                        case "rownumberer":
+                            //flag = true;
+                            record.data.ColumnType = 'rownumber';
+                            break;
+                        case "datecolumn":
+                            record.data.ColumnType = 'date';
+                            break;
+                }
                 var grid = row.grid;
                 var window = Ext.create('Arbela.view.common.AddGridColumnWindow',{
                     title:'Edit grid column',

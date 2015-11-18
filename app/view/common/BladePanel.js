@@ -52,7 +52,7 @@ Ext.define('Arbela.view.common.BladePanel', {
         }
     },
 
-    setTypeData: function(typeData) {//debugger;
+    setTypeData: function(typeData) {// 
         this.getViewModel().getStore('types').setData(typeData);
     }
 });

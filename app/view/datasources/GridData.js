@@ -8,7 +8,7 @@ Ext.define('Arbela.view.datasources.GridData', {
 
     settings: [],
 
-    loadData: function(){//debugger;
+    loadData: function(){// 
         this.setData({
             data:[
                 { name: 'Lisa', email: 'lisa@simpsons.com', phone: '555-111-1224' },

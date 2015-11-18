@@ -38,12 +38,14 @@ Ext.define('Arbela.view.blades.SparklineLine', {
         items: [{
             xtype: 'sparklineline',
             lineColor: '#ffffff',
+            
             lineWidth: 1,
             margin: 20,
             height: 50,
             width: 90,
             name: 'sparkline',
-            values: []
+            values: [],
+            //tipTpl : new Ext.XTemplate('Testing')
         }, {
             xtype: 'component',
             flex: 1,
@@ -55,7 +57,6 @@ Ext.define('Arbela.view.blades.SparklineLine', {
     setBladeData: function(dataCfg) {  
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         var values = this.down('sparklineline').getValues();
-
         if(dataCfg.value1.length){
             var valueLength = dataCfg.value1.length;
 

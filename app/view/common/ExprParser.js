@@ -6,7 +6,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 	datasources: null,
 	updateCallback: Ext.emptyFn,
 
-	parse: function(exprStr, datasources,datavalue,updateCallback, clbkScope) { //debugger;
+	parse: function(exprStr, datasources,datavalue,updateCallback, clbkScope) { // 
 		if(datavalue){ 
 			if(exprStr){
 				var exp ="datasources["+"'"+datavalue+"'"+"]."+exprStr;  	
@@ -42,7 +42,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			'/': function(x, y) { return x / y}
 		},
 
-		processNode: function(node) {//debugger;
+		processNode: function(node) {// 
 			var obj;
 			console.log('Processing....' + node.type);
 
@@ -51,7 +51,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return obj;
 		},
 
-		processBinaryExpression: function(node) {//debugger;
+		processBinaryExpression: function(node) {// 
 
 			//this will have left and right nodes
 			var left = node.left,
@@ -64,16 +64,16 @@ Ext.define('Arbela.view.common.ExprParser', {
 
 		},
 
-		processLiteral: function(node) {//debugger;
+		processLiteral: function(node) {// 
 			return node.value;
 		},
-		processIdentifier: function(node){//debugger;
+		processIdentifier: function(node){// 
 			return node.name;
 		},
-		processUnaryExpression: function(node){//debugger;
+		processUnaryExpression: function(node){// 
 			return node.value;
 		},
-		processCompound: function(node){//debugger;
+		processCompound: function(node){// 
 
 			var nodeLength = node.body.length;
 			var identifier = [];
@@ -95,7 +95,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 				return literal;
 			}
 		},
-		processMemberExpression: function(node) {//debugger;
+		processMemberExpression: function(node) {// 
 			var obj = node.object, prop = node.property;
 
 			var mObj = null;
@@ -119,7 +119,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return mObj;
 		},
 
-		processComputedMemberExpression: function(node) {//debugger;
+		processComputedMemberExpression: function(node) {// 
 			var obj = node.object, prop = node.property;
 
 			var mObj = null;
