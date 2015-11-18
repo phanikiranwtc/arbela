@@ -38,7 +38,7 @@ Ext.define('Arbela.view.ds.List', {
         text: 'Name',
         dataIndex: 'name',
         menuDisabled: true,
-        sortable: false,
+        //sortable: false,
         resizable: false,
         flex: 1,
         renderer: function(value, metaData, record) {
@@ -48,7 +48,7 @@ Ext.define('Arbela.view.ds.List', {
         text: 'Last Updated',
         dataIndex: 'updatedOn',
         menuDisabled: true,
-        sortable: false,
+        //sortable: false,
         resizable: false,
         width: 120
     }, {

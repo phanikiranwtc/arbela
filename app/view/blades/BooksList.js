@@ -16,6 +16,7 @@ Ext.define('Arbela.view.blades.BooksList', {
         xtype: 'textfield',
         fieldLabel: 'URL',
         name: 'url',
+        value:Arbela.util.Utility.api.booksList,
         allowBlank:false
     }],
 

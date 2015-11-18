@@ -34819,3 +34819,13 @@ Grid Css Ends Here
 xmp {
   margin: 0px;
   font: 300 13px/15px helvetica, arial, verdana, sans-serif; }
+
+/** Splitter of data source panel styling issues fixed by following styles and Splitter position with panel**/
+/* line 167, /Applications/XAMPP/xamppfiles/htdocs/sandeep/Arbela/arbelaGit18Nov/build/temp/production/Arbela/slicer-temp/../../../../../sass/src/Application.scss */
+.x-splitter-focus {
+  outline: none !important;
+  outline-offset: none !important; }
+
+/* line 172, /Applications/XAMPP/xamppfiles/htdocs/sandeep/Arbela/arbelaGit18Nov/build/temp/production/Arbela/slicer-temp/../../../../../sass/src/Application.scss */
+x-splitter.x-border-item.x-box-item.x-splitter-default.x-splitter-vertical.x-unselectable.x-focus.x-splitter-focus.x-splitter-default-focus {
+  transition-duration: 100ms !important; }

@@ -163,4 +163,12 @@ xmp{
     margin: 0px;
     font: 300 13px/15px helvetica,arial,verdana,sans-serif;
 }
+/** Splitter of data source panel styling issues fixed by following styles and Splitter position with panel**/
+.x-splitter-focus {
+    outline: none !important;
+    outline-offset: none !important;
+}
 
+x-splitter.x-border-item.x-box-item.x-splitter-default.x-splitter-vertical.x-unselectable.x-focus.x-splitter-focus.x-splitter-default-focus {
+    transition-duration: 100ms !important;
+}

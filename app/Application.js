@@ -19,7 +19,8 @@ Ext.define('Arbela.Application', {
         'Arbela.view.datasources.MQTT',
         'Arbela.view.datasources.PubNub',
 	    'Arbela.view.datasources.GridData',
-        'Arbela.view.common.AddGridColumnWindow'
+        'Arbela.view.common.AddGridColumnWindow',
+        'Arbela.util.Utility'
     ],
     views: [
         'MyViewport',

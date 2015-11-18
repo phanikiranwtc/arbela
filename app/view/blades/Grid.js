@@ -51,7 +51,7 @@ Ext.define('Arbela.view.blades.Grid', {
     },{
         xtype: 'textfield',
         fieldLabel: 'URL',
-        value: 'http://192.168.1.54/steven/arbela-product/resources/data/summary.json',
+        value: Arbela.util.Utility.api.summary,//'http://192.168.1.54/steven/arbela-product/resources/data/summary.json',
         name: 'url'
     },{
         xtype:'commongridtoolbar'

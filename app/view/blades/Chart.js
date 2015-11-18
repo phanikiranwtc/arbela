@@ -34,7 +34,7 @@ Ext.define('Arbela.view.blades.Chart', {
         fieldLabel: 'URL',
         name: 'url',
         allowBlank:false,
-        value:'resources/data/inventorydata.json'
+        value:Arbela.util.Utility.api.inventoryData//'resources/data/inventorydata.json'
     },{
         xtype: 'combobox',
         fieldLabel: 'Select Chart Type',

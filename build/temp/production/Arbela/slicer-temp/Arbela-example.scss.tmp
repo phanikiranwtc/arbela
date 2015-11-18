@@ -3,6 +3,7 @@ $theme-name:  'ext-theme-crisp' !default;
 $include-arbela-application: true;
 $include-arbela-protocols-mqtt: true;
 $include-arbela-protocols-pubnub: true;
+$include-arbela-util-utility: true;
 $include-arbela-view-myviewport: true;
 $include-arbela-view-api-blade: true;
 $include-arbela-view-api-card: true;
