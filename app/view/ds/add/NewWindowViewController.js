@@ -16,7 +16,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
             fs = null;            
         }
 
-        if (md.length > 0) {
+        if (md && md.length > 0) {
 
             form.add({
                 xtype: 'fieldset',

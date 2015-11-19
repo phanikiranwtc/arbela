@@ -239,9 +239,9 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 newBlade.push(values.blades[b].typeObj);
                 oldPanel.add(newBlade[b]);
             }
-            for(var w = 0;w<=oldPanel.items.length-1;w++){
-                newHeight += oldPanel.items.getAt(w).height;
-            }
+            /*for(var w = 0;w<=oldPanel.items.length-1;w++){
+                //newHeight += oldPanel.items.getAt(w).height;
+            }*/
             var showTitle = values.showTitle;
             var title;
             if(showTitle){

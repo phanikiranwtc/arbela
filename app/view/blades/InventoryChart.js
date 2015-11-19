@@ -10,7 +10,7 @@ Ext.define('Arbela.view.blades.InventoryChart', {
     },
 
     config: {
-        height: 400,
+        //height: 400,
         // layout: 'fit',
         title: 'Inventory',
         header: false,

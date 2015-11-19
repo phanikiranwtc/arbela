@@ -14,7 +14,7 @@ Ext.define('Arbela.view.common.WindowToolbar', {
             xtype: 'button',
             text: 'Add Blade',
             cls: 'add-blade-btn',
-            icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+            icon: 'resources/images/add-16.png',
             ui: 'plain',
             handler: 'onAddBladeBtnClick'
         },{

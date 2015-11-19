@@ -16,6 +16,7 @@ Ext.define('Arbela.view.blades.Grid', {
         ui:'gridcss',
         itemId: 'outputGrid',
         //columnLines:true,
+        maxHeight:300,
         columns: [],
         features:[{
             ftype:'grouping',id:'groupingField'
@@ -26,7 +27,7 @@ Ext.define('Arbela.view.blades.Grid', {
         }]
     },
     config: {
-        height: 250,
+       // height: 250,
         width: 300
     },
     settings: [{
@@ -66,11 +67,11 @@ Ext.define('Arbela.view.blades.Grid', {
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
                     if(newValue == true){
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-1].show();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].show();
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setValue(false);
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(true);
                     }else{
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-1].hide();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].hide();
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(false);
                     }
                 }
@@ -83,11 +84,11 @@ Ext.define('Arbela.view.blades.Grid', {
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
                     if(newValue == true){
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].show();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].show();
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setValue(false);
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(true);
                     }else{
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].hide();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].hide();
                         this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(false);
                     }
                 }
@@ -100,15 +101,15 @@ Ext.define('Arbela.view.blades.Grid', {
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
                     if(newValue == true){
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-1].show();
                         this.up('fieldset').up('fieldset').down('grid').columns[l-2].show();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].show();
                         this.up('fieldset').down('checkboxfield[name=summary]').setValue(false);
                         this.up('fieldset').down('checkboxfield[name=summary]').setDisabled(true);
                         this.up('fieldset').down('checkboxfield[name=grouping]').setValue(false);
                         this.up('fieldset').down('checkboxfield[name=grouping]').setDisabled(true);
                     }else{
-                        this.up('fieldset').up('fieldset').down('grid').columns[l-1].hide();
                         this.up('fieldset').up('fieldset').down('grid').columns[l-2].hide();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].hide();
                         this.up('fieldset').down('checkboxfield[name=summary]').setDisabled(false);
                         this.up('fieldset').down('checkboxfield[name=grouping]').setDisabled(false);
                     }
@@ -229,183 +230,25 @@ Ext.define('Arbela.view.blades.Grid', {
                 dataIndex:'SummaryType',
                 menuDisabled: true, 
                 hidden:true
-        }],
-        listeners:{
-            celldblclick:function( row, td, cellIndex, record, tr, rowIndex, e, eOpts ){
-                switch (record.data.ColumnType) {
-                        case "gridcolumn":
-                            record.data.ColumnType = 'string';
-                            break;
-                        case "numbercolumn":
-                            record.data.ColumnType = 'number';
-                            break;
-                        case "rownumberer":
-                            //flag = true;
-                            record.data.ColumnType = 'rownumber';
-                            break;
-                        case "datecolumn":
-                            record.data.ColumnType = 'date';
-                            break;
-                }
-                var grid = row.grid;
-                var window = Ext.create('Arbela.view.common.AddGridColumnWindow',{
-                    title:'Edit grid column',
-                    autoShow: true,
-                    autoHeight: true,
-                    width: 400,
-                    bodyPadding: 10,
-                    layout: 'fit',
-                    autoScroll: true,
-                    values: grid,
-                    rowIndex:rowIndex,
-                    items:{
-
-                        xtype:'form',
-                        layout: 'vbox',
-                        items: [{
-                            xtype: 'textfield',
-                            fieldLabel: 'Column Header',
-                            name: 'ColumnHeader',
-                            allowBlank: false,
-                            value:record.data.ColumnHeader   
-                        },{
-                            xtype: 'textfield',
-                            fieldLabel: 'DataIndex',
-                            name: 'DataIndex',
-                            allowBlank: false,
-                            value:record.data.DataIndex
-                            
-                        },{
-                            xtype: 'combobox',
-                            fieldLabel: 'Column Type',
-                            name: 'ColumnType',
-                            queryMode: 'local',
-                            valueField:'type',
-                            displayField: 'type',
-                            allowBlank: false,
-                            value:record.data.ColumnType,
-                            listeners:{
-                                change:function (combo, newValue, oldValue, eOpts ){ 
-                                    if(newValue == 'date'){
-                                        this.up().down('textfield[name=Format]').setDisabled(false);
-                                    }else{
-                                        this.up().down('textfield[name=Format]').setDisabled(true);
-                                    }
-                                }
-                            }
-                           
-                        },{
-                            xtype: 'textfield',
-                            fieldLabel: 'Format',
-                            name: 'Format',
-                            disabled :true,
-                            value:record.data.Format
-                        },{
-                            xtype:'checkbox',
-                            fieldLabel:'Group Field',
-                            name:'GroupField',
-                            value:record.data.GroupField,
-                        },{
-                            xtype:'combobox',
-                             fieldLabel:'Summary Type',
-                            name:'SummaryType',
-                            queryMode:'local',
-                            displayField:'summarytype',
-                            value:record.data.SummaryType,
-                            store:Ext.create('Ext.data.Store',{
-                                fields:['name','summarytype'],
-                                data:[{
-                                    name:'count',summarytype:'count'
-                                },{
-                                    name:'sum',summarytype:'sum'
-                                },{
-                                    name:'min',summarytype:'min'
-                                },{
-                                    name:'max',summarytype:'max'
-                                },{
-                                    name:'average',summarytype:'average',
-                                }]
-                            })
-                        }],
-                         dockedItems: [{
-                            dock: 'bottom',
-                            layout: {
-                                type: 'hbox',
-                                pack: 'end'
-                            },
-                            items:[{
-                                name: 'save',
-                                xtype: 'button',
-                                text: 'Save',
-                                ui: 'primary',
-                                formBind:true,
-                                width: 60,
-                                listeners: {
-                                    click:function(button){ 
-                                        var formData = this.up('form').getValues();
-                                        var gridStore = this.up('window').values.getStore();
-                                        var rowIndex = this.up('window').rowIndex;
-                                        var newRecord = gridStore.getAt(rowIndex);
-                                        var records = {
-                                            ColumnHeader:formData.ColumnHeader,
-                                            DataIndex:formData.DataIndex,
-                                            ColumnType:formData.ColumnType,
-                                            Format:formData.Format,
-                                            GroupField:formData.GroupField,
-                                            SummaryType:formData.SummaryType
-                                        }
-                                        newRecord.set(records);
-                                        newRecord.commit();
-                                        //this.up('window').values.reconfigure(gridStore); //It is creating issue.
-                                        this.up('window').hide();
-                                    }
-                                }
-                            },{ 
-                                xtype: 'tbspacer',width: 10
-                            },{
-                                name: 'cancel',
-                                text: 'Cancel',
-                                xtype: 'button',
-                                width: 60,
-                                listeners: {
-                                    click: function(button){ 
-                                        this.up('window').close();
-                                    }
-                                },
-                            }]
-                        }]
-                    }
-
-                });
-                       
-                        var typeArr = [];
-                         typeArr.push({
-                                'type': 'string'
-                            }, {
-                                'type': 'number'
-                            }, {
-                                'type': 'rownumber'
-                            },{
-                                'type': 'date'
-                        });
-                        var formateArr = [];
-                        formateArr.push({
-                                'formate':'M d Y'
-                            },{
-                                'formate':'Y m d'
-                            });
-                        var formateStore =Ext.create('Ext.data.Store', {
-                            fields: 'formate',
-                            data: formateArr
-                        });
-                        var typeStore = Ext.create('Ext.data.Store', {
-                            fields: 'type',
-                            data: typeArr
-                        });
-                    window.down('form').down('combobox[name=ColumnType]').setStore(typeStore);
-                    window.show();
-            }
-        }
+            },{
+                xtype: 'actioncolumn',
+                //width: 0,
+                menuDisabled: true,
+                sortable: false,
+                resizable: false,
+                text: "Action",
+                items: [{
+                    icon: 'resources/images/edit.png',
+                    tooltip: 'Edit',
+                    handler: 'onEdit'
+                },{
+                    xtype:'tbspacer'
+                },{
+                    icon: 'resources/images/delete.png',
+                    tooltip: 'Remove',
+                    handler: 'onRemove'
+                }]
+        }]
     }],
     setBladeData: function(datacfg) {
         var me = this;

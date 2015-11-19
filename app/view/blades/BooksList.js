@@ -21,7 +21,7 @@ Ext.define('Arbela.view.blades.BooksList', {
     }],
 
     config: {
-        height: 350,
+        maxHeight: 350,
         xtype: 'container',
         scrollable: true,
         bodyPadding: 5,

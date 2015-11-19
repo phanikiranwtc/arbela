@@ -38,7 +38,7 @@ Ext.define('Arbela.view.blades.TotalSales', {
 }],
 
     config: {
-        height: 90,
+        //height: 90,
         cls: 'orangebg',
         layout: {
             type: 'hbox',
@@ -62,7 +62,19 @@ Ext.define('Arbela.view.blades.TotalSales', {
             }
         }]
     },
+
     setBladeData: function(dataCfg) {
+       console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
+       if(dataCfg.value1.length == 1 ){
+           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+           if(tooltip ){
+               tooltip.update(null);
+           }
+       }
+       this.down('sparklineline').setValues(dataCfg.value1);
+       this.getViewModel().setData(dataCfg);
+   }
+    /*setBladeData: function(dataCfg) {
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         if(dataCfg.value1.length == 1 ){
             var sparkTooltip = Ext.getCmp('sparklines-tooltip');
@@ -72,5 +84,5 @@ Ext.define('Arbela.view.blades.TotalSales', {
         }
         this.down('sparklineline').setValues(dataCfg.value1);
         this.getViewModel().setData(dataCfg);
-    }
+    }*/
 });

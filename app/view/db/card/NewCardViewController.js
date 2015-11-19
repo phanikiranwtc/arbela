@@ -381,6 +381,169 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             flag:true
         });
         win.hide();
+    },
+    onRemove: function(grid, rowIdx, colIdx){
+        grid.getStore().removeAt(rowIdx);
+    },
+    onEdit: function(grid, rowIndex, colIndex){
+        
+        var record = grid.getStore().getAt(rowIndex);
+        var window = Ext.create('Arbela.view.common.AddGridColumnWindow',{
+            title:'Edit grid column',
+            autoShow: true,
+            autoHeight: true,
+            width: 400,
+            bodyPadding: 10,
+            layout: 'fit',
+            autoScroll: true,
+            values: grid,
+            rowIndex:rowIndex,
+            items:{
+
+                xtype:'form',
+                layout: 'vbox',
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'Column Header',
+                    name: 'ColumnHeader',
+                    allowBlank: false,
+                    value:record.data.ColumnHeader   
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: 'DataIndex',
+                    name: 'DataIndex',
+                    allowBlank: false,
+                    value:record.data.DataIndex
+                    
+                },{
+                    xtype: 'combobox',
+                    fieldLabel: 'Column Type',
+                    name: 'ColumnType',
+                    queryMode: 'local',
+                    valueField:'type',
+                    displayField: 'type',
+                    allowBlank: false,
+                    value:record.data.ColumnType,
+                    listeners:{
+                        change:function (combo, newValue, oldValue, eOpts ){ 
+                            if(newValue == 'date'){
+                                this.up().down('textfield[name=Format]').setDisabled(false);
+                            }else{
+                                this.up().down('textfield[name=Format]').setDisabled(true);
+                            }
+                        }
+                    }
+                   
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: 'Format',
+                    name: 'Format',
+                    disabled :true,
+                    value:record.data.Format
+                },{
+                    xtype:'checkbox',
+                    fieldLabel:'Group Field',
+                    name:'GroupField',
+                    value:record.data.GroupField,
+                },{
+                    xtype:'combobox',
+                     fieldLabel:'Summary Type',
+                    name:'SummaryType',
+                    queryMode:'local',
+                    displayField:'summarytype',
+                    value:record.data.SummaryType,
+                    store:Ext.create('Ext.data.Store',{
+                        fields:['name','summarytype'],
+                        data:[{
+                            name:'count',summarytype:'count'
+                        },{
+                            name:'sum',summarytype:'sum'
+                        },{
+                            name:'min',summarytype:'min'
+                        },{
+                            name:'max',summarytype:'max'
+                        },{
+                            name:'average',summarytype:'average',
+                        }]
+                    })
+                }],
+                 dockedItems: [{
+                    dock: 'bottom',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'end'
+                    },
+                    items:[{
+                        name: 'save',
+                        xtype: 'button',
+                        text: 'Save',
+                        ui: 'primary',
+                        formBind:true,
+                        width: 60,
+                        listeners: {
+                            click:function(button){ 
+                                var formData = this.up('form').getValues();
+                                var gridStore = this.up('window').values.getStore();
+                                var rowIndex = this.up('window').rowIndex;
+                                var newRecord = gridStore.getAt(rowIndex);
+                                var records = {
+                                    ColumnHeader:formData.ColumnHeader,
+                                    DataIndex:formData.DataIndex,
+                                    ColumnType:formData.ColumnType,
+                                    Format:formData.Format,
+                                    GroupField:formData.GroupField,
+                                    SummaryType:formData.SummaryType
+                                }
+                                newRecord.set(records);
+                                newRecord.commit();
+                                //this.up('window').values.reconfigure(gridStore); //It is creating issue.
+                                this.up('window').hide();
+                            }
+                        }
+                    },{ 
+                        xtype: 'tbspacer',width: 10
+                    },{
+                        name: 'cancel',
+                        text: 'Cancel',
+                        xtype: 'button',
+                        width: 60,
+                        listeners: {
+                            click: function(button){ 
+                                this.up('window').close();
+                            }
+                        },
+                    }]
+                }]
+            }
+
+        });
+               
+        var typeArr = [];
+         typeArr.push({
+                'type': 'string'
+            }, {
+                'type': 'number'
+            }, {
+                'type': 'rownumber'
+            },{
+                'type': 'date'
+        });
+        var formateArr = [];
+        formateArr.push({
+                'formate':'M d Y'
+            },{
+                'formate':'Y m d'
+            });
+        var formateStore =Ext.create('Ext.data.Store', {
+            fields: 'formate',
+            data: formateArr
+        });
+        var typeStore = Ext.create('Ext.data.Store', {
+            fields: 'type',
+            data: typeArr
+        });
+        window.down('form').down('combobox[name=ColumnType]').setStore(typeStore);
+        window.show();
     }
 
 });

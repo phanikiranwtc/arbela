@@ -141,7 +141,7 @@ Ext.define('Arbela.view.blades.Chart', {
             xtype: 'button',
             text: 'Add Series',
             cls: 'add-blade-btn',
-            icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+            icon: 'resources/images/add-16.png',
             charttype : '',
             ui: 'plain',
             name : 'addSeries',
@@ -338,7 +338,7 @@ Ext.define('Arbela.view.blades.Chart', {
         }]
     }],
     config: {
-        height: 400
+       // height: 400
     },
     setBladeData: function(dataCfg) {
         var url = dataCfg.url;

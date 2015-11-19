@@ -29,7 +29,7 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
     }],
 
     config: {
-        height: 90,
+        //height: 90,
         layout: {
             type: 'hbox',
             align: 'stretch'
@@ -51,6 +51,12 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
         }]
     },
     setBladeData: function(dataCfg) {
+        if(dataCfg.value1.length == 1 ){
+           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+           if(tooltip ){
+               tooltip.update(null);
+           }
+       }
         this.down('sparklinebar').setValues(dataCfg.value1);
     }
 });

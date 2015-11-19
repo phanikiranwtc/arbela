@@ -51,6 +51,12 @@ Ext.define('Arbela.view.blades.SupportTickets', {
         }]
     },
     setBladeData: function(dataCfg) {
+        if(dataCfg.value1.length == 1 ){
+           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+           if(tooltip ){
+               tooltip.update(null);
+           }
+       }
         this.down('sparklineline').setValues(dataCfg.value1);
     }
 });

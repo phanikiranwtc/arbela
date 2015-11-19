@@ -29,7 +29,7 @@ Ext.define('Arbela.view.blades.SparklineLine', {
 }],
 
     config: {
-        height: 90,
+        //height: 90,
         cls: 'orangebg',
         layout: {
             type: 'hbox',
@@ -57,6 +57,12 @@ Ext.define('Arbela.view.blades.SparklineLine', {
     setBladeData: function(dataCfg) {  
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         var values = this.down('sparklineline').getValues();
+        if(dataCfg.value1.length == 1 ){
+           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+           if(tooltip ){
+               tooltip.update(null);
+           }
+       }
         if(dataCfg.value1.length){
             var valueLength = dataCfg.value1.length;
 

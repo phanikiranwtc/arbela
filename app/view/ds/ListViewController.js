@@ -41,6 +41,7 @@ Ext.define('Arbela.view.ds.ListViewController', {
                         v.getStore().setAutoSync(true);
                         selectedRec.set('name',values.name);
                         selectedRec.set('updatedOn',values.updatedOn);
+                        selectedRec.data.isSelected = false;
                         v.getView().refresh();
                     }else{
                         v.getStore().add(values);

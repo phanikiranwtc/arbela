@@ -12,7 +12,7 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
     items: [
         {
             xtype: 'button',
-            icon: 'https://cdn4.iconfinder.com/data/icons/linecon/512/add-16.png',
+            icon: 'resources/images/add-16.png',
             text: 'Add Card',
             tooltip: 'Add Card',
             ui: 'plain',
