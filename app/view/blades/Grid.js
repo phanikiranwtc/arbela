@@ -119,55 +119,6 @@ Ext.define('Arbela.view.blades.Grid', {
     },{
         xtype: 'gridpanel',
         ui:'gridcss',
-        store: Ext.create('Ext.data.Store',{
-           fields: [
-               'ColumnHeader', 
-               'DataIndex','ColumnType',
-               'Format',
-               {
-                   name : 'GroupField',
-                   defaultValue: false,
-                   type:'boolean'
-               },
-               'SummaryType'
-               ],
-               listeners:{
-                   add:function(th,records){
-                       if(records && records.length > 0 ){
-                           if( records[0].get('GroupField') ){
-                               this.removeOtherGroupFields(records[0]);
-                           }
-
-                       }
-                           
-                   },
-                   update:function(th,record,type){
-                       if(!this.instoreProcess && type != 'edit'){
-                           if( record.get('GroupField') ){
-                               this.removeOtherGroupFields(record);
-
-                           }
-
-                       }
-
-                   }
-               },
-               removeOtherGroupFields:function(presentRecord){
-                   if(presentRecord){
-                       this.instoreProcess = true;
-                       var querygroupFields = this.query('GroupField',true);
-                       for(var i=0;i<querygroupFields.getCount();i++){
-                           if( querygroupFields.getAt(i) != presentRecord ){
-                                   querygroupFields.getAt(i).set('GroupField',false);
-                                   querygroupFields.getAt(i).commit();
-                           }
-
-                       }  
-                       this.instoreProcess = false; 
-                   }
-
-               }
-       }),
         selModel: 'rowmodel', //this is default model . If it is not working need to change css styles ...
         columns:[{ 
                 text: 'Column Header', 
@@ -248,12 +199,70 @@ Ext.define('Arbela.view.blades.Grid', {
                     tooltip: 'Remove',
                     handler: 'onRemove'
                 }]
-        }]
+        }],
+        listeners:{
+            beforerender: function(grid){ 
+                var gridStore = grid.getStore();
+                var count = 0;
+                count ++;
+                var store = Ext.create('Ext.data.Store',{
+                    storeId: 'settingGridStore'+count,
+                    fields: [
+                       'ColumnHeader', 
+                       'DataIndex','ColumnType',
+                       'Format',
+                       {
+                           name : 'GroupField',
+                           defaultValue: false,
+                           type:'boolean'
+                       },
+                       'SummaryType'
+                       ],
+                       listeners:{
+                           add:function(th,records){
+                               if(records && records.length > 0 ){
+                                   if( records[0].get('GroupField') ){
+                                       this.removeOtherGroupFields(records[0]);
+                                   }
+
+                               }
+                                   
+                           },
+                           update:function(th,record,type){
+                               if(!this.instoreProcess && type != 'edit'){
+                                   if( record.get('GroupField') ){
+                                       this.removeOtherGroupFields(record);
+
+                                   }
+
+                               }
+
+                           }
+                       },
+                       removeOtherGroupFields:function(presentRecord){
+                           if(presentRecord){
+                               this.instoreProcess = true;
+                               var querygroupFields = this.query('GroupField',true);
+                               for(var i=0;i<querygroupFields.getCount();i++){
+                                   if( querygroupFields.getAt(i) != presentRecord ){
+                                           querygroupFields.getAt(i).set('GroupField',false);
+                                           querygroupFields.getAt(i).commit();
+                                   }
+
+                               }  
+                               this.instoreProcess = false; 
+                           }
+
+                       }
+               });
+                grid.setStore(store);
+            }
+        }
     }],
-    setBladeData: function(datacfg) {
+    setBladeData: function(datacfg) {  
         var me = this;
         var grid = this.items.items[0];
-        /*if(datacfg.griddata){ //this condition not executing presently.....
+        if(datacfg.griddata){ //this condition for rendering grid with data sources data
             var frstrw = datacfg.griddata.data[0];
             var fields = Ext.Object.getAllKeys(frstrw),
                 fieldsLen = fields.length;
@@ -271,8 +280,38 @@ Ext.define('Arbela.view.blades.Grid', {
                 }
             }
             me.createGrid(datacfg.griddata, fields);
-        }else{                //this condition presently working......*/
-            var settings = datacfg.typeObj.getSettings();
+        }else{                //This is for rendering grid with custom columns
+            if(datacfg.settingsData){ 
+                var dataLen = datacfg.settingsData.length;
+                var  arr=[];
+                for(var d=0;d<=dataLen-1;d++){
+                    var data={};
+                    data['data'] = datacfg.settingsData[d];
+                    arr.push(data);
+                } 
+                var storeData={"items":arr};
+            }
+            var gridRefData = datacfg.typeObj.gridRefData;
+            if(gridRefData){
+                    var gridRefDataLen = gridRefData.length;
+                    var  arr=[];
+                    for(var d=0;d<=gridRefDataLen-1;d++){
+                        var data={};
+                        data['data'] = gridRefData[d];
+                        arr.push(data);
+                    } 
+                    var storeData={"items":arr};
+            }else if(datacfg.typeObj.newGridData){
+                    var  arr=[];
+                    var newGridDataLen = datacfg.typeObj.newGridData.length;
+                    for(var d=0;d<=newGridDataLen-1;d++){
+                        var data={};
+                        data['data'] = datacfg.typeObj.newGridData[d];
+                        arr.push(data);
+                    } 
+                    var storeData={"items":arr};
+                }
+
             var flag;
             grid.getView().getFeature('groupingsummaryField').disable();
             grid.getView().getFeature('groupingField').disable();
@@ -288,7 +327,7 @@ Ext.define('Arbela.view.blades.Grid', {
                 grid.getView().getFeature('groupingsummaryField').enable();
             }
 
-            var storeData = settings[settings.length-1].store.getData();
+            
             var gridItems = storeData.items;
             var fields = [];
             for (var j = 0; j < gridItems.length; j++) {
@@ -390,7 +429,7 @@ Ext.define('Arbela.view.blades.Grid', {
                 var fields = Ext.Object.getAllKeys(frstrw);
                 me.createGrid(datacfg.griddata, fields);
             }
-        //}
+        }
     },
     createGrid: function(responceText, fields) { 
         if(responceText.data){

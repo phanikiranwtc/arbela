@@ -4,6 +4,16 @@ Ext.define('Arbela.view.ws.WorkspaceViewController', {
 
 	onDatasourceAdded: function(cmp, record) {
 		var data = this.getViewModel().getData();
+		/* deleting the oldRecord which was edited and identifying it using record.oldName */
+		if(record.oldName){
+			var allRecName = Ext.Object.getAllKeys(data.datasources),
+			allRecLen = allRecName.length;
+			for(var i=0; i<=allRecLen-1; i++){
+				if(allRecName[i] == record.oldName){
+					delete data.datasources[allRecName[i]];
+				}
+			}
+		}
 		data.datasources[record.name] = record;
 
 		record.typeObj.setSettings(record);

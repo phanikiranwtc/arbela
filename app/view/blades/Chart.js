@@ -175,7 +175,12 @@ Ext.define('Arbela.view.blades.Chart', {
                         seriesIndex : this.up('bladeform').seriesIndex
                         
                 });
-            
+                var seriesLen = fieldSet.items.length;                 
+                for(var i=0; i<=seriesLen-2; i++){      
+                    var fielsetRef = fieldSet.items.items[i];       
+                    var delButtonRef = fielsetRef.down('button[text="Delete Series"]');     
+                    delButtonRef.enable();      
+                }
             }
         }],
     },{
@@ -186,15 +191,15 @@ Ext.define('Arbela.view.blades.Chart', {
             xtype: 'combobox',
             fieldLabel: 'Type',
             store: Ext.create('Ext.data.Store', {
-            fields: ['name','type'],
-            data : [
-            {name:"Category",type:"category"},
-            {name:"Category3d",type:"category3d"},
-            {name:"Numeric",type:"numeric"},
-            {name:"Numeric3d",type:"numeric3d"},
-            {name:"Time",type:"time"},
-            {name:"Time3d",type:"time3d"}
-            ]
+                fields: ['name','type'],
+                data : [
+                    {name:"Category",type:"category"},
+                    {name:"Category3d",type:"category3d"},
+                    {name:"Numeric",type:"numeric"},
+                    {name:"Numeric3d",type:"numeric3d"},
+                    {name:"Time",type:"time"},
+                    {name:"Time3d",type:"time3d"}
+                ]
             }),
             queryMode: 'local',
             displayField: 'name',
@@ -222,15 +227,15 @@ Ext.define('Arbela.view.blades.Chart', {
             xtype: 'combobox',
             fieldLabel: 'Type',
             store: Ext.create('Ext.data.Store', {
-            fields: ['name','type'],
-            data : [
-            {name:"Category",type:"category"},
-            {name:"Category3d",type:"category3d"},
-            {name:"Numeric",type:"numeric"},
-            {name:"Numeric3d",type:"numeric3d"},
-            {name:"Time",type:"time"},
-            {name:"Time3d",type:"time3d"}
-            ]
+                fields: ['name','type'],
+                data : [
+                    {name:"Category",type:"category"},
+                    {name:"Category3d",type:"category3d"},
+                    {name:"Numeric",type:"numeric"},
+                    {name:"Numeric3d",type:"numeric3d"},
+                    {name:"Time",type:"time"},
+                    {name:"Time3d",type:"time3d"}
+                ]
             }),
             queryMode: 'local',
             displayField: 'name',
@@ -393,6 +398,8 @@ Ext.define('Arbela.view.blades.Chart', {
         }
         var fieldArray = [];
         var a = responseData.data[0];
+        var yAxisFields = dataCfg.yaxisfield;
+        var yAxisFieldsArr = yAxisFields.split(",");
         fieldArray = Ext.Object.getAllKeys(a);
         var chartStore = Ext.create('Ext.data.Store', {
             fields:fieldArray
@@ -428,7 +435,7 @@ Ext.define('Arbela.view.blades.Chart', {
                         text: dataCfg.yaxistitle,
                         fontSize: 15
                     },
-                    fields:dataCfg.yaxisfield,
+                    fields:yAxisFieldsArr,
                     grid : dataCfg.yaxisgrid=="on" ? true :false
                 }
             ]);
@@ -439,18 +446,20 @@ Ext.define('Arbela.view.blades.Chart', {
                 var legendtitle = 'legendtitle'+i;
                 var marker = 'marker'+i;
                 var style = 'style'+i;
-                chartSeriesArr.push({
-                    type: dataCfg[cartesiantype],
-                    stacked : false,
-                    xField: dataCfg[xfield],
-                    yField: dataCfg[yfield],
-                    title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                    showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
-                    showMarkers : dataCfg[marker] == "on" ? true : false,
-                    marker : dataCfg[marker] == "on" ? true : false,
-                    //style : eval('({' + dataCfg[style] + '})')
-                    style : Ext.dom.Element.parseStyles(dataCfg[style])
-                });
+                if(dataCfg[cartesiantype]){
+                    chartSeriesArr.push({
+                        type: dataCfg[cartesiantype],
+                        stacked : false,
+                        xField: dataCfg[xfield],
+                        yField: dataCfg[yfield],
+                        title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
+                        showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
+                        showMarkers : dataCfg[marker] == "on" ? true : false,
+                        marker : dataCfg[marker] == "on" ? true : false,
+                        //style : eval('({' + dataCfg[style] + '})')
+                        style : Ext.dom.Element.parseStyles(dataCfg[style])
+                    });
+                }
             }
             cart.setSeries(chartSeriesArr);
             
@@ -539,7 +548,10 @@ Ext.define('Arbela.view.blades.Chart', {
                     });
                  }
             }
+            //chart.dataCfg = dataCfg;
             cart.setSeries(chartSeriesArr);
             }
     }
 });
+
+//v.items.items[0].items.items[0].items.items[0].getViewModel().data

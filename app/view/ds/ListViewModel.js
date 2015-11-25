@@ -6,6 +6,7 @@ Ext.define('Arbela.view.ds.ListViewModel', {
     	datasources: {
     		autoSync: true,
     		fields: ['name', 'lastUpdated'],
+            //data:[{'name':'testing',"lastUpdated":'now'}],
     		proxy: {
     			type: 'rest',
     			url : '/datasources'

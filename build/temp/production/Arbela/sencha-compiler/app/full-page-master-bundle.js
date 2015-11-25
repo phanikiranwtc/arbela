@@ -1,2 +1,2 @@
 // @tag full-page
-// @require /var/www/html/steven/arbela-git/app.js
+// @require /var/www/html/sandeep/arbela-git/arbela-git-sandeep/app.js

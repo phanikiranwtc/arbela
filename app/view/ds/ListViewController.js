@@ -39,10 +39,12 @@ Ext.define('Arbela.view.ds.ListViewController', {
                     var selectedRec = v.getStore().findRecord('isSelected',true);
                     if(selectedRec){
                         v.getStore().setAutoSync(true);
+                        values.oldName = selectedRec.data.name; //saving the oldrecord name as "oldName" for its use in WorkspaceViewController
                         selectedRec.set('name',values.name);
                         selectedRec.set('updatedOn',values.updatedOn);
                         selectedRec.data.isSelected = false;
                         v.getView().refresh();
+                        v.fireEvent('addeddatasource', v, values);
                     }else{
                         v.getStore().add(values);
                         v.fireEvent('addeddatasource', v, values);

@@ -2,7 +2,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.dbnewcard',
 
-    onComboboxSelect: function(combo, record, eOpts) { 
+    onComboboxSelect: function(combo, record, eOpts) {  
         var klass = record.data.klass;
         if(klass !== undefined){
             var md = (Ext.create(klass, {})).getSettings();
@@ -65,7 +65,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     break; 
                 }
                 if(md[i].xtype == "gridpanel"){
-                    md[i].store.removeAll();
+                   // md[i].store.removeAll();
                     combo.setStore(store);
                 } 
             }
@@ -73,11 +73,11 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    onComboboxChange: function(combo, newVal, oldVal, eOpts) {
+    onComboboxChange: function(combo, newVal, oldVal, eOpts) { 
         var record = combo.getStore().findRecord('klass', newVal);
     },
 
-    onToolbarBtnClick: function(btn, e, eOpts) {
+    onToolbarBtnClick: function(btn, e, eOpts) { 
         console.log('BUTTON: ', btn.getInitialConfig());
         var btnName = btn.getInitialConfig().name;
         if (btnName === 'save') {
@@ -90,7 +90,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) {
+    handleSaveBtnClick: function(btn, e, eOpts) {  
          
 
         var v = this.getView();
@@ -98,64 +98,73 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var blades;
 
         var values = {};
-
-        var cardVals = form.getValues();
+        if(btn.url){
+            var cardVals = btn;
+        }else if(btn.blades){
+            var cardVals = btn;
+        }
+        else {
+            var cardVals = form.getValues();
+            console.log(cardVals);
+        }
 
     
         values.showTitle = cardVals.showTitle;
         values.hideTitleBar = cardVals.hideTitleBar;
 	    values.titleStyle = cardVals.titleStyle;
         values.name = cardVals.name;
-
-        //there could be multiple blades in a card
-        blades = Ext.ComponentQuery.query('bladeform', form);
+        values.colIdx = cardVals.colIdx;
+        //values.columnWidth = cardVals.columnWidth;
+        //values.settingsData = cardVals.settingsData;
+        if(!btn.blades){
+            //there could be multiple blades in a card
+            blades = Ext.ComponentQuery.query('bladeform', form);
+        }else{
+            blades = btn.blades;
+        }
         var l = blades.length;
         if (l > 0) {
             values.blades = [];
         }
-
+ 
         for (var i = 0; i < l; i++) {
             
-            var val = blades[i].getValues();
+            if(btn.url){
+                var val = cardVals;
+            }else if(btn.blades){
+                var val = btn.blades[i];
+            }
+            else {
+                var val = blades[i].getValues();
+            }
+
             val.typeObj = Ext.create(val.type, {});
             val.seriesIndex = blades[i].seriesIndex;
             console.log('====> Blade Values: ', val);
+            var gridRefData;
+            var gridRef;
+            var newGridData;
+            if(blades[i].gridRef){
+                val.typeObj.gridRefData = blades[i].gridRef;
+            }
+            if(blades[i].set){
+               val.typeObj.gridRefData =blades[i].set;
+            }
+            if(blades[i].newGridRecord){
+                val.typeObj.newGridData = blades[i].newGridRecord;
+            }
             this.processExpressions(blades[i], val);
             values.blades.push(val);
         }
-        
-        // var gridRef = this.getView().down('bladeform').down('grid');
-        // if(gridRef.getStore().data.length == 0){
-        //     var dataSrc = val.griddata.data[0];
-        //     var gridFields = Ext.Object.getAllKeys(dataSrc),
-        //         fieldsLen = gridFields.length, gridArr = [];
-        //     window.colGridfields = ["header", "dataIndex", "type"],
-        //         window.gridColmns = gridRef.getColumns();
-        //     for(var i=0; i<colGridfields.length; i++){
-        //         gridColmns[i].dataIndex = colGridfields[i];
-        //     }
-        //     for(var i=0; i<fieldsLen-1; i++){
-        //         var gridObj = {};
-        //         gridObj["header"] = gridFields[i];
-        //         gridObj["dataIndex"] = gridFields[i];
-        //         gridObj["type"] = "gridcolumn"
-        //         gridArr.push(gridObj);
-        //     }
-        //     console.log(gridArr);
-        //     var store = Ext.create('Ext.data.Store', {
-        //         fields:gridFields,
-        //         data: gridArr
-        //     });
-        //     gridRef.setStore(store);
-        //     window.gridstore = gridRef.getStore(); // store for grid
-        // }
+
         values.updatedOn = Ext.Date.format(new Date(), 'h:i:s A');
 
         v.fireEvent('addcard', v, values, e, eOpts);
         v.close();
     },
 
-    processExpressions: function(blade, bladeVal) {
+
+    processExpressions: function(blade, bladeVal) { 
         var v = this.getView();
         var me = this;
          
@@ -188,11 +197,22 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         }
 
         if(bladeVal.type == "Arbela.view.blades.Grid"){
-            var dataValue =  v.down('#dataCombo').getValue();
-            var retVal = Arbela.view.common.ExprParser.parse(value, v.getDatasources(),dataValue, function(cmp, data) { 
+            if(v.down('#dataCombo')){
+                var dataValue =  v.down('#dataCombo').getValue(); 
+                //if(v.getDatasources()){
+                    var gridSource = v.getDatasources();
+                //}
+            }
+            if(bladeVal.griddata){
+                var dataValue = bladeVal.datasources;
+                var g = Ext.ComponentQuery.query('wsworkspace')[0];
+                var gridSource = g.getViewModel().getData().datasources;
+                //var gridSource = Arbela.view.ds.add.NewWindowViewController.handleSaveBtnClick(dataValue,gridValues);
+            }
+            var retVal = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue, function(cmp, data) { 
                 
                 //re-evaluate the expression and set the value on the blade
-                d[name] = Arbela.view.common.ExprParser.parse(value, v.getDatasources(),dataValue); 
+                d[name] = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue); 
                 this.setBladeData(d);
 
             }, bladeVal.typeObj);
@@ -238,28 +258,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         form.insert(l, {xtype: 'bladeform'});
     },
 
-    onGridColumnChange:function(field, newValue, oldValue, eOpts){ 
-        var store = field.up('#customGrid').getStore();
-        var count = store.getCount();
-        var value = field.dataIndex;
-        store.getAt(count - 1).data[value] = newValue;
-        var formatGrid;
-        var formatGridCombo;
-        var gridRow = field.el.up('.x-grid-cell');
-        var gridCell= Ext.get(gridRow.up().dom.childNodes[2]);
-        var gridCombo = Ext.get(gridCell.down('.x-field')).component
-        var columnType = gridCombo.getValue();
-        if (columnType == "date") {
-            formatGrid = Ext.get(gridRow.up().dom.childNodes[3]);
-            formatGridCombo = Ext.get(formatGrid.down('.x-field')).component;
-            formatGridCombo.setDisabled(false);
-        }else{ 
-            formatGrid = Ext.get(gridRow.up().dom.childNodes[3]);
-            formatGridCombo = Ext.get(formatGrid.down('.x-field')).component;
-            formatGridCombo.setDisabled(true);
-        }
-    },
-    onAddColumnButtonClick:function(button){ 
+    onAddColumnButtonClick:function(button){  
         var fieldset = button.up('fieldset');
         var typeArr = [];
              typeArr.push({
@@ -291,11 +290,12 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         win.down('form').down('combobox[name=ColumnType]').setStore(typeStore);
         win.show();
     },
+
     onLoadButtonClick:function(button){ 
         var v = this.getView();
         var me = this;
-         var value = button.up().up().down('textfield[name=url]').value,
-            dataValue =  v.down('#dataCombo').getValue(), d = {};
+        var value = button.up().up().down('textfield[name=url]').value,
+        dataValue =  v.down('#dataCombo').getValue(), d = {};
         var blades, values = undefined;
         if(!dataValue){
             if (value) {
@@ -334,15 +334,15 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             var colgrid = v.down('grid').getStore();
             var dataSrc = retVals.data[0];
             var gridFields = Ext.Object.getAllKeys(dataSrc),
-                fieldsLen = gridFields.length, gridArr = [];
-            //window.colGridfields = ["header", "dataIndex", "type"],
-                //window.gridColmns = gridRef.getColumns();
+            fieldsLen = gridFields.length, gridArr = [];
             for(var i=0; i<fieldsLen; i++){
                 var records = {
                     ColumnHeader:gridFields[i],
                     DataIndex:gridFields[i],
                     ColumnType:"gridcolumn",
-                    Format: undefined
+                    Format: undefined,
+                    GroupField:undefined,
+                    SummaryType:undefined
                 }
                 colgrid.add(records);
             }

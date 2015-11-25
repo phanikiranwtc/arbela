@@ -9,6 +9,7 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
         title: 'Columns Adding Form',
         autoShow: true,
         autoHeight: true,
+        modal:true,
         width: 400,
         bodyPadding: 10,
         reference :'AddGridColumnWindow',
@@ -101,7 +102,7 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                     formBind:true,
                     width: 60,
                     listeners: {
-                        click:function(button){ 
+                        click:function(button){  
                             var formData = this.up('form').getValues();
                             var gridStore = this.up('window').values.down('grid').getStore();
                             var records = {
@@ -115,6 +116,11 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                             gridStore.add(records);
                             this.up('window').hide();
                             this.up('window').values.down('grid')
+                            var newGridRecords =[]
+                            if(!this.up('window').values.up().newGridRecord){
+                                this.up('window').values.up().newGridRecord = [];
+                            }
+                            this.up('window').values.up().newGridRecord.push(records);
                         }
                     }
                 },{ 

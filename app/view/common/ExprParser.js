@@ -6,7 +6,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 	datasources: null,
 	updateCallback: Ext.emptyFn,
 
-	parse: function(exprStr, datasources,datavalue,updateCallback, clbkScope) { // 
+	parse: function(exprStr, datasources,datavalue,updateCallback, clbkScope) {  
 		if(datavalue){ 
 			if(exprStr){
 				var exp ="datasources["+"'"+datavalue+"'"+"]."+exprStr;  	
@@ -119,7 +119,7 @@ Ext.define('Arbela.view.common.ExprParser', {
 			return mObj;
 		},
 
-		processComputedMemberExpression: function(node) {// 
+		processComputedMemberExpression: function(node) {
 			var obj = node.object, prop = node.property;
 
 			var mObj = null;

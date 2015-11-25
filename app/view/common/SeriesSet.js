@@ -88,7 +88,27 @@ Ext.define('Arbela.view.common.SeriesSet', {
 			xtype: 'checkbox',
 			fieldLabel: 'Show Marker',
 			name:'marker'+appseries
-		}],
+		},{		
+			xtype: 'button',		
+            text: 'Delete Series',		
+            cls: 'add-blade-btn',		
+            icon: 'resources/images/delete-16.png',		
+            charttype : '',		
+            ui: 'plain',		
+            name : 'deleteSeries',		
+            margin: '0 0 5 0',		
+            disabled: true,		
+            handler: function(){		
+            	// 		
+            	var currFieldset = this.up('fieldset'),		
+            		parentFieldset = currFieldset.up();		
+            	parentFieldset.remove(currFieldset);		
+            	var parentFieldsetLen = parentFieldset.items.length;		
+            	if(parentFieldsetLen == 2){		
+            		parentFieldset.down('fieldset').down('button[text="Delete Series"]').disable();		
+            	}	
+            }	
+        }],
 		me.callParent(arguments);
 	}
 });

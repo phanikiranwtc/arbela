@@ -59,7 +59,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) {
+    handleSaveBtnClick: function(btn, e, eOpts) { 
         var v = this.getView();
         var form = v.down('form');
 

@@ -17,6 +17,7 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         scrollable: true,
         maxColumns: 3,
         closable: true,
+        columnWidths: [0.33,0.33,0.33,0.33,0.33,0.33,1,1,0.5,0.5,1],
         parts: {
             'card': 'card'
         },
@@ -44,6 +45,10 @@ Ext.define('Arbela.view.db.main.Dashboard', {
 
     afterRender: function() {
         this.callParent(arguments);
+    },
+
+    listeners: {
+        'beforerender':'settingCards'
     }
 
 });

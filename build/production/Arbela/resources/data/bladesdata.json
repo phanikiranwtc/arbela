@@ -1,0 +1,89 @@
+{
+    "data": [
+        {
+            "showTitle": "on",
+            "titleStyle": "",
+            "name": "",
+            "colIdx": 0,
+            "blades": [
+                {
+                    "type": "Arbela.view.blades.InventoryChart"
+                }
+            ],
+            "updatedOn": "05:30:42 PM",
+            "columnWidth": 0.33
+        },
+        {
+            "showTitle": "on",
+            "titleStyle": "",
+            "name": "",
+            "colIdx": 1,
+            "blades": [
+                {
+                    "type": "Arbela.view.blades.Grid",
+                    "datasources": "dsg",
+                    "url": "http://arbela.walkingtree.in/resources/data/summary.json",
+                    "griddata": {
+                        "data": [
+                            {
+                                "name": "Lisa",
+                                "email": "lisa@simpsons.com",
+                                "phone": "555-111-1224",
+                                "id": "extModel229-1"
+                            },
+                            {
+                                "name": "Bart",
+                                "email": "bart@simpsons.com",
+                                "phone": "555-222-1234",
+                                "id": "extModel229-2"
+                            },
+                            {
+                                "name": "Homer",
+                                "email": "homer@simpsons.com",
+                                "phone": "555-222-1244",
+                                "id": "extModel229-3"
+                            },
+                            {
+                                "name": "Marge",
+                                "email": "marge@simpsons.com",
+                                "phone": "555-222-1254",
+                                "id": "extModel229-4"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "updatedOn": "05:30:45 PM",
+            "columnWidth": 0.47564245810055866
+        },
+        {
+            "showTitle": "on",
+            "hideTitleBar": "on",
+            "titleStyle": "gjf",
+            "name": "fcb",
+            "colIdx": 2,
+            "blades": [
+                {
+                    "type": "Arbela.view.blades.InventoryChart"
+                }
+            ],
+            "updatedOn": "05:30:45 PM",
+            "columnWidth": 0.5
+        }
+    ],
+    "datasource": [
+        {
+            "name": "dfsg",
+            "type": "Arbela.view.datasources.Sales",
+            "refreshfrequency": "5",
+            "updatedOn": "06:37:03 PM",
+            "id": "extModel94-1"
+        },
+        {
+            "name": "dsg",
+            "type": "Arbela.view.datasources.GridData",
+            "updatedOn": "06:37:10 PM",
+            "id": "extModel94-2"
+        }
+    ]
+}

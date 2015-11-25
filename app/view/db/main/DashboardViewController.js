@@ -3,7 +3,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     alias: 'controller.dbdashboard',
 
     columnIdx: 0,
-    handleChageSettings:function(panel){// 
+    handleChageSettings:function(panel){
         var me = this;
         var blades= this.getAvailableBlades();
         var newCard = Ext.create('Arbela.view.db.card.NewCard', {
@@ -49,7 +49,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 });
             }
         }
-        var bladeForms = form.query('bladeform');
+        var bladeForms = form.query('bladeform'); 
         for (var is = 0 ; is < bladeForms.length ; is++){
             var formBladePanels = panel.formvalues.blades[is];
             var seriesIndexblade = formBladePanels.seriesIndex+1;
@@ -57,6 +57,48 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 bladeForms[is].charttype = formBladePanels.charttype;        
                 bladeForms[is].query('button[name=addSeries]')[0].el.dom.click();
             } 
+            if(formBladePanels.type=="Arbela.view.blades.Grid"){
+                if(formBladePanels.settingsData){
+                    var gridStore = bladeForms[is].down('grid').getStore();
+                    var set;
+                    bladeForms[is].set= formBladePanels.settingsData;
+                    for (var i=0;i<=formBladePanels.settingsData.length-1;i++){
+                        var record = formBladePanels.settingsData[i];
+                        bladeForms[is].down('grid').getStore().add(record);
+                    }
+                }
+                if(formBladePanels.griddata){
+                    var gridStore = bladeForms[is].down('grid').getStore();
+                    var set;
+                    bladeForms[is].set= formBladePanels.griddata;
+                    for (var i=0;i<=formBladePanels.griddata.length-1;i++){
+                        var record = formBladePanels.griddata[i];
+                        bladeForms[is].down('grid').getStore().add(record);
+                    }
+                }
+                if(formBladePanels.typeObj){
+                    if(formBladePanels.typeObj.gridRefData){
+                        var gridRefLen = formBladePanels.typeObj.gridRefData.length;
+                        var gridRef;
+                            bladeForms[is].gridRef =formBladePanels.typeObj.gridRefData;
+                        for(var i=0;i<=gridRefLen-1;i++){
+                            var record = formBladePanels.typeObj.gridRefData[i];
+                            bladeForms[is].down('grid').getStore().add(record);
+                        }
+                    }
+                    if(formBladePanels.typeObj.newGridData){
+                        var gridRefLen = formBladePanels.typeObj.newGridData.length;
+                        var gridRef;
+                            bladeForms[is].gridRef =formBladePanels.typeObj.newGridData;
+                        for(var i=0;i<=gridRefLen-1;i++){
+                            var record = formBladePanels.typeObj.newGridData[i];
+                            bladeForms[is].down('grid').getStore().add(record);
+                        }
+                    }
+                }
+                
+            }
+            
         }
         
     	if(panel.formvalues.titleStyle){
@@ -112,6 +154,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                         //     // }
                         // }
                         datasrcCombo.setStore(store);
+                        setRef.down('button[text="Load Meta-data"]').enable();
                     }
                 }else{
                     
@@ -133,33 +176,6 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         newCard.show();
     },
 
-    // setGridColumnType: function(newCard){
-    //    // 
-    //     var gridStore = newCard.down('form').down('fieldset').down('grid').getStore();
-    //     var storeData = gridStore.getData();
-    //     var gridItems = storeData.items;
-    //     var fields = [];
-    //     for (var j = 0; j < gridItems.length; j++) {
-    //         var items = gridItems[j].data;
-    //         switch (items.ColumnType) {
-    //             case "gridcolumn":
-    //                 items.ColumnType = 'string';
-    //                 break;
-    //             case "numbercolumn":
-    //                 items.ColumnType = 'number';
-    //                 break;
-    //             case "rownumberer":
-    //                 flag = true;
-    //                 items.ColumnType = 'rownumber';
-    //                 break;
-    //             case "datecolumn":
-    //                 items.ColumnType = 'date';
-    //                 break;
-    //         }
-    //         gridStore.commitChanges();
-    //     }
-    //     newCard.down('form').down('fieldset').down('grid').getView().refresh();
-    // },
     /**
     ** fetch the avaiable baldes in the application and return them in an array with
     ** object as {klass:'',name:'',niceName:''}
@@ -223,7 +239,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         });
     },
 
-    handleAddCardEvent: function(win, values) {
+    handleAddCardEvent: function(win, values) { 
          
         var me = this;
         var oldPanel = win.config.originalContainerRef;
@@ -259,38 +275,209 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 var vt = blades[i].typeObj; 
                 items.push(vt);
             }
-
-            if(me.getView().items.items.length == 0) {
+             
+            //var columnIndex = values.colIdx ? values.colIdx : me.columnIdx;
+            if(!Ext.isEmpty(values.colIdx)){
+               if(me.getView().items.items.length == 0) {
+                 
                 var card = me.getView().addView({
                     title : values.showTitle ? values.name : '',
                     type: 'card',
-                    columnIndex: me.columnIdx
-                }, 0);
+                    columnIndex: values.colIdx,
+                    //columnWidth:values.columnWidth
+                }, values.colIdx);
+                   
                 card.add(items);
+                   //card.up('container').columnWidth = values.columnWidth;
                 card.formvalues = values;
             } else {
                 me.getView().on('add', function(ct, cmp, idx) {
                     cmp.add(items);
                     cmp.formvalues = values;
+                   // cmp.up('container').columnWidth = values.columnWidth;
+                    //cmp.up('conatiner').setColumnWidth(values.columnWidth);
                 }, this, {single: true});
                 var card = me.getView().addView({
                     title : values.showTitle ? values.name : '',
                     type: 'card',
-                    columnIndex: me.columnIdx,
-                }, 0);
+                    columnIndex: values.colIdx,
+                    //columnWidth:values.columnWidth
+                }, values.colIdx);
+                card.formvalues = values;
             }
             card.applyTitleStyles(card, values);
-            me.columnIdx++;
+        }else{
+            if(me.getView().items.items.length == 0) {
+             
+            var card = me.getView().addView({
+                title : values.showTitle ? values.name : '',
+                type: 'card',
+                columnIndex: me.columnIdx
+            }, 0);
+            card.add(items);
+            card.formvalues = values;
+        } else {
+            me.getView().on('add', function(ct, cmp, idx) {
+                cmp.add(items);
+                cmp.formvalues = values;
+            }, this, {single: true});
+            var card = me.getView().addView({
+                title : values.showTitle ? values.name : '',
+                type: 'card',
+                columnIndex: me.columnIdx,
+            }, 0);
+            card.formvalues = values;
+        }
+        card.applyTitleStyles(card, values);
+        me.columnIdx++;
+        }
+
         }
     },
     
     onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) {
-        alert('Clone Dashboard');
+         
+        //alert('Clone Dashboard');
+        var v = this.getView();
+
+        var datasources = v.getDatasources();
+        var dataSourceArray = [];
+        for( datasourcesItem in datasources ){
+            var dataListItem = datasources[datasourcesItem];
+            delete dataListItem.typeObj;
+            dataSourceArray.push(dataListItem);
+        }
+
+        if(v.items.items[0]){
+            
+            var cardsArray = [], jsonObj = {};
+            //var cardsLen = v.items.items[j].items.items.length;
+            var cards = v.query('panel[cls=arbelaCard]');
+            var cardsLen = cards.length;
+
+                
+                
+            for(var i=0; i<=cardsLen-1; i++){
+                var bladeData = cards[i].formvalues;
+                var colIndex = cards[i].columnIndex;
+                //var columnWidth = cards[i].up('container').columnWidth;
+                var bladesLen = bladeData.blades.length;
+                for(var l = 0; l<=bladesLen-1; l++){
+                    if(bladeData.blades[l].type == "Arbela.view.blades.Grid"){ 
+                        if(bladeData.blades[l].settingsData){
+                            var settingsDataLen = bladeData.blades[l].settingsData.length,  itemsArr= [];
+                            for(var m = 0;m<= settingsDataLen-1;m++){
+                                var itemData = bladeData.blades[l].settingsData[m];
+                                itemsArr.push(itemData);
+                            }
+                            bladeData.blades[l].settingsData= itemsArr;
+
+                        }
+                        if(bladeData.blades[l].typeObj){
+                            if(bladeData.blades[l].typeObj.gridRefData){
+                                var gridRefDataLen = bladeData.blades[l].typeObj.gridRefData.length,  itemsArr= [];
+                                for(var m = 0;m<= gridRefDataLen-1;m++){
+                                    var itemData = bladeData.blades[l].typeObj.gridRefData[m];
+                                    itemsArr.push(itemData);
+                                }
+                                bladeData.blades[l].settingsData= itemsArr;
+                            }
+                            if(bladeData.blades[l].typeObj.newGridData){
+                                var newGridDataLen = bladeData.blades[l].typeObj.newGridData.length,  itemsArr= [];
+                                for(var m = 0;m<= newGridDataLen-1;m++){
+                                    var itemData = bladeData.blades[l].typeObj.newGridData[m];
+                                    itemsArr.push(itemData);
+                                }
+                                bladeData.blades[l].settingsData= itemsArr;
+                            } 
+                        }
+
+                    }
+                }
+                bladeData.colIdx = colIndex;
+               // bladeData.columnWidth = columnWidth;
+                cardsArray.push(bladeData);
+            }
+        
+            //cardsArray.push(dataSourceArray);
+            jsonObj["data"] = cardsArray;
+            var datasource = dataSourceArray;
+            jsonObj["datasource"]= datasource;
+            console.log(jsonObj);
+            var dataLen = jsonObj.data.length;
+
+            for( var j = 0; j<=dataLen-1;j++){
+                if(jsonObj.data[j].blades){
+                var bladesLen = jsonObj.data[j].blades.length;
+                for(var k=0;k<=bladesLen-1;k++){
+                    delete jsonObj.data[j].blades[k].typeObj
+                }
+            }
+            }
+            var jsonString = JSON.stringify(jsonObj);
+            Ext.Msg.alert("INFO",jsonString);
+        }else{
+            Ext.Msg.alert("INFO",'We could not save your data because you did not provide any cards on dashboard');
+        }
     },
 
     onRemoveDashboard: function(button, e, eOpts) {
         var v = this.getView();
         v.fireEvent('removedashboard', v);
+    },
+
+    settingCards: function(){
+        // 
+        Ext.Ajax.request({
+            url: "resources/data/bladesdata.json",
+            //params: params,
+            success: function(response){
+                var me = this,
+                    responseData = Ext.decode(response.responseText);
+                me.settingCardsData(responseData);
+            },
+            failure: function(error) {
+                            return Ext.Msg.show({
+                                title: 'Custom Dashboard',
+                                message: 'You did not save dashboard before!',
+                                buttons: Ext.Msg.OK,
+                                icon: Ext.Msg.ERROR,
+                            });
+                        },
+            scope:this
+        },this);
+    },
+    settingCardsData: function(responseData) {
+        var cardsData = responseData.data,
+            cardsLen = cardsData.length;
+        if(responseData.datasource){
+            var datasourceData =  responseData.datasource
+            datasourcesLen =  datasourceData.length;
+            for(var k =0; k<= datasourcesLen-1;k++){
+                var type = datasourceData[k].type;
+                responseData.datasource[k].typeObj = Ext.create(type,{ });
+                delete responseData.datasource[k].id;
+                var grid = Ext.ComponentQuery.query('dslist')[0];
+               // var grid = Ext.create('Arbela.view.ds.List',{});
+                // grid.getStore().add(datasourceData[k]);
+                
+                grid.getViewModel().getData().datasources.add(datasourceData[k]);
+                //grid.getViewModel().getStore().setData(datasourceData[k]);
+                grid.fireEvent('addeddatasource', grid, datasourceData[k]);
+            }
+                
+        }
+        for (var i = 0; i <= cardsLen - 1; i++) {
+            var cardsValues = cardsData[i],
+                x = Ext.create('Arbela.view.db.card.NewCard', {
+                    listeners: {
+                        addcard: this.handleAddCardEvent,
+                        scope: this
+                    }
+                });
+            x.getController().handleSaveBtnClick(cardsValues);
+
+        }
     }
 
 });
