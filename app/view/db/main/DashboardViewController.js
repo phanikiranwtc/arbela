@@ -45,7 +45,9 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 arr[k].add({
                     xtype: 'fieldset',
                     title: 'Settings',
-                    items: settings[k]
+                    items: settings[k],
+                    layout:'anchor',
+                    defaults: {anchor: '100%'},
                 });
             }
         }

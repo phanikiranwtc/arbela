@@ -8,7 +8,10 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             var md = (Ext.create(klass, {})).getSettings();
         }
         if(combo.fieldLabel == "DataSources"){
-            combo.up().down('button[name="loaddata"]').enable();
+            var loadDataRef = combo.up().down('button[name="loaddata"]');
+            if(loadDataRef){
+                combo.up().down('button[name="loaddata"]').enable();
+            }
         }
         console.log('Meta Data: ', md);
 
@@ -29,6 +32,8 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     xtype: 'fieldset',
                     title: 'Settings',
                     items: md,
+                    layout:'anchor',
+                    defaults: {anchor: '100%'},
                     listeners: {
                         afterrender: {
                             fn: function(cmp) {
@@ -90,7 +95,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) {  
+    handleSaveBtnClick: function(btn, e, eOpts) {
          
 
         var v = this.getView();

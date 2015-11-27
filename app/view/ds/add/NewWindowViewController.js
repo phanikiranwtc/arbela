@@ -21,6 +21,8 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
             form.add({
                 xtype: 'fieldset',
                 title: 'Settings',
+                layout:'anchor',
+                defaults: {anchor: '100%'},
                 items: md,
                 listeners: {
                     afterrender: {

@@ -31,8 +31,7 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
     config: {
         //height: 90,
         layout: {
-            type: 'hbox',
-            align: 'stretch'
+            type: 'hbox'
         },
         cls: 'cyanbg',
         items: [{
@@ -40,11 +39,12 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
             barColor: '#FFFFFF',
             margin: 20,
             height: 50,
+            flex:0.3,
             width: 90,
             values: [] //[2, 4, 6, -3, 7, 10, 3, 5, 9, 2, 4, 6, -3, 7, 10, 3, 5, 9]
-        }, {
+        },{
             xtype: 'component',
-            flex: 1,
+            flex: 0.7,
             bind: {
                 html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Website Traffics</small><span class="bigtext">{value2}</span></div>'
             }
