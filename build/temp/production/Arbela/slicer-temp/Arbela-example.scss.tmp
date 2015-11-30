@@ -1,4 +1,4 @@
-$image-search-path: '/var/www/html/sandeep/arbela-git/arbela-git-sandeep/build/production/Arbela/resources';
+$image-search-path: '/var/www/html/steven/Arbela-New/build/production/Arbela/resources';
 $theme-name:  'ext-theme-crisp' !default;
 $include-arbela-application: true;
 $include-arbela-protocols-mqtt: true;

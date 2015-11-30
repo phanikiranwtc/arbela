@@ -290,9 +290,10 @@ Ext.define('Arbela.view.blades.Grid', {
                     arr.push(data);
                 } 
                 var storeData={"items":arr};
-            }
-            var gridRefData = datacfg.typeObj.gridRefData;
-            if(gridRefData){
+            } 
+            if(datacfg.typeObj){        //checking this condition becoz of "Error while running task"
+                var gridRefData = datacfg.typeObj.gridRefData;
+                if(gridRefData){
                     var gridRefDataLen = gridRefData.length;
                     var  arr=[];
                     for(var d=0;d<=gridRefDataLen-1;d++){
@@ -301,7 +302,7 @@ Ext.define('Arbela.view.blades.Grid', {
                         arr.push(data);
                     } 
                     var storeData={"items":arr};
-            }else if(datacfg.typeObj.newGridData){
+                }else if(datacfg.typeObj.newGridData){
                     var  arr=[];
                     var newGridDataLen = datacfg.typeObj.newGridData.length;
                     for(var d=0;d<=newGridDataLen-1;d++){
@@ -311,123 +312,125 @@ Ext.define('Arbela.view.blades.Grid', {
                     } 
                     var storeData={"items":arr};
                 }
-
-            var flag;
-            grid.getView().getFeature('groupingsummaryField').disable();
-            grid.getView().getFeature('groupingField').disable();
-            grid.getView().getFeature('summaryId').disable();
-
-            if( datacfg.grouping ){
-                grid.getView().getFeature('groupingField').enable();
-            }
-            if(datacfg.summary){
-                grid.getView().getFeature('summaryId').enable();
-            }
-            if(datacfg.groupingsummary){
-                grid.getView().getFeature('groupingsummaryField').enable();
-            }
-
             
-            var gridItems = storeData.items;
-            var fields = [];
-            for (var j = 0; j < gridItems.length; j++) {
-                var items = gridItems[j].data;
-                switch (items.ColumnType) {
-                    case "string":
-                        items.ColumnType = 'gridcolumn';
-                        break;
-                    case "number":
-                        items.ColumnType = 'numbercolumn';
-                        break;
-                    case "rownumber":
-                        flag = true;
-                        items.ColumnType = 'rownumberer';
-                        break;
-                    case "date":
-                        items.ColumnType = 'datecolumn';
-                        break;
+
+                var flag;
+                grid.getView().getFeature('groupingsummaryField').disable();
+                grid.getView().getFeature('groupingField').disable();
+                grid.getView().getFeature('summaryId').disable();
+
+                if( datacfg.grouping ){
+                    grid.getView().getFeature('groupingField').enable();
                 }
-                fields.push(items.DataIndex);
-            }
-            if (flag) {
-                flag = false;
-                column = Ext.create('Ext.grid.column.Column', {
-                    xtype: items.ColumnType,
-                    text: items.ColumnHeader,
-                    flex: 1,
-                    menuDisabled: true, 
-                    renderer: function(v, p, record, rowIndex) {
-                        return ++rowIndex;
-                    }
-                });
-            }
-            grid.columnManager.headerCt.insert(0, column);
-            var index = grid.getColumns().length;
-            for (var i = 0; i < gridItems.length; i++) {
-                var items = gridItems[i].data;
-                var column;
-                if(items.GroupField){
-                   grid.getStore().setGroupField( items.DataIndex);
-                   grid.presentGroupField = items.DataIndex;
+                if(datacfg.summary){
+                    grid.getView().getFeature('summaryId').enable();
                 }
+                if(datacfg.groupingsummary){
+                    grid.getView().getFeature('groupingsummaryField').enable();
+                }
+
                 
-                if ( items.ColumnType != 'rownumberer' && items.ColumnType != 'datecolumn' ) {
-                    column = Ext.create('Ext.grid.column.Column', {
-                        xtype: items.ColumnType,
-                        text: items.ColumnHeader,
-                        flex: 1,
-                        summaryType:items.SummaryType,
-                        dataIndex: items.DataIndex,
-                        menuDisabled: true
-                    });
-                }else if(items.ColumnType == 'datecolumn'){
-                    column = Ext.create('Ext.grid.column.Column', {
-                        xtype: items.ColumnType,
-                        text: items.ColumnHeader,
-                        flex: 1,
-                        Format: items.Format,
-                        dataIndex: items.DataIndex,
-                        menuDisabled: true,
-                        summaryType:items.SummaryType,
-                        renderer: function(v, p, record, rowIndex) {
-                            var d = new Date(v);
-                            return Ext.Date.format(d, column.Format);
-                       }
-                    });
+                var gridItems = storeData.items;
+                var fields = [];
+                for (var j = 0; j < gridItems.length; j++) {
+                    var items = gridItems[j].data;
+                    switch (items.ColumnType) {
+                        case "string":
+                            items.ColumnType = 'gridcolumn';
+                            break;
+                        case "number":
+                            items.ColumnType = 'numbercolumn';
+                            break;
+                        case "rownumber":
+                            flag = true;
+                            items.ColumnType = 'rownumberer';
+                            break;
+                        case "date":
+                            items.ColumnType = 'datecolumn';
+                            break;
+                    }
+                    fields.push(items.DataIndex);
                 }
-                grid.columnManager.headerCt.insert(index++, column);
-            }
-            if(!datacfg.datasources){
-                if (datacfg.url) {
-                    Ext.Ajax.request({
-                        url: datacfg.url,
-                        params: {},
-                        success: function(response) {
-                            var text = response.responseText;
-                            me.createGrid(text, fields);
-                        },
-                        failure: function(error) {
-                            return Ext.Msg.show({
-                                title: 'Request Failed',
-                                message: 'Error: we are not able to load the URL ',
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.ERROR,
-                            });
+                if (flag) {
+                    flag = false;
+                    column = Ext.create('Ext.grid.column.Column', {
+                        xtype: items.ColumnType,
+                        text: items.ColumnHeader,
+                        flex: 1,
+                        menuDisabled: true, 
+                        renderer: function(v, p, record, rowIndex) {
+                            return ++rowIndex;
                         }
                     });
-                } else {
-                    return Ext.Msg.show({
-                        title: 'Message for you',
-                        message: 'Please enter URL for Sales By Year data Visual',
-                        buttons: Ext.Msg.OK,
-                        icon: Ext.Msg.INFO,
-                    });
                 }
-            }
-             else{
-                var frstrw = datacfg.griddata.data[0];
-                var fields = Ext.Object.getAllKeys(frstrw);
-                me.createGrid(datacfg.griddata, fields);
+                grid.columnManager.headerCt.insert(0, column);
+                var index = grid.getColumns().length;
+                for (var i = 0; i < gridItems.length; i++) {
+                    var items = gridItems[i].data;
+                    var column;
+                    if(items.GroupField){
+                       grid.getStore().setGroupField( items.DataIndex);
+                       grid.presentGroupField = items.DataIndex;
+                    }
+                    
+                    if ( items.ColumnType != 'rownumberer' && items.ColumnType != 'datecolumn' ) {
+                        column = Ext.create('Ext.grid.column.Column', {
+                            xtype: items.ColumnType,
+                            text: items.ColumnHeader,
+                            flex: 1,
+                            summaryType:items.SummaryType,
+                            dataIndex: items.DataIndex,
+                            menuDisabled: true
+                        });
+                    }else if(items.ColumnType == 'datecolumn'){
+                        column = Ext.create('Ext.grid.column.Column', {
+                            xtype: items.ColumnType,
+                            text: items.ColumnHeader,
+                            flex: 1,
+                            Format: items.Format,
+                            dataIndex: items.DataIndex,
+                            menuDisabled: true,
+                            summaryType:items.SummaryType,
+                            renderer: function(v, p, record, rowIndex) {
+                                var d = new Date(v);
+                                return Ext.Date.format(d, column.Format);
+                           }
+                        });
+                    }
+                    grid.columnManager.headerCt.insert(index++, column);
+                }
+                if(!datacfg.datasources){
+                    if (datacfg.url) {
+                        Ext.Ajax.request({
+                            url: datacfg.url,
+                            params: {},
+                            success: function(response) {
+                                var text = response.responseText;
+                                me.createGrid(text, fields);
+                            },
+                            failure: function(error) {
+                                return Ext.Msg.show({
+                                    title: 'Request Failed',
+                                    message: 'Error: we are not able to load the URL ',
+                                    buttons: Ext.Msg.OK,
+                                    icon: Ext.Msg.ERROR,
+                                });
+                            }
+                        });
+                    } else {
+                        return Ext.Msg.show({
+                            title: 'Message for you',
+                            message: 'Please enter URL for Sales By Year data Visual',
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.INFO,
+                        });
+                    }
+                }
+                 else{
+                    var frstrw = datacfg.griddata.data[0];
+                    var fields = Ext.Object.getAllKeys(frstrw);
+                    me.createGrid(datacfg.griddata, fields);
+                }
             }
         }
     },

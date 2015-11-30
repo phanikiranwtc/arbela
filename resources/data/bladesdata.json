@@ -21,7 +21,7 @@
             "blades": [
                 {
                     "type": "Arbela.view.blades.Grid",
-                    "datasources": "dsg",
+                    "datasources": "S",
                     "url": "http://arbela.walkingtree.in/resources/data/summary.json",
                     "griddata": {
                         "data": [
@@ -71,19 +71,20 @@
             "columnWidth": 0.5
         }
     ],
-    "datasource": [
-        {
-            "name": "dfsg",
-            "type": "Arbela.view.datasources.Sales",
-            "refreshfrequency": "5",
-            "updatedOn": "06:37:03 PM",
-            "id": "extModel94-1"
-        },
-        {
-            "name": "dsg",
-            "type": "Arbela.view.datasources.GridData",
-            "updatedOn": "06:37:10 PM",
-            "id": "extModel94-2"
-        }
-    ]
+    "datasource": [{
+        "name": "S",
+        "type": "Arbela.view.datasources.GridData",
+        "updatedOn": "04:03:48 PM",
+        "id": "extModel94-1"
+    }, {
+        "name": "S",
+        "type": "Arbela.view.datasources.GridData",
+        "updatedOn": "04:03:54 PM",
+        "id": "extModel94-2"
+    }, {
+        "name": "S2",
+        "type": "Arbela.view.datasources.GridData",
+        "updatedOn": "06:37:20 PM",
+        "id": "extModel94-3"
+    }]
 }

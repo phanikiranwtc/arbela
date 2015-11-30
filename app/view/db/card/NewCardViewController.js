@@ -101,6 +101,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var v = this.getView();
         var form = v.down('form');
         var blades;
+        var actualGridData = Ext.ComponentQuery.query('#columnGrid')[0];
 
         var values = {};
         if(btn.url){
@@ -116,7 +117,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     
         values.showTitle = cardVals.showTitle;
         values.hideTitleBar = cardVals.hideTitleBar;
-	    values.titleStyle = cardVals.titleStyle;
+        values.titleStyle = cardVals.titleStyle;
         values.name = cardVals.name;
         values.colIdx = cardVals.colIdx;
         //values.columnWidth = cardVals.columnWidth;
@@ -158,20 +159,45 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             if(blades[i].newGridRecord){
                 val.typeObj.newGridData = blades[i].newGridRecord;
             }
-            this.processExpressions(blades[i], val);
+             
+            if(actualGridData){
+                if(actualGridData.getStore().getData().length == 0){
+                    Ext.Msg.alert("INFO","Empty grid cannot be saved!!");
+                }else{
+                    this.processExpressions(blades[i], val);
+                }
+            }else{
+                this.processExpressions(blades[i], val);
+            }
             values.blades.push(val);
         }
 
         values.updatedOn = Ext.Date.format(new Date(), 'h:i:s A');
-
-        v.fireEvent('addcard', v, values, e, eOpts);
-        v.close();
+         
+        if(actualGridData){
+            if(actualGridData.getStore().getData().length !== 0){
+                v.fireEvent('addcard', v, values, e, eOpts);
+                v.close();
+            }
+        }else{
+            v.fireEvent('addcard', v, values, e, eOpts);
+            v.close();
+        }
     },
 
 
-    processExpressions: function(blade, bladeVal) { 
+    processExpressions: function(blade, bladeVal) {  
+        var g = Ext.ComponentQuery.query('dslist')[0];
+        var dataSourceitems = g.getStore().getData().items;
+        var dataSourcelen=dataSourceitems.length;
+        var dataSource={};
+        for(var i=0; i<=dataSourcelen-1; i++){
+            var obj = dataSourceitems[i].data;
+            dataSource[obj.name] = obj;
+        }
         var v = this.getView();
         var me = this;
+
          
         //check if we have expressions, if so, prepare them for evaluation
         var exprFields = Ext.ComponentQuery.query('expressionfield', blade);
@@ -183,25 +209,28 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
             var d = {};
 
-            console.log('=====> Datasources: ', v.getDatasources());
+            console.log('=====> Datasources: ', dataSource);
              
              var dataValue =  v.down('#dataCombo').getValue();
-             var retVal = Arbela.view.common.ExprParser.parse(value, v.getDatasources(),dataValue, function(cmp, data) { 
+
+             var retVal = Arbela.view.common.ExprParser.parse(value, dataSource,dataValue, function(cmp, data) { 
                 
                 //re-evaluate the expression and set the value on the blade
-                d[name] = Arbela.view.common.ExprParser.parse(value, v.getDatasources(),dataValue); 
+                d[name] = Arbela.view.common.ExprParser.parse(value, dataSource,dataValue); //gridRefData
                 this.setBladeData(d);
 
             }, bladeVal.typeObj);
 
             console.log('retVal: ', retVal);
             bladeVal['exprVal'] = value;
-    	    if(retVal !== undefined){
+            if(retVal !== undefined){
                 bladeVal[name] = retVal;
             }
-        }
 
-        if(bladeVal.type == "Arbela.view.blades.Grid"){
+        }
+         
+        if(bladeVal.type == "Arbela.view.blades.Grid"){ 
+
             if(v.down('#dataCombo')){
                 var dataValue =  v.down('#dataCombo').getValue(); 
                 //if(v.getDatasources()){
@@ -213,15 +242,23 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 var g = Ext.ComponentQuery.query('wsworkspace')[0];
                 var gridSource = g.getViewModel().getData().datasources;
                 //var gridSource = Arbela.view.ds.add.NewWindowViewController.handleSaveBtnClick(dataValue,gridValues);
-            }
-            var retVal = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue, function(cmp, data) { 
+            } 
+            var gridsoourceKeys = Object.keys(gridSource),
+                keysLen = gridsoourceKeys.length;
+            for(var i=0; i<= keysLen-1; i++){
+                if(gridSource[gridsoourceKeys[i]].type == 'Arbela.view.datasources.GridData'){
+                     
+                    var d = {};
+                    var retVal = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue, function(cmp, data) {
                 
-                //re-evaluate the expression and set the value on the blade
-                d[name] = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue); 
-                this.setBladeData(d);
+                        //re-evaluate the expression and set the value on the blade
+                        d['value1'] = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue); 
+                        this.setBladeData(d);
 
-            }, bladeVal.typeObj);
-            bladeVal["griddata"] = retVal;
+                    }, bladeVal.typeObj);
+                    bladeVal["griddata"] = retVal;
+                }
+            }
         }
 
         //set the data on the viewModel so that the bindings are evaluated properly
@@ -337,6 +374,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 this.setBladeData(d);
             }, typeObj);
             var colgrid = v.down('grid').getStore();
+            delete retVals.data[0].id;
             var dataSrc = retVals.data[0];
             var gridFields = Ext.Object.getAllKeys(dataSrc),
             fieldsLen = gridFields.length, gridArr = [];
