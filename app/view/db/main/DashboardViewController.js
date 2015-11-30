@@ -73,10 +73,13 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     var gridStore = bladeForms[is].down('grid').getStore();
                     var set;
                     bladeForms[is].set= formBladePanels.griddata;
-                    for (var i=0;i<=formBladePanels.griddata.length-1;i++){
-                        var record = formBladePanels.griddata[i];
-                        bladeForms[is].down('grid').getStore().add(record);
-                    }
+                    // for (var i=0;i<=formBladePanels.griddata.length-1;i++){
+                    //     var record = formBladePanels.griddata[i];
+                    //     bladeForms[is].down('grid').getStore().add(record);
+                    // }
+                }
+                if(formBladePanels.dataSourceS){
+                    bladeForms[is].down('grid').setStore(formBladePanels.dataSourceS);
                 }
                 if(formBladePanels.typeObj){
                     if(formBladePanels.typeObj.gridRefData){

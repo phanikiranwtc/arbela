@@ -111,6 +111,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         }
         else {
             var cardVals = form.getValues();
+
             console.log(cardVals);
         }
 
@@ -164,6 +165,8 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 if(actualGridData.getStore().getData().length == 0){
                     Ext.Msg.alert("INFO","Empty grid cannot be saved!!");
                 }else{
+                    var dataSourceStore = actualGridData.getStore();
+                    val.dataSourceS = dataSourceStore;
                     this.processExpressions(blades[i], val);
                 }
             }else{

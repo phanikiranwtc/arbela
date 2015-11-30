@@ -119,6 +119,7 @@ Ext.define('Arbela.view.blades.Grid', {
     },{
         xtype: 'gridpanel',
         ui:'gridcss',
+        itemId: 'columnGrid',
         selModel: 'rowmodel', //this is default model . If it is not working need to change css styles ...
         columns:[{ 
                 text: 'Column Header', 
@@ -264,6 +265,7 @@ Ext.define('Arbela.view.blades.Grid', {
         var grid = this.items.items[0];
         if(datacfg.griddata){ //this condition for rendering grid with data sources data
             var frstrw = datacfg.griddata.data[0];
+            delete datacfg.griddata.data[0].id;
             var fields = Ext.Object.getAllKeys(frstrw),
                 fieldsLen = fields.length;
             for(var i=0; i<=fieldsLen-1; i++){
