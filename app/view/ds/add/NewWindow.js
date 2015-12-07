@@ -47,6 +47,7 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
                 xtype: 'combobox',
                 fieldLabel: 'Type',
                 name: 'type',
+                forceSelection :true,
                 emptyText: 'Select a type',
                 queryMode: 'local',
                 valueField: 'klass',

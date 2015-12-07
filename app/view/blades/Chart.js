@@ -51,6 +51,7 @@ Ext.define('Arbela.view.blades.Chart', {
         queryMode: 'local',
         displayField: 'name',
         valueField: 'name',
+        forceSelection :true,
         listeners: {
                 change: function(combo, newValue, oldValue, eOpts){ 
                     fieldSet = this.up('fieldset').down('fieldset[name = chartSeries]');
@@ -190,6 +191,7 @@ Ext.define('Arbela.view.blades.Chart', {
         items: [{
             xtype: 'combobox',
             fieldLabel: 'Type',
+            forceSelection :true,
             store: Ext.create('Ext.data.Store', {
                 fields: ['name','type'],
                 data : [
@@ -226,6 +228,7 @@ Ext.define('Arbela.view.blades.Chart', {
         items: [{
             xtype: 'combobox',
             fieldLabel: 'Type',
+            forceSelection :true,
             store: Ext.create('Ext.data.Store', {
                 fields: ['name','type'],
                 data : [
@@ -263,6 +266,7 @@ Ext.define('Arbela.view.blades.Chart', {
             xtype: 'checkbox',
             fieldLabel: 'show Interactions',
             name : 'showinteractions',
+            forceSelection :true,
             listeners : {
                 change : function( field, newValue, oldValue, eOpts ) {
                     var fieldset = field.up('fieldset[title=Interactions]');
@@ -287,14 +291,15 @@ Ext.define('Arbela.view.blades.Chart', {
             store: Ext.create('Ext.data.Store', {
             fields: ['name','type'],
             data : [
-            {name:"Crosshair",type:"crosshair"},
-            {name:"Crosszoom",type:"crosszoom"},
-            {name:"Panzoom",type:"panzoom"}
+                {name:"Crosshair",type:"crosshair"},
+                {name:"Crosszoom",type:"crosszoom"},
+                {name:"Panzoom",type:"panzoom"}
             ]
             }),
             queryMode: 'local',
             displayField: 'name',
             valueField: 'type',
+            forceSelection :true,
             name : 'cartesianinteractions'
         },{
             xtype: 'combobox',
@@ -303,10 +308,11 @@ Ext.define('Arbela.view.blades.Chart', {
             store: Ext.create('Ext.data.Store', {
             fields: ['name','type'],
             data : [
-            {name:"Rotate",type:"rotate"},
-            {name:"RotatePie3d",type:"rotatePie3d"}
+                {name:"Rotate",type:"rotate"},
+                {name:"RotatePie3d",type:"rotatePie3d"}
             ]
             }),
+            forceSelection :true,
             queryMode: 'local',
             displayField: 'name',
             valueField: 'type',
@@ -330,12 +336,13 @@ Ext.define('Arbela.view.blades.Chart', {
             store: Ext.create('Ext.data.Store', {
             fields: ['name','type'],
             data : [
-            {name:"Bottom",type:"bottom"},
-            {name:"Top",type:"top"},
-            {name:"Right",type:"right"},
-            {name:"Left",type:"left"}
+                {name:"Bottom",type:"bottom"},
+                {name:"Top",type:"top"},
+                {name:"Right",type:"right"},
+                {name:"Left",type:"left"}
             ]
             }),
+            forceSelection :true,
             queryMode: 'local',
             displayField: 'name',
             valueField: 'type',

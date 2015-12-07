@@ -46,7 +46,7 @@ Ext.define('Arbela.view.blades.SupportTickets', {
             xtype: 'component',
             flex: 1,
             bind: {
-                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Support Tickets</small><span class="bigtext">{value2}</span></div>'
+                html: '<div style="padding-left: 10px;padding-top: 20px;"><small>Total Support Tickets</small><span class="bigtext">{value2}</span></div>'
             }
         }]
     },

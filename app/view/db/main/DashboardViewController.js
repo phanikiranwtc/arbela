@@ -60,45 +60,15 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 bladeForms[is].query('button[name=addSeries]')[0].el.dom.click();
             } 
             if(formBladePanels.type=="Arbela.view.blades.Grid"){
+                var settingsGridStore = formBladePanels.typeObj.settingsGridStore;
+                bladeForms[is].down('settingsgrid').setStore(settingsGridStore);
                 if(formBladePanels.settingsData){
-                    var gridStore = bladeForms[is].down('grid').getStore();
+                   /// var gridStore = bladeForms[is].down('settingsgrid').getStore();
                     var set;
                     bladeForms[is].set= formBladePanels.settingsData;
                     for (var i=0;i<=formBladePanels.settingsData.length-1;i++){
                         var record = formBladePanels.settingsData[i];
-                        bladeForms[is].down('grid').getStore().add(record);
-                    }
-                }
-                if(formBladePanels.griddata){
-                    var gridStore = bladeForms[is].down('grid').getStore();
-                    var set;
-                    bladeForms[is].set= formBladePanels.griddata;
-                    // for (var i=0;i<=formBladePanels.griddata.length-1;i++){
-                    //     var record = formBladePanels.griddata[i];
-                    //     bladeForms[is].down('grid').getStore().add(record);
-                    // }
-                }
-                if(formBladePanels.dataSourceS){
-                    bladeForms[is].down('grid').setStore(formBladePanels.dataSourceS);
-                }
-                if(formBladePanels.typeObj){
-                    if(formBladePanels.typeObj.gridRefData){
-                        var gridRefLen = formBladePanels.typeObj.gridRefData.length;
-                        var gridRef;
-                            bladeForms[is].gridRef =formBladePanels.typeObj.gridRefData;
-                        for(var i=0;i<=gridRefLen-1;i++){
-                            var record = formBladePanels.typeObj.gridRefData[i];
-                            bladeForms[is].down('grid').getStore().add(record);
-                        }
-                    }
-                    if(formBladePanels.typeObj.newGridData){
-                        var gridRefLen = formBladePanels.typeObj.newGridData.length;
-                        var gridRef;
-                            bladeForms[is].gridRef =formBladePanels.typeObj.newGridData;
-                        for(var i=0;i<=gridRefLen-1;i++){
-                            var record = formBladePanels.typeObj.newGridData[i];
-                            bladeForms[is].down('grid').getStore().add(record);
-                        }
+                        bladeForms[is].down('settingsgrid').getStore().add(record);
                     }
                 }
                 
@@ -144,20 +114,13 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             store = Ext.ComponentQuery.query('dslist')[0].getStore(); 
             if(setRef !== null){
                 var datasrcCombo = setRef.down('combo[fieldLabel="DataSources"]');
+                if(datasrcCombo !== null){
                 if(store.getData().length !== 0){
                     if(datasrcCombo.hidden == false){
                         if(panelValues.type !== "Arbela.view.blades.Grid"){
                             arr[p].down('fieldset').down('textfield[fieldLabel="Expression"]').setValue(panelValues.exprVal);
                         }
-                        // else{
-                        //     /* setting grid store and columns of grid in fieldset settings while editing */
-                        //     // if(gridstore){
-                        //     //     for(var i=0; i<colGridfields.length; i++){
-                        //     //         form.down('grid').getColumns()[i].dataIndex = colGridfields[i];
-                        //     //     }
-                        //     //     form.down('grid').setStore(gridstore);
-                        //     // }
-                        // }
+                        
                         datasrcCombo.setStore(store);
                         setRef.down('button[text="Load Meta-data"]').enable();
                     }
@@ -176,6 +139,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     }
                 }
             }
+            }
         }
         
         newCard.show();
@@ -185,7 +149,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     ** fetch the avaiable baldes in the application and return them in an array with
     ** object as {klass:'',name:'',niceName:''}
     **/
-    getAvailableBlades:function(){
+    getAvailableBlades:function(){ 
         
     var classes = Ext.ClassManager.classes;
     var blades = [];
@@ -207,7 +171,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         return blades;
         
     },
-    onToolbarAddcard: function(tb, btn, e, eOpts, eventOptions) {
+    onToolbarAddcard: function(tb, btn, e, eOpts, eventOptions) { 
         //TODO: move this to a common util as it is used for Datasource as well as Card/Blade
         var classes = Ext.ClassManager.classes;
         var blades = [];
@@ -244,7 +208,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         });
     },
 
-    handleAddCardEvent: function(win, values) { 
+    handleAddCardEvent: function(win, values) {   
          
         var me = this;
         var oldPanel = win.config.originalContainerRef;
@@ -340,17 +304,17 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         }
     },
     
-    onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) {
+    onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) { 
          
         //alert('Clone Dashboard');
         var v = this.getView();
-
-        var datasources = v.getDatasources();
+        var store = this.getView().up('wsworkspace').down('dslist').getStore();
+        var dataLength = store.data.length;
         var dataSourceArray = [];
-        for( datasourcesItem in datasources ){
-            var dataListItem = datasources[datasourcesItem];
-            delete dataListItem.typeObj;
-            dataSourceArray.push(dataListItem);
+        for(var m = 0;m<=dataLength-1;m++){
+           var dataListItem = store.data.items[m].data;
+           delete dataListItem.typeObj;
+           dataSourceArray.push(dataListItem);
         }
 
         if(v.items.items[0]){
@@ -369,33 +333,20 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 var bladesLen = bladeData.blades.length;
                 for(var l = 0; l<=bladesLen-1; l++){
                     if(bladeData.blades[l].type == "Arbela.view.blades.Grid"){ 
-                        if(bladeData.blades[l].settingsData){
-                            var settingsDataLen = bladeData.blades[l].settingsData.length,  itemsArr= [];
-                            for(var m = 0;m<= settingsDataLen-1;m++){
-                                var itemData = bladeData.blades[l].settingsData[m];
-                                itemsArr.push(itemData);
-                            }
-                            bladeData.blades[l].settingsData= itemsArr;
-
-                        }
+                        
                         if(bladeData.blades[l].typeObj){
-                            if(bladeData.blades[l].typeObj.gridRefData){
-                                var gridRefDataLen = bladeData.blades[l].typeObj.gridRefData.length,  itemsArr= [];
-                                for(var m = 0;m<= gridRefDataLen-1;m++){
-                                    var itemData = bladeData.blades[l].typeObj.gridRefData[m];
-                                    itemsArr.push(itemData);
-                                }
-                                bladeData.blades[l].settingsData= itemsArr;
-                            }
-                            if(bladeData.blades[l].typeObj.newGridData){
-                                var newGridDataLen = bladeData.blades[l].typeObj.newGridData.length,  itemsArr= [];
+                            if(bladeData.blades[l].typeObj.settingsGridStore){
+                                var newGridDataLen = bladeData.blades[l].typeObj.settingsGridStore.data.length,  itemsArr= [];
                                 for(var m = 0;m<= newGridDataLen-1;m++){
-                                    var itemData = bladeData.blades[l].typeObj.newGridData[m];
+                                    var itemData = bladeData.blades[l].typeObj.settingsGridStore.data.items[m].data;
                                     itemsArr.push(itemData);
                                 }
                                 bladeData.blades[l].settingsData= itemsArr;
                             } 
+
                         }
+                            
+                        //}
 
                     }
                 }
@@ -426,12 +377,13 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         }
     },
 
+
     onRemoveDashboard: function(button, e, eOpts) {
         var v = this.getView();
         v.fireEvent('removedashboard', v);
     },
 
-    settingCards: function(){
+    settingCards: function(){  
         // 
         Ext.Ajax.request({
             url: "resources/data/bladesdata.json",
@@ -452,7 +404,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             scope:this
         },this);
     },
-    settingCardsData: function(responseData) {
+    settingCardsData: function(responseData) {  
         var cardsData = responseData.data,
             cardsLen = cardsData.length;
         if(responseData.datasource){

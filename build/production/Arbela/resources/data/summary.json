@@ -1,0 +1,56 @@
+{"aggregations": {
+      "range": {
+         "buckets": [
+            {
+            "student": "Student 1",
+            "mark": 84,
+            "date": "2015/02/22"
+        },{
+            "student": "Student 2",
+            "mark": 72,
+            "date": "2015/04/30"
+        },{
+            "student": "Student 3",
+            "mark": 96,
+            "date": "2015/05/9"
+        },{
+            "student": "Student 4",
+            "mark": 68,
+            "date": "2015/03/10"
+        },{
+            "student": "Student 1",
+            "mark": 86,
+            "date": "2015/05/15",
+        },{
+            "student": "Student 2",
+            "mark": 86,
+            "date": "2012/02/19"
+        },{
+            "student": "Student 3",
+            "mark": 123,
+            "date": "2011/04/02"
+        },{
+            "student": "Student 4",
+            "mark": 98,
+            "date": "2015/04/13"
+        },{
+            "student": "Student 1",
+            "mark": 184,
+            "date": "2011/04/22"
+        },{
+            "student": "Student 2",
+            "mark": 172,
+            "date": "2014/04/05"
+        },{
+            "student": "Student 3",
+            "mark": 196,
+            "date": "2013/04/22"
+        },{
+            "student": "Student 4",
+            "mark": 168,
+            "date": "2011/04/22"
+        }
+         ]
+      }
+   }
+ }

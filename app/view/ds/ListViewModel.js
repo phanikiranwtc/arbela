@@ -4,11 +4,11 @@ Ext.define('Arbela.view.ds.ListViewModel', {
 
     stores: {
     	datasources: {
-    		autoSync: true,
+    		//autoSync: true,
     		fields: ['name', 'lastUpdated'],
             //data:[{'name':'testing',"lastUpdated":'now'}],
     		proxy: {
-    			type: 'rest',
+    			type: 'memory',
     			url : '/datasources'
     		}
     	}

@@ -50,9 +50,9 @@ Ext.define('Arbela.view.blades.WebsiteTraffics', {
             }
         }]
     },
-    setBladeData: function(dataCfg) {
-        if(dataCfg.value1.length == 1 ){
-           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+    setBladeData: function(dataCfg) { 
+        if(dataCfg.value1[0] == "" ){
+           var tooltip = this.down('sparklinebar').tooltip;// Fixed tooltip issue
            if(tooltip ){
                tooltip.update(null);
            }

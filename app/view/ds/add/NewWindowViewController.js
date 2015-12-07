@@ -2,7 +2,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.commonnewwindow',
 
-    onComboboxSelect: function(combo, record, eOpts) {
+    onComboboxSelect: function(combo, record, eOpts) { 
         var klass = record.data.klass;
         var md = (Ext.create(klass, {})).getSettings();
         console.log('Meta Data: ', md);
@@ -61,7 +61,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) { 
+    handleSaveBtnClick: function(btn, e, eOpts) {  
         var v = this.getView();
         var form = v.down('form');
 

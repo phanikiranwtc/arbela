@@ -35,7 +35,7 @@ Ext.define('Arbela.view.ds.ListViewController', {
             typeData: dses,
             values: data,
             listeners: {
-                adddatasource: function(win, values) {
+                adddatasource: function(win, values) { 
                     var selectedRec = v.getStore().findRecord('isSelected',true);
                     if(selectedRec){
                         v.getStore().setAutoSync(true);

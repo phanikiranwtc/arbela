@@ -41,7 +41,8 @@ Ext.define('Arbela.Application', {
         'blades.InventoryChart',
         'blades.SparklineLine',
         'blades.Chart',
-        'blades.Grid'
+        'blades.Grid',
+        'blades.grid.SettingsGrid'
     ],
 
 

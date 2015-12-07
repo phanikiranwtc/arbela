@@ -1,4 +1,4 @@
-$image-search-path: '/var/www/html/arbela-gitNew/build/production/Arbela/resources';
+$image-search-path: '/var/www/html/steven/Arbela-New/build/production/Arbela/resources';
 $theme-name:  'ext-theme-crisp' !default;
 $include-arbela-application: true;
 $include-arbela-protocols-mqtt: true;
@@ -17,6 +17,7 @@ $include-arbela-view-blades-sparklineline: true;
 $include-arbela-view-blades-supporttickets: true;
 $include-arbela-view-blades-totalsales: true;
 $include-arbela-view-blades-websitetraffics: true;
+$include-arbela-view-blades-grid-settingsgrid: true;
 $include-arbela-view-common-addgridcolumnwindow: true;
 $include-arbela-view-common-bladepanel: true;
 $include-arbela-view-common-calculatedfield: true;

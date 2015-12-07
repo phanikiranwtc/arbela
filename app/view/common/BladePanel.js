@@ -42,7 +42,7 @@ Ext.define('Arbela.view.common.BladePanel', {
         valueField: 'klass',
         displayField: 'niceName',
         triggerAction: 'all',
-        // reference: 'typeCombo',
+        forceSelection :true,
         bind: {
             store: '{types}'
         },

@@ -24,6 +24,7 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
             xtype: 'button',
             ui: 'plain',
             text: 'Save',
+            icon: 'resources/images/download-16.png',
             listeners: {
                 click: 'onCloneBtnClick'
             }

@@ -13,16 +13,17 @@ Ext.define('Arbela.view.common.SeriesSet', {
 			store:Ext.create('Ext.data.Store', {
 			fields: ['name','type'],
 			data : [
-			{name:"Bar",type:"bar"},
-			{name:"Bar3D",type:"bar3d"},
-			{name:"Scatter",type:"scatter"},
-			{name:"Area",type:"area"},
-			{name:"Line",type:"line"}
+				{name:"Bar",type:"bar"},
+				{name:"Bar3D",type:"bar3d"},
+				{name:"Scatter",type:"scatter"},
+				{name:"Area",type:"area"},
+				{name:"Line",type:"line"}
 			]
 			}),
 			queryMode: 'local',
 			displayField: 'name',
 			valueField: 'type',
+			forceSelection :true,
 			name:'cartesiantype'+appseries,
 			hidden: me.cartesianFlag
 		},{
@@ -31,12 +32,13 @@ Ext.define('Arbela.view.common.SeriesSet', {
 			store:Ext.create('Ext.data.Store', {
 			fields: ['name','type'],
 			data : [
-			{name:"Pie",type:"pie"},
-			{name:"Pie3D",type:"pie3d"},
-			{name:"Gauge",type:"gauge"},
-			{name:"Radar", type:"radar"}
+				{name:"Pie",type:"pie"},
+				{name:"Pie3D",type:"pie3d"},
+				{name:"Gauge",type:"gauge"},
+				{name:"Radar", type:"radar"}
 			]
 			}),
+			forceSelection :true,
 			queryMode: 'local',
 			displayField: 'name',
 			valueField: 'type',
@@ -98,8 +100,7 @@ Ext.define('Arbela.view.common.SeriesSet', {
             name : 'deleteSeries',		
             margin: '0 0 5 0',		
             disabled: true,		
-            handler: function(){		
-            	// 		
+            handler: function(){	
             	var currFieldset = this.up('fieldset'),		
             		parentFieldset = currFieldset.up();		
             	parentFieldset.remove(currFieldset);		

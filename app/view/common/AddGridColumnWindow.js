@@ -27,12 +27,6 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                 name: 'ColumnHeader',
                 allowBlank: false    
             },{
-                xtype: 'textfield',
-                fieldLabel: 'DataIndex',
-                name: 'DataIndex',
-                allowBlank: false
-                
-            },{
                 xtype: 'combobox',
                 fieldLabel: 'Column Type',
                 name: 'ColumnType',
@@ -40,23 +34,38 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                 valueField:'type',
                 displayField: 'type',
                 allowBlank: false,
+                forceSelection :true,
                 listeners:{
                     change:function (combo, newValue, oldValue, eOpts ){ 
                        this.up().down('textfield[name=DataIndex]').setDisabled(false);
                        this.up().down('textfield[name=Format]').setDisabled(true);             
                        if(newValue == 'date'){
                            this.up().down('textfield[name=Format]').setDisabled(false);
-                       }else if(newValue == 'rownumber' ){
+                           this.up().down('combobox[name=SummaryType]').setDisabled(false);
+                           this.up().down('checkbox[name=GroupField]').setDisabled(false);
+                       }else if(newValue == 'rownumberer' ){
                            this.up().down('textfield[name=DataIndex]').setDisabled(true);
+                           this.up().down('combobox[name=SummaryType]').setDisabled(true);
+                           this.up().down('checkbox[name=GroupField]').setDisabled(true);
                            this.up().down('textfield[name=DataIndex]').reset();
                            this.up().down('textfield[name=Format]').reset();
+                           this.up().down('combobox[name=SummaryType]').reset();
+                           this.up().down('checkbox[name=GroupField]').reset();
 
                        }else{
                            this.up().down('textfield[name=Format]').reset();
+                           this.up().down('checkbox[name=GroupField]').setDisabled(false);
+                           this.up().down('combobox[name=SummaryType]').setDisabled(false);
                        }
                     }
                 }
                
+            },{
+                xtype: 'textfield',
+                fieldLabel: 'DataIndex',
+                name: 'DataIndex',
+                allowBlank: false
+                
             },{
                 xtype: 'textfield',
                 fieldLabel: 'Format',
@@ -69,13 +78,16 @@ Ext.define('Arbela.view.common.AddGridColumnWindow',{
                 name:'GroupField'
             },{
                 xtype:'combobox',
-                 fieldLabel:'Summary Type',
+                fieldLabel:'Summary Type',
                 name:'SummaryType',
                 queryMode:'local',
-                displayField:'summarytype',
+                displayField:'name',
+                forceSelection :true,
                 store:Ext.create('Ext.data.Store',{
                     fields:['name','summarytype'],
                     data:[{
+                        name:'none',summarytype:''
+                    },{
                         name:'count',summarytype:'count'
                     },{
                         name:'sum',summarytype:'sum'

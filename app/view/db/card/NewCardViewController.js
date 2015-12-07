@@ -2,7 +2,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.dbnewcard',
 
-    onComboboxSelect: function(combo, record, eOpts) {  
+    onComboboxSelect: function(combo, record, eOpts) {    
         var klass = record.data.klass;
         if(klass !== undefined){
             var md = (Ext.create(klass, {})).getSettings();
@@ -34,6 +34,52 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     items: md,
                     layout:'anchor',
                     defaults: {anchor: '100%'},
+                    viewModel:{
+                        data: {
+                            summary: false,
+                            grouping:false,
+                            groupingsummary:false,
+                            summaryType:true,
+                            groupField:true,
+                            datasources:null
+                        },
+
+                        formulas: {
+                            enablegroupingsummary: function (get) {
+
+                                return !(get('summary') || get('grouping'));
+                            },
+                            enableSummeryColumns: function(get){
+                                if(get('summary') || get('groupingsummary')){
+                                    return false;
+                                }else{
+                                    return true;
+                                }
+                            },
+                            enableGroupColumns: function(get){
+                                if(get('groupingsummary') || get('grouping')){
+                                    return false;
+                                }else{
+                                    return true;
+                                }
+                            },
+                            enableDataSource: function(get){
+                                if(get('datasources') !== null){
+                                    return true;
+                                }else{
+                                    return false;
+                                }
+                            },
+                            enableTextFieldValue: function(get){
+                                if(get('datasources') == null){
+                                    return Arbela.util.Utility.api.summary;
+                                }else{
+                                    return null;
+                                }
+                            }
+
+                        }
+                    } ,
                     listeners: {
                         afterrender: {
                             fn: function(cmp) {
@@ -45,11 +91,11 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 });
             }
         }
-	    var combo1; 
+	    var combo1;  
         if(md !== undefined){
             for(i=0;i<md.length;i++){ 
                 var store = Ext.ComponentQuery.query('dslist')[0].getStore(); 
-                var combo = Ext.ComponentQuery.query('#dataCombo')[0];
+                var combo = form.down('fieldset').down('combobox[name=datasources]');
                 if(md[i].xtype == "expressionfield"){
                     var formItems = this.getView().down('form').items,
                         formItemsLen = formItems.length;
@@ -69,7 +115,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     }
                     break; 
                 }
-                if(md[i].xtype == "gridpanel"){
+                if(md[i].xtype == "settingsgrid"){
                    // md[i].store.removeAll();
                     combo.setStore(store);
                 } 
@@ -78,11 +124,11 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    onComboboxChange: function(combo, newVal, oldVal, eOpts) { 
+    onComboboxChange: function(combo, newVal, oldVal, eOpts) {  
         var record = combo.getStore().findRecord('klass', newVal);
     },
 
-    onToolbarBtnClick: function(btn, e, eOpts) { 
+    onToolbarBtnClick: function(btn, e, eOpts) {  
         console.log('BUTTON: ', btn.getInitialConfig());
         var btnName = btn.getInitialConfig().name;
         if (btnName === 'save') {
@@ -95,13 +141,13 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) {
+    handleSaveBtnClick: function(btn, e, eOpts) {  
          
 
         var v = this.getView();
         var form = v.down('form');
         var blades;
-        var actualGridData = Ext.ComponentQuery.query('#columnGrid')[0];
+        //var actualGridData = Ext.ComponentQuery.query('#columnGrid')[0];
 
         var values = {};
         if(btn.url){
@@ -144,37 +190,46 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             else {
                 var val = blades[i].getValues();
             }
-
             val.typeObj = Ext.create(val.type, {});
             val.seriesIndex = blades[i].seriesIndex;
-            console.log('====> Blade Values: ', val);
-            var gridRefData;
-            var gridRef;
-            var newGridData;
-            if(blades[i].gridRef){
-                val.typeObj.gridRefData = blades[i].gridRef;
-            }
-            if(blades[i].set){
-               val.typeObj.gridRefData =blades[i].set;
-            }
-            if(blades[i].newGridRecord){
-                val.typeObj.newGridData = blades[i].newGridRecord;
-            }
-             
-            if(actualGridData){
-                if(actualGridData.getStore().getData().length == 0){
-                    Ext.Msg.alert("INFO","Empty grid cannot be saved!!");
+            if(val.type == 'Arbela.view.blades.Grid'){
+                if(blades[i].title){
+                    var actualGridData = blades[i].down('fieldset').down('grid');
+                }            
+                val.typeObj = Ext.create(val.type, {});
+                val.seriesIndex = blades[i].seriesIndex;
+                console.log('====> Blade Values: ', val);
+                var gridRefData;
+                var gridRef;
+                var newGridData;
+                if(blades[i].gridRef){
+                    val.typeObj.gridRefData = blades[i].gridRef;
+                }
+                if(blades[i].set){
+                   val.typeObj.gridRefData =blades[i].set;
+                }
+                if(blades[i].newGridRecord){
+                    val.typeObj.newGridData = blades[i].newGridRecord;
+                }
+                 
+                if(actualGridData){
+                    if(actualGridData.getStore().getData().length == 0){
+                        Ext.Msg.alert("INFO","Empty grid cannot be saved!!");
+                    }else{
+                        var dataSourceStore = blades[i].down('fieldset').down('grid').getStore();
+                        val.typeObj.settingsGridStore = dataSourceStore;
+                        this.processExpressions(blades[i], val);
+                    }
                 }else{
-                    var dataSourceStore = actualGridData.getStore();
-                    val.dataSourceS = dataSourceStore;
                     this.processExpressions(blades[i], val);
                 }
             }else{
-                this.processExpressions(blades[i], val);
-            }
-            values.blades.push(val);
-        }
 
+                this.processExpressions(blades[i], val);
+        }
+         values.blades.push(val);
+        }
+         
         values.updatedOn = Ext.Date.format(new Date(), 'h:i:s A');
          
         if(actualGridData){
@@ -189,7 +244,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
     },
 
 
-    processExpressions: function(blade, bladeVal) {  
+    processExpressions: function(blade, bladeVal) {   
         var g = Ext.ComponentQuery.query('dslist')[0];
         var dataSourceitems = g.getStore().getData().items;
         var dataSourcelen=dataSourceitems.length;
@@ -201,7 +256,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var v = this.getView();
         var me = this;
 
-         
         //check if we have expressions, if so, prepare them for evaluation
         var exprFields = Ext.ComponentQuery.query('expressionfield', blade);
         for (var j = 0; j < exprFields.length; j++) {
@@ -232,41 +286,37 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
         }
          
-        if(bladeVal.type == "Arbela.view.blades.Grid"){ 
-
-            if(v.down('#dataCombo')){
-                var dataValue =  v.down('#dataCombo').getValue(); 
-                //if(v.getDatasources()){
-                    var gridSource = v.getDatasources();
-                //}
-            }
-            if(bladeVal.griddata){
-                var dataValue = bladeVal.datasources;
-                var g = Ext.ComponentQuery.query('wsworkspace')[0];
-                var gridSource = g.getViewModel().getData().datasources;
-                //var gridSource = Arbela.view.ds.add.NewWindowViewController.handleSaveBtnClick(dataValue,gridValues);
-            } 
-            var gridsoourceKeys = Object.keys(gridSource),
-                keysLen = gridsoourceKeys.length;
-            for(var i=0; i<= keysLen-1; i++){
-                if(gridSource[gridsoourceKeys[i]].type == 'Arbela.view.datasources.GridData'){
-                     
-                    var d = {};
-                    var retVal = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue, function(cmp, data) {
-                
-                        //re-evaluate the expression and set the value on the blade
-                        d['value1'] = Arbela.view.common.ExprParser.parse(value, gridSource,dataValue); 
-                        this.setBladeData(d);
-
-                    }, bladeVal.typeObj);
-                    bladeVal["griddata"] = retVal;
+        if(bladeVal.type == "Arbela.view.blades.Grid"){  
+            if(bladeVal.datasources){
+                if(v.down('#dataCombo')){
+                    var dataValue =  v.down('#dataCombo').getValue(); 
+                }
+                if(bladeVal.datasources){
+                    var dataValue = bladeVal.datasources;
+                }
+                 
+                var gridsoourceKeys = Object.keys(dataSource),
+                    keysLen = gridsoourceKeys.length;
+                for(var i=0; i<= keysLen-1; i++){
+                    if(dataSource[gridsoourceKeys[i]].type == 'Arbela.view.datasources.GridData'){
+                         
+                        var d = {};
+                        var retVal = Arbela.view.common.ExprParser.parse(value, dataSource ,dataValue, function(cmp, data) {
+                    
+                            //re-evaluate the expression and set the value on the blade
+                            d['value1'] = Arbela.view.common.ExprParser.parse(value, dataSource ,dataValue); 
+                            this.setBladeData(d);
+                             
+                        }, bladeVal.typeObj);
+                        bladeVal["griddata"] = retVal;
+                    }
                 }
             }
         }
 
         //set the data on the viewModel so that the bindings are evaluated properly
         bladeVal.typeObj.getViewModel().setData(bladeVal);
-
+         
         //set the data on the view for any custom data handling specific to the blade
         bladeVal.typeObj.setBladeData(bladeVal);
 
@@ -311,7 +361,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 }, {
                     'type': 'number'
                 }, {
-                    'type': 'rownumber'
+                    'type': 'rownumberer'
                 },{
                     'type': 'date'
             });
@@ -336,7 +386,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         win.show();
     },
 
-    onLoadButtonClick:function(button){ 
+    onLoadButtonClick:function(button){  
         var v = this.getView();
         var me = this;
         var value = button.up().up().down('textfield[name=url]').value,
@@ -356,7 +406,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                             title: 'Request Failed',
                             message: 'Error: we are not able to load the ulr ',
                             buttons: Ext.Msg.OK,
-                            icon: Ext.Msg.ERROR,
+                            icon: Ext.Msg.ERROR
                         });
                     }
                 });
@@ -365,7 +415,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     title: 'Message for you',
                     message: 'Please enter URL',
                     buttons: Ext.Msg.OK,
-                    icon: Ext.Msg.INFO,
+                    icon: Ext.Msg.INFO
                 });
             }
         }else{
@@ -376,6 +426,8 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 d[name] = Arbela.view.common.ExprParser.parse(values, v.getDatasources(),dataValue); 
                 this.setBladeData(d);
             }, typeObj);
+             
+            var gridStore = v.down('grid').getStore();
             var colgrid = v.down('grid').getStore();
             delete retVals.data[0].id;
             var dataSrc = retVals.data[0];
@@ -455,13 +507,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     allowBlank: false,
                     value:record.data.ColumnHeader   
                 },{
-                    xtype: 'textfield',
-                    fieldLabel: 'DataIndex',
-                    name: 'DataIndex',
-                    allowBlank: false,
-                    value:record.data.DataIndex
-                    
-                },{
                     xtype: 'combobox',
                     fieldLabel: 'Column Type',
                     name: 'ColumnType',
@@ -472,14 +517,36 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     value:record.data.ColumnType,
                     listeners:{
                         change:function (combo, newValue, oldValue, eOpts ){ 
-                            if(newValue == 'date'){
-                                this.up().down('textfield[name=Format]').setDisabled(false);
-                            }else{
-                                this.up().down('textfield[name=Format]').setDisabled(true);
-                            }
+                           this.up().down('textfield[name=DataIndex]').setDisabled(false);
+                           this.up().down('textfield[name=Format]').setDisabled(true);             
+                           if(newValue == 'date'){
+                               this.up().down('textfield[name=Format]').setDisabled(false);
+                               this.up().down('combobox[name=SummaryType]').setDisabled(false);
+                               this.up().down('checkbox[name=GroupField]').setDisabled(false);
+                           }else if(newValue == 'rownumberer' ){
+                               this.up().down('textfield[name=DataIndex]').setDisabled(true);
+                               this.up().down('combobox[name=SummaryType]').setDisabled(true);
+                               this.up().down('checkbox[name=GroupField]').setDisabled(true);
+                               this.up().down('textfield[name=DataIndex]').reset();
+                               this.up().down('textfield[name=Format]').reset();
+                               this.up().down('combobox[name=SummaryType]').reset();
+                               this.up().down('checkbox[name=GroupField]').reset();
+
+                           }else{
+                               this.up().down('textfield[name=Format]').reset();
+                               this.up().down('checkbox[name=GroupField]').setDisabled(false);
+                               this.up().down('combobox[name=SummaryType]').setDisabled(false);
+                           }
                         }
                     }
                    
+                },{
+                    xtype: 'textfield',
+                    fieldLabel: 'DataIndex',
+                    name: 'DataIndex',
+                    allowBlank: false,
+                    value:record.data.DataIndex
+                    
                 },{
                     xtype: 'textfield',
                     fieldLabel: 'Format',
@@ -490,17 +557,19 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     xtype:'checkbox',
                     fieldLabel:'Group Field',
                     name:'GroupField',
-                    value:record.data.GroupField,
+                    value:record.data.GroupField
                 },{
                     xtype:'combobox',
                      fieldLabel:'Summary Type',
                     name:'SummaryType',
                     queryMode:'local',
-                    displayField:'summarytype',
+                    displayField:'name',
                     value:record.data.SummaryType,
                     store:Ext.create('Ext.data.Store',{
                         fields:['name','summarytype'],
                         data:[{
+                            name:'none',summarytype:''
+                        },{
                             name:'count',summarytype:'count'
                         },{
                             name:'sum',summarytype:'sum'
@@ -509,8 +578,8 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                         },{
                             name:'max',summarytype:'max'
                         },{
-                            name:'average',summarytype:'average',
-                        }]
+                            name:'average',summarytype:'average'
+                        },]
                     })
                 }],
                  dockedItems: [{
@@ -547,7 +616,8 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                             }
                         }
                     },{ 
-                        xtype: 'tbspacer',width: 10
+                        xtype: 'tbspacer',
+                        width: 10
                     },{
                         name: 'cancel',
                         text: 'Cancel',
@@ -559,7 +629,15 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                             }
                         },
                     }]
-                }]
+                }],
+                listeners:{
+                    beforerender: function( form, eOpts ){
+                        if(record.data.ColumnType == 'date'){
+                            form.down('textfield[name=Format]').setDisabled(false);
+                        }
+                    }
+                }
+
             }
 
         });
@@ -570,7 +648,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
             }, {
                 'type': 'number'
             }, {
-                'type': 'rownumber'
+                'type': 'rownumberer'
             },{
                 'type': 'date'
         });

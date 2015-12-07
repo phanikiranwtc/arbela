@@ -1,90 +1,102 @@
 {
-    "data": [
-        {
-            "showTitle": "on",
-            "titleStyle": "",
-            "name": "",
-            "colIdx": 0,
-            "blades": [
-                {
-                    "type": "Arbela.view.blades.InventoryChart"
-                }
-            ],
-            "updatedOn": "05:30:42 PM",
-            "columnWidth": 0.33
-        },
-        {
-            "showTitle": "on",
-            "titleStyle": "",
-            "name": "",
-            "colIdx": 1,
-            "blades": [
-                {
-                    "type": "Arbela.view.blades.Grid",
-                    "datasources": "S",
-                    "url": "http://arbela.walkingtree.in/resources/data/summary.json",
-                    "griddata": {
-                        "data": [
-                            {
-                                "name": "Lisa",
-                                "email": "lisa@simpsons.com",
-                                "phone": "555-111-1224",
-                                "id": "extModel229-1"
-                            },
-                            {
-                                "name": "Bart",
-                                "email": "bart@simpsons.com",
-                                "phone": "555-222-1234",
-                                "id": "extModel229-2"
-                            },
-                            {
-                                "name": "Homer",
-                                "email": "homer@simpsons.com",
-                                "phone": "555-222-1244",
-                                "id": "extModel229-3"
-                            },
-                            {
-                                "name": "Marge",
-                                "email": "marge@simpsons.com",
-                                "phone": "555-222-1254",
-                                "id": "extModel229-4"
-                            }
-                        ]
-                    }
-                }
-            ],
-            "updatedOn": "05:30:45 PM",
-            "columnWidth": 0.47564245810055866
-        },
-        {
-            "showTitle": "on",
-            "hideTitleBar": "on",
-            "titleStyle": "gjf",
-            "name": "fcb",
-            "colIdx": 2,
-            "blades": [
-                {
-                    "type": "Arbela.view.blades.InventoryChart"
-                }
-            ],
-            "updatedOn": "05:30:45 PM",
-            "columnWidth": 0.5
-        }
-    ],
-    "datasource": [{
-        "name": "S",
-        "type": "Arbela.view.datasources.GridData",
-        "updatedOn": "04:03:48 PM",
-        "id": "extModel94-1"
-    }, {
-        "name": "S",
-        "type": "Arbela.view.datasources.GridData",
-        "updatedOn": "04:03:54 PM",
-        "id": "extModel94-2"
-    }, {
-        "name": "S2",
-        "type": "Arbela.view.datasources.GridData",
-        "updatedOn": "06:37:20 PM",
-        "id": "extModel94-3"
-    }]
+	"data": [{
+		"showTitle": "on",
+		"hideTitleBar": "on",
+		"titleStyle": "height:50px;color:red;background-color:#6E4E5F",
+		"name": "DataSourceGrid",
+		"colIdx": 0,
+		"blades": [{
+			"type": "Arbela.view.blades.Grid",
+			"datasources": "SDF",
+			"url": "",
+			"summary": "on",
+			"griddata": {
+				"data": [{
+					"name": "Lisa",
+					"email": "lisa@simpsons.com",
+					"phone": "555-111-1224",
+					"id": "extModel393-1"
+				}, {
+					"name": "Bart",
+					"email": "bart@simpsons.com",
+					"phone": "555-222-1234",
+					"id": "extModel393-2"
+				}, {
+					"name": "Homer",
+					"email": "homer@simpsons.com",
+					"phone": "555-222-1244",
+					"id": "extModel393-3"
+				}, {
+					"name": "Marge",
+					"email": "marge@simpsons.com",
+					"phone": "555-222-1254",
+					"id": "extModel393-4"
+				}]
+			},
+			"settingsData": [{
+				"ColumnHeader": "name",
+				"DataIndex": "name",
+				"ColumnType": "gridcolumn",
+				"GroupField": false,
+				"SummaryType": "count",
+				"id": "extModel321-1"
+			}, {
+				"ColumnHeader": "email",
+				"DataIndex": "email",
+				"ColumnType": "gridcolumn",
+				"GroupField": false,
+				"id": "extModel321-2"
+			}, {
+				"ColumnHeader": "phone",
+				"DataIndex": "phone",
+				"ColumnType": "gridcolumn",
+				"GroupField": false,
+				"id": "extModel321-3"
+			}]
+		}],
+		"updatedOn": "06:15:16 PM"
+	}, {
+		"showTitle": "on",
+		"hideTitleBar": "on",
+		"titleStyle": "height:50px;background-color:#F0EF92;color:blue",
+		"name": "Trafic",
+		"colIdx": 1,
+		"blades": [{
+			"type": "Arbela.view.blades.Chart",
+			"url": "http://192.168.1.54/steven/Arbela-New/resources/data/inventorydata.json",
+			"charttype": "Cartesian",
+			"xaxistype": "category3d",
+			"xaxistitle": "Names",
+			"xaxisfield": "name",
+			"yaxisType": "category3d",
+			"yaxistitle": "Quantity",
+			"yaxisfield": "apples",
+			"showinteractions": "on",
+			"cartesianinteractions": "crosshair",
+			"polarinteractions": "",
+			"showlegend": "on",
+			"chartLegend": "bottom",
+			"cartesiantype0": "bar3d",
+			"polartype0": "",
+			"xfield0": "name",
+			"yfield0": "apples",
+			"fieldlabel0": "",
+			"legendtitle0": "Apples",
+			"style0": "color:red",
+			"seriesIndex": 0
+		}],
+		"updatedOn": "06:22:01 PM"
+	}],
+	"datasource": [{
+		"name": "SDF",
+		"type": "Arbela.view.datasources.GridData",
+		"updatedOn": "06:11:09 PM",
+		"id": "extModel94-1"
+	}, {
+		"name": "Sales",
+		"type": "Arbela.view.datasources.Sales",
+		"refreshfrequency": "5",
+		"updatedOn": "06:11:17 PM",
+		"id": "extModel94-2"
+	}]
 }
