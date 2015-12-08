@@ -3,7 +3,7 @@ Ext.define('Arbela.view.blades.Grid', {
         'Ext.view.View',
         'Ext.XTemplate',
         'Ext.scroll.Scroller',
-        'Arbela.view.common.GridToolbar',
+        'Arbela.view.blades.grid.GridToolbar',
         'Arbela.view.blades.grid.SettingsGrid',
         'Ext.grid.feature.Summary',
         'Ext.grid.feature.Grouping',
@@ -54,7 +54,7 @@ Ext.define('Arbela.view.blades.Grid', {
              value:'{enableTextFieldValue}'
         }
     },{
-        xtype:'commongridtoolbar'
+        xtype:'gridtoolbar'
     },{
         xtype:'fieldset',
         title:'Features',
@@ -307,6 +307,6 @@ Ext.define('Arbela.view.blades.Grid', {
         });
         grid.setStore(store);
         me.add(grid);
-    },
+    }
     
 });

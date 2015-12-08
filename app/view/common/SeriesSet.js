@@ -63,11 +63,11 @@ Ext.define('Arbela.view.common.SeriesSet', {
 					this.up().up().up('fieldset').down('fieldset[title=Y-Axis]').setHidden(true);
 					}
 				}
-			},
+			}
 		},{
 			xtype: 'textfield',
 			fieldLabel: 'xField',
-			name:'xfield'+appseries,
+			name:'xfield'+appseries
 		},{
 			xtype: 'textfield',
 			fieldLabel: 'yField',

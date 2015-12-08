@@ -1,10 +1,12 @@
-Ext.define('Arbela.view.common.GridToolbar', {
+Ext.define('Arbela.view.blades.grid.GridToolbar', {
     extend: 'Ext.toolbar.Toolbar',
-    alias: 'widget.commongridtoolbar',
+    alias: 'widget.gridtoolbar',
 
     requires: [
-        'Ext.button.Button'
+        'Ext.button.Button',
+        'Arbela.view.blades.grid.GridController'
     ],
+    controller: 'gridcontroller',
 
     layout: {
         type: 'hbox',
@@ -24,25 +26,14 @@ Ext.define('Arbela.view.common.GridToolbar', {
             xtype: 'button',
             name: 'loaddata',
             text: 'Load Meta-data',
-            disabled: true,
+            bind: {
+                disabled: '{!enableDataSource}'
+            },
             width: 110,
             listeners:{
                 click:'onLoadButtonClick'
             }
         }
-    ],
-
-    // afterRender: function() {
-    //     console.log('onAfterRender');
-    //     var items = this.items.items;
-    //     var l = items.length;
-
-    //     for (var i = 0; i < l; i++) {
-    //         this.relayEvents(items[i], ['click']);    
-    //     }
-
-    //     this.callParent(arguments);
-        
-    // }
+    ]
 
 });

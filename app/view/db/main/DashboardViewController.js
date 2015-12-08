@@ -47,7 +47,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     title: 'Settings',
                     items: settings[k],
                     layout:'anchor',
-                    defaults: {anchor: '100%'},
+                    defaults: {anchor: '100%'}
                 });
             }
         }
@@ -122,7 +122,12 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                         }
                         
                         datasrcCombo.setStore(store);
-                        setRef.down('button[text="Load Meta-data"]').enable();
+                        if(setRef.down('button[text="Load Meta-data"]')){
+
+                            setRef.down('button[text="Load Meta-data"]').enable();
+
+                        }
+
                     }
                 }else{
                     
@@ -252,7 +257,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 var card = me.getView().addView({
                     title : values.showTitle ? values.name : '',
                     type: 'card',
-                    columnIndex: values.colIdx,
+                    columnIndex: values.colIdx
                     //columnWidth:values.columnWidth
                 }, values.colIdx);
                    
@@ -269,7 +274,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 var card = me.getView().addView({
                     title : values.showTitle ? values.name : '',
                     type: 'card',
-                    columnIndex: values.colIdx,
+                    columnIndex: values.colIdx
                     //columnWidth:values.columnWidth
                 }, values.colIdx);
                 card.formvalues = values;
@@ -293,7 +298,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             var card = me.getView().addView({
                 title : values.showTitle ? values.name : '',
                 type: 'card',
-                columnIndex: me.columnIdx,
+                columnIndex: me.columnIdx
             }, 0);
             card.formvalues = values;
         }
@@ -398,7 +403,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                                 title: 'Custom Dashboard',
                                 message: 'You did not save dashboard before!',
                                 buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.ERROR,
+                                icon: Ext.Msg.ERROR
                             });
                         },
             scope:this

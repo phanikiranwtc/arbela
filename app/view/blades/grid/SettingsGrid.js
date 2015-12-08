@@ -1,16 +1,20 @@
 Ext.define('Arbela.view.blades.grid.SettingsGrid',{
+  requires:[
+    'Arbela.view.blades.grid.GridController'
+  ],
   extend:'Ext.grid.Panel',
   xtype: 'settingsgrid',
+  controller: 'gridcontroller',
   ui:'gridcss',
   itemId: 'columnGrid',
   columns:[{ 
     text: 'Column Header', 
     dataIndex: 'ColumnHeader',
-    menuDisabled: true, 
+    menuDisabled: true 
   },{ 
     text: 'Data Index', 
     dataIndex: 'DataIndex',
-    menuDisabled: true, 
+    menuDisabled: true 
   },{ 
     text: 'Column Type', 
     menuDisabled: true, 
@@ -35,7 +39,7 @@ Ext.define('Arbela.view.blades.grid.SettingsGrid',{
   },{
     text: 'Format', 
     dataIndex: 'Format',
-    menuDisabled: true, 
+    menuDisabled: true
   },{
     xtype: 'widgetcolumn',
     widget: {

@@ -38,13 +38,12 @@ Ext.define('Arbela.view.blades.SparklineLine', {
         items: [{
             xtype: 'sparklineline',
             lineColor: '#ffffff',
-            
             lineWidth: 1,
             margin: 20,
             height: 50,
             width: 90,
             name: 'sparkline',
-            values: [],
+            values: []
             //tipTpl : new Ext.XTemplate('Testing')
         }, {
             xtype: 'component',

@@ -43,7 +43,7 @@ Ext.define('Arbela.view.blades.Chart', {
         store: Ext.create('Ext.data.Store',{
             fields:['name'],
             data:[{
-                name:'Cartesian',
+                name:'Cartesian'
             },{
                 name:'Polar'
             }]
@@ -53,86 +53,86 @@ Ext.define('Arbela.view.blades.Chart', {
         valueField: 'name',
         forceSelection :true,
         listeners: {
-                change: function(combo, newValue, oldValue, eOpts){ 
-                    fieldSet = this.up('fieldset').down('fieldset[name = chartSeries]');
-                    l = fieldSet.items.length;
-                    var cartesianFlag;
-                    var polarFlag;
-                    if(newValue == 'Cartesian'){
-                        cartesianFlag = false;
-                        polarFlag = true;
-                    }else if(newValue =='Polar'){
-                        cartesianFlag = true;
-                        polarFlag = false;
-                    }
-                    if(l==1){
-                        
-                        this.up('bladeform').seriesIndex = 0;
-                        fieldSet.insert(l-1,{
-                                xtype: 'seriesset',
-                                cartesianFlag : cartesianFlag,
-                                polarFlag : polarFlag,
-                                seriesIndex : 0
-
-                                
-                        });
-                    }
-
+            change: function(combo, newValue, oldValue, eOpts){ 
+                fieldSet = this.up('fieldset').down('fieldset[name = chartSeries]');
+                l = fieldSet.items.length;
+                var cartesianFlag;
+                var polarFlag;
                 if(newValue == 'Cartesian'){
-                       var CartesianLen = fieldSet.items.length;
-                       var items = fieldSet.items.items;
-                       fieldSet.setHidden(false);
-                       for(var i = 0;i<=CartesianLen-1;i++){
-                           if(items[i].xtype == 'seriesset'){
-                               var count = i;
-                               var yfield = 'yfield'+count;
-                               var cartesiantype = 'cartesiantype'+count;
-                               var polartype = 'polartype'+count;
-                               var fieldlabel = 'fieldlabel'+count;
-                               items[i].down('textfield[name='+yfield+']').setHidden(false);
-                               items[i].down('combo[name='+cartesiantype+']').setHidden(false);
-                               items[i].down('combo[name='+polartype+']').setHidden(true);
-                               items[i].down('textfield[name='+fieldlabel+']').setHidden(true);
-                           }
-                       }
-                       this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(false);
-                       this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(false);
-                       this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
-                       this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
-                       var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
-                       if(interactionCheck && interactionCheck.checked) {
-                            interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(false);
-                            interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(true);
-                       }
-                   }else if(newValue == 'Polar'){
-                       var items = fieldSet.items.items;
-                       var polarLen = items.length;
-                       fieldSet.setHidden(false);
-                       for(var i = 0;i<=polarLen-1;i++){
-                           if(items[i].xtype == 'seriesset'){
-                               var count = i;
-                               var yfield = 'yfield'+count;
-                               var cartesiantype = 'cartesiantype'+count;
-                               var polartype = 'polartype'+count;
-                               var fieldlabel = 'fieldlabel'+count;
-                               items[i].down('textfield[name='+yfield+']').setHidden(true);
-                               items[i].down('combo[name='+cartesiantype+']').setHidden(true);
-                               items[i].down('combo[name='+polartype+']').setHidden(false);
-                               items[i].down('textfield[name='+fieldlabel+']').setHidden(false);
-                           }
-                       }
-                       this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(true);
-                       this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(true);
-                       this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
-                       this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
-                       var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
-                       if(interactionCheck && interactionCheck.checked) {
-                            interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(true);
-                            interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
+                    cartesianFlag = false;
+                    polarFlag = true;
+                }else if(newValue =='Polar'){
+                    cartesianFlag = true;
+                    polarFlag = false;
+                }
+                if(l==1){
+                    
+                    this.up('bladeform').seriesIndex = 0;
+                    fieldSet.insert(l-1,{
+                            xtype: 'seriesset',
+                            cartesianFlag : cartesianFlag,
+                            polarFlag : polarFlag,
+                            seriesIndex : 0
+
+                            
+                    });
+                }
+
+            if(newValue == 'Cartesian'){
+                   var CartesianLen = fieldSet.items.length;
+                   var items = fieldSet.items.items;
+                   fieldSet.setHidden(false);
+                   for(var i = 0;i<=CartesianLen-1;i++){
+                       if(items[i].xtype == 'seriesset'){
+                           var count = i;
+                           var yfield = 'yfield'+count;
+                           var cartesiantype = 'cartesiantype'+count;
+                           var polartype = 'polartype'+count;
+                           var fieldlabel = 'fieldlabel'+count;
+                           items[i].down('textfield[name='+yfield+']').setHidden(false);
+                           items[i].down('combo[name='+cartesiantype+']').setHidden(false);
+                           items[i].down('combo[name='+polartype+']').setHidden(true);
+                           items[i].down('textfield[name='+fieldlabel+']').setHidden(true);
                        }
                    }
-                }
-        },
+                   this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(false);
+                   this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(false);
+                   this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
+                   this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
+                   var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
+                   if(interactionCheck && interactionCheck.checked) {
+                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(false);
+                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(true);
+                   }
+               }else if(newValue == 'Polar'){
+                   var items = fieldSet.items.items;
+                   var polarLen = items.length;
+                   fieldSet.setHidden(false);
+                   for(var i = 0;i<=polarLen-1;i++){
+                       if(items[i].xtype == 'seriesset'){
+                           var count = i;
+                           var yfield = 'yfield'+count;
+                           var cartesiantype = 'cartesiantype'+count;
+                           var polartype = 'polartype'+count;
+                           var fieldlabel = 'fieldlabel'+count;
+                           items[i].down('textfield[name='+yfield+']').setHidden(true);
+                           items[i].down('combo[name='+cartesiantype+']').setHidden(true);
+                           items[i].down('combo[name='+polartype+']').setHidden(false);
+                           items[i].down('textfield[name='+fieldlabel+']').setHidden(false);
+                       }
+                   }
+                   this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(true);
+                   this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(true);
+                   this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
+                   this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
+                   var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
+                   if(interactionCheck && interactionCheck.checked) {
+                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(true);
+                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
+                   }
+               }
+            }
+        }
     },{
         xtype:'fieldset',
         title: 'Chart Series',
@@ -183,7 +183,7 @@ Ext.define('Arbela.view.blades.Chart', {
                     delButtonRef.enable();      
                 }
             }
-        }],
+        }]
     },{
         xtype:'fieldset',
         title: 'X-Axis',
@@ -243,7 +243,7 @@ Ext.define('Arbela.view.blades.Chart', {
             queryMode: 'local',
             displayField: 'name',
             valueField: 'type',
-            name:'yaxisType',
+            name:'yaxisType'
         },{
             xtype:"textfield",
             fieldLabel: "Title",
@@ -368,7 +368,7 @@ Ext.define('Arbela.view.blades.Chart', {
                         title: 'Request Failed',
                         message: 'Error: cannot load the specified URL',
                         buttons: Ext.Msg.OK,
-                        icon: Ext.Msg.ERROR,
+                        icon: Ext.Msg.ERROR
                     });
                 },
                 scope:this
@@ -378,7 +378,7 @@ Ext.define('Arbela.view.blades.Chart', {
                 title: 'Warning',
                 message: 'Please enter the Valid URL',
                 buttons: Ext.Msg.OK,
-                icon: Ext.Msg.WARNING,
+                icon: Ext.Msg.WARNING
             });
         }
     },
@@ -539,26 +539,23 @@ Ext.define('Arbela.view.blades.Chart', {
                        lineWidth: 1
                    }
                 });
-                } else {
-                    chartSeriesArr.push({
-                        type: dataCfg[polartype],
-                        xField: dataCfg[xfield],
-                        title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                        showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
-                        showMarkers : dataCfg[marker] == "on" ? true : false,
-                        marker : dataCfg[marker] == "on" ? true : false,
-                        style : Ext.dom.Element.parseStyles(dataCfg[style]),
-                        label: {
-                            field: dataCfg[fieldlabel],
-                            display: 'rotate'
-                        }
-                    });
-                 }
-            }
-            //chart.dataCfg = dataCfg;
+            } else {
+                chartSeriesArr.push({
+                    type: dataCfg[polartype],
+                    xField: dataCfg[xfield],
+                    title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
+                    showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
+                    showMarkers : dataCfg[marker] == "on" ? true : false,
+                    marker : dataCfg[marker] == "on" ? true : false,
+                    style : Ext.dom.Element.parseStyles(dataCfg[style]),
+                    label: {
+                        field: dataCfg[fieldlabel],
+                        display: 'rotate'
+                    }
+                });
+             }
+        }
             cart.setSeries(chartSeriesArr);
-            }
+        }
     }
 });
-
-//v.items.items[0].items.items[0].items.items[0].getViewModel().data
