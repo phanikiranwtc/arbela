@@ -182,7 +182,10 @@ Ext.define('Arbela.view.blades.Grid', {
                     grid.columnManager.headerCt.insert(0, column);
 
                 }else{
-
+                    var formate;
+                    if(items.Format){
+                        formate = 'date('+'"'+items.Format+'"'+')';
+                    }
                     var column = Ext.create('Ext.grid.column.Column', {
                         xtype: items.ColumnType,
                         dataIndex: items.DataIndex,
@@ -190,7 +193,7 @@ Ext.define('Arbela.view.blades.Grid', {
                         flex: 1,
                         menuDisabled: true,
                         summaryType:items.SummaryType,
-                        format: items.Format
+                        formatter:formate 
                     });
 
                     grid.columnManager.headerCt.insert(j, column);
@@ -290,7 +293,7 @@ Ext.define('Arbela.view.blades.Grid', {
     processingDynamicGrid:function(data, grid, fields){
         var me = this;
         var store = Ext.create('Ext.data.Store',{
-            pageSize:10,
+            //pageSize:10,
             data: data,
             fields: fields,
             groupField:grid.presentGroupField,
@@ -305,7 +308,8 @@ Ext.define('Arbela.view.blades.Grid', {
               }
             }
         });
-        grid.setStore(store);
+        grid.reconfigure(store);
+        //grid.setStore(store);
         me.add(grid);
     }
     

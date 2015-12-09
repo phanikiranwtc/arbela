@@ -2,9 +2,40 @@
 	"data": [{
 		"showTitle": "on",
 		"hideTitleBar": "on",
+		"titleStyle": "height:50px;color:gray;background-color:#00FFFF",
+		"name": "Sales by User",
+		"colIdx": 0,
+		"blades": [{
+			"type": "Arbela.view.blades.Chart",
+			"url": "http://192.168.1.54/steven/Arbela-Product/resources/data/inventorydata.json",
+			"charttype": "Polar",
+			"xaxistype": "",
+			"xaxistitle": "",
+			"xaxisfield": "",
+			"yaxisType": "",
+			"yaxistitle": "",
+			"yaxisfield": "",
+			"showinteractions": "on",
+			"cartesianinteractions": "",
+			"polarinteractions": "rotate",
+			"showlegend": "on",
+			"chartLegend": "bottom",
+			"cartesiantype0": "",
+			"polartype0": "pie3d",
+			"xfield0": "oranges",
+			"yfield0": "",
+			"fieldlabel0": "name",
+			"legendtitle0": "Oranges",
+			"style0": "color:green",
+			"seriesIndex": 0
+		}],
+		"updatedOn": "03:56:37 PM"
+	}, {
+		"showTitle": "on",
+		"hideTitleBar": "on",
 		"titleStyle": "height:50px;color:red;background-color:#6E4E5F",
 		"name": "DataSourceGrid",
-		"colIdx": 0,
+		"colIdx": 1,
 		"blades": [{
 			"type": "Arbela.view.blades.Grid",
 			"datasources": "SDF",
@@ -54,13 +85,13 @@
 				"id": "extModel321-3"
 			}]
 		}],
-		"updatedOn": "06:15:16 PM"
+		"updatedOn": "03:51:53 PM"
 	}, {
 		"showTitle": "on",
 		"hideTitleBar": "on",
 		"titleStyle": "height:50px;background-color:#F0EF92;color:blue",
 		"name": "Trafic",
-		"colIdx": 1,
+		"colIdx": 2,
 		"blades": [{
 			"type": "Arbela.view.blades.Chart",
 			"url": "http://192.168.1.54/steven/Arbela-New/resources/data/inventorydata.json",
@@ -85,7 +116,7 @@
 			"style0": "color:red",
 			"seriesIndex": 0
 		}],
-		"updatedOn": "06:22:01 PM"
+		"updatedOn": "03:51:53 PM"
 	}],
 	"datasource": [{
 		"name": "SDF",
