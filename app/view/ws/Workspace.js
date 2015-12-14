@@ -48,12 +48,12 @@ Ext.define('Arbela.view.ws.Workspace', {
             ui: 'navigation',
             activeTab: 1,
             cls:'workspace_tabpanel',
-            defaults:{
+            /**defaults:{
                 tabConfig: {
                     listeners:{
                         boxready: function(){
                             var tabPanel = this.up('tabpanel');
-                            
+                             
                             var editor = new Ext.Editor({
                                 updateEl: true,
                                 alignment: 'l-l',
@@ -66,15 +66,17 @@ Ext.define('Arbela.view.ws.Workspace', {
                                 listeners:{  
                                     complete:{
                                         scope:this,
-                                        fn:function( me, value, startValue, eOpts){
-                                            this.card.up('tabpanel').updateLayout();
+                                        fn:function( me, value, startValue, eOpts){ 
+                                            //this.card.up('tabpanel').down('dbdashboard').setTitle("<span class ='mytitle'>"+value+"</span>");
+                                            //this.card.up('tabpanel').updateLayout();
+                                            this.card.up('tabpanel').down('dbdashboard').setTitle("<span class ='mytitle'>"+value+"</span>");
                                         }
                                     }
                                 }
                             });
                             tabPanel.editor = editor;
 
-                            if(this.el.down('.mytitle')){
+                            if(this.el.down('.mytitle')){ 
                                 tabPanel.presentEditTab = this.el.down('.mytitle').dom;
                                 //editor.startEdit(this.el.down('.mytitle').dom);
                                 this.el.down('.mytitle').on('dblclick', function(e, t) {
@@ -83,9 +85,9 @@ Ext.define('Arbela.view.ws.Workspace', {
                                 });
                             }
                         }
-                    }
+                    } 
                 }
-            },
+            },**/
             items: [
                 {
                     xtype: 'panel',
@@ -103,27 +105,18 @@ Ext.define('Arbela.view.ws.Workspace', {
                     },
                     listeners: {
                         removedashboard: 'onRemoveDashboard'
+
                     }
                 }
             ],
             listeners: {
-                afterlayout:function(){
-                    var editor = this.editor;
-                    var tabBarElement = this.presentEditTab;
-
-                    if(editor && tabBarElement){
-
-                            editor.startEdit(tabBarElement);
-                            this.editor = null;
-                            this.presentEditTab = null;
-                    }
-                    
-                },
+                
                 beforetabchange: function(tabPnl, newCard, oldeCard) {
                     if (newCard.addTab) {
                         var count = tabPnl.items.getCount();
                         var db = Ext.create({
                             xtype: 'dbdashboard',
+                            flag:true,
                             bind: {
                                 datasources: {
                                     bindTo: '{datasources}',

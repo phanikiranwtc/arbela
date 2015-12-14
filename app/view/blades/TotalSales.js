@@ -65,12 +65,12 @@ Ext.define('Arbela.view.blades.TotalSales', {
 
     setBladeData: function(dataCfg) {
        console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
-       if(dataCfg.value1.length == 1 ){
+       /*if(dataCfg.value1.length == 1 ){
            var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
            if(tooltip ){
                tooltip.update(null);
            }
-       }
+       }*/
        this.down('sparklineline').setValues(dataCfg.value1);
        this.getViewModel().setData(dataCfg);
    }

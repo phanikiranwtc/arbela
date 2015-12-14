@@ -1,0 +1,161 @@
+{"aggregations": {
+      "wd_agg": {
+         "doc_count_error_upper_bound": 153,
+         "sum_other_doc_count": 118060,
+				 "buckets": [
+				            {
+				               "key": "Auto-Wares, Inc",
+				               "doc_count": 387257,
+				               "yearly_upToDate_sales": {
+				                  "buckets": [
+				                     {
+				                        "key": "2014-01-01-2014-09-18",
+				                        "from": 1388534400000,
+				                        "from_as_string": "2014-01-01",
+				                        "to": 1411036133608,
+				                        "to_as_string": "2014-09-18",
+				                        "doc_count": 0,
+				                        "netamt_sum": {
+				                           "value": 0
+				                        }
+				                     },
+				                     {
+				                        "key": "2015-01-01-2015-09-18",
+				                        "from": 1420070400000,
+				                        "from_as_string": "2015-01-01",
+				                        "to": 1442572133608,
+				                        "to_as_string": "2015-09-18",
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 31214219.293999713
+				                        }
+				                     }
+				                  ]
+				               },
+				               "yearly_net_sales": {
+				                  "buckets": [
+				                     {
+				                        "key_as_string": "2014-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 5704219.293999713
+				                        }
+				                     },
+				                     {
+				                        "key_as_string": "2013-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 104219.293999713
+				                        }
+				                     }
+				                  ]
+				               }
+				            },
+				            {
+				               "key": "Alliance, Inc",
+				               "doc_count": 387257,
+				               "yearly_upToDate_sales": {
+				                  "buckets": [
+				                     {
+				                        "key": "2014-01-01-2014-09-18",
+				                        "from": 1388534400000,
+				                        "from_as_string": "2014-01-01",
+				                        "to": 1411036133608,
+				                        "to_as_string": "2014-09-18",
+				                        "doc_count": 0,
+				                        "netamt_sum": {
+				                           "value": 0
+				                        }
+				                     },
+				                     {
+				                        "key": "2015-01-01-2015-09-18",
+				                        "from": 1420070400000,
+				                        "from_as_string": "2015-01-01",
+				                        "to": 1442572133608,
+				                        "to_as_string": "2015-09-18",
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 00014219.293999713
+				                        }
+				                     }
+				                  ]
+				               },
+				               "yearly_net_sales": {
+				                  "buckets": [
+				                     {
+				                        "key_as_string": "2014-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 65614219.293999713
+				                        }
+				                     },
+				                     {
+				                        "key_as_string": "2013-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 11114219.293999713
+				                        }
+				                     }
+				                  ]
+				               }
+				            },				            {
+				               "key": "WalkingTree, Inc",
+				               "doc_count": 387257,
+				               "yearly_upToDate_sales": {
+				                  "buckets": [
+				                     {
+				                        "key": "2014-01-01-2014-09-18",
+				                        "from": 1388534400000,
+				                        "from_as_string": "2014-01-01",
+				                        "to": 1411036133608,
+				                        "to_as_string": "2014-09-18",
+				                        "doc_count": 0,
+				                        "netamt_sum": {
+				                           "value": 0
+				                        }
+				                     },
+				                     {
+				                        "key": "2015-01-01-2015-09-18",
+				                        "from": 1420070400000,
+				                        "from_as_string": "2015-01-01",
+				                        "to": 1442572133608,
+				                        "to_as_string": "2015-09-18",
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 123219.293999713
+				                        }
+				                     }
+				                  ]
+				               },
+				               "yearly_net_sales": {
+				                  "buckets": [
+				                     {
+				                        "key_as_string": "2014-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 78914219.293999713
+				                        }
+				                     },
+				                     {
+				                        "key_as_string": "2013-01-01",
+				                        "key": 1420070400000,
+				                        "doc_count": 387257,
+				                        "netamt_sum": {
+				                           "value": 96514219.293999713
+				                        }
+				                     }
+				                  ]
+				               }
+				            }
+
+										
+				]
+				}
+         
+      }
+		}

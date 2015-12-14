@@ -13,7 +13,7 @@ Ext.define('Arbela.view.db.main.Dashboard', {
         type: 'dbdashboard'
     },
     config: {
-        title:'<span class ="mytitle">My Dashboard</span>',
+        title:'My Dashboard',
         scrollable: true,
         maxColumns: 3,
         closable: true,
@@ -48,6 +48,33 @@ Ext.define('Arbela.view.db.main.Dashboard', {
     },
 
     listeners: {
+        boxready:function(){
+                        var editor = new Ext.Editor({
+                                updateEl: true,
+                                alignment: 'l-l',
+                                autoSize: {
+                                   width: 'boundEl'
+                                },
+                                field: {
+                                   xtype: 'textfield'
+                                },
+                                listeners:{  
+                                    complete:{
+                                        scope:this,
+                                        fn:function( me, value, startValue, eOpts){
+                                            this.setTitle(value);
+                                        }
+                                    }
+                                }
+                            });
+                           
+                                this.tab.el.down('.x-tab-inner').on('dblclick', function(e, t) {
+                                    editor.startEdit(t);
+                                    editor.field.focus(50, true);
+                                });
+                                editor.startEdit(this.tab.el.down('.x-tab-inner'));
+
+                        },
         'beforerender':'settingCards'
     }
 

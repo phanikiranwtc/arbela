@@ -309,10 +309,11 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         }
     },
     
-    onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) { 
+    onToolbarClonedashboard: function(tb, btn, e, eOpts, eventOptions) {  
          
         //alert('Clone Dashboard');
         var v = this.getView();
+        var title = v.getTitle();
         var store = this.getView().up('wsworkspace').down('dslist').getStore();
         var dataLength = store.data.length;
         var dataSourceArray = [];
@@ -376,7 +377,24 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             }
             }
             var jsonString = JSON.stringify(jsonObj);
-            Ext.Msg.alert("INFO",jsonString);
+            // Ext.Ajax.request({
+            //     actionMethods:'POST',
+            //     url : "http://192.168.1.54/steven/json.php",
+            //     data: {
+            //         json:jsonString,
+            //     }
+            // },scope=this);
+            Ext.Ajax.request({
+                url: 'http://192.168.1.54/steven/Arbela-Product/json.php',
+                method: 'POST',
+                //Send the query as the message body
+                //jsonData: jsonStr,
+                params: {
+                    json: jsonString,
+                    title:title
+                }
+            });
+            //Ext.Msg.alert("INFO",jsonString);
         }else{
             Ext.Msg.alert("INFO",'We could not save your data because you did not provide any cards on dashboard');
         }
@@ -388,10 +406,15 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         v.fireEvent('removedashboard', v);
     },
 
-    settingCards: function(){  
+    settingCards: function(board){  
         // 
+        if(!board.flag){
+        var str = window.location.href;
+        var db = str.indexOf('=')+1;
+        var dashboardName = str.substr(db);
+        board.setTitle(dashboardName);
         Ext.Ajax.request({
-            url: "resources/data/bladesdata.json",
+            url: "resources/data/"+dashboardName+".json",
             //params: params,
             success: function(response){
                 var me = this,
@@ -408,6 +431,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                         },
             scope:this
         },this);
+        }
     },
     settingCardsData: function(responseData) {  
         var cardsData = responseData.data,
