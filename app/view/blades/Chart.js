@@ -20,10 +20,11 @@ Ext.define('Arbela.view.blades.Chart', {
         'Ext.chart.series.Gauge',
         'Ext.chart.series.Line',
         'Ext.chart.series.Pie3D',
-        'Arbela.view.common.SeriesSet'
+        'Ext.chart.series.Scatter',
+        'Arbela.view.blades.chart.SeriesSet',
+        'Arbela.view.blades.chart.SettingsChart'
     ],
     extend: 'Arbela.view.api.Blade',
-
     statics: {
         niceName: 'Chart',
         desc: 'chart showing user-wise inventory'
@@ -53,304 +54,13 @@ Ext.define('Arbela.view.blades.Chart', {
         valueField: 'name',
         forceSelection :true,
         listeners: {
-            change: function(combo, newValue, oldValue, eOpts){ 
-                fieldSet = this.up('fieldset').down('fieldset[name = chartSeries]');
-                l = fieldSet.items.length;
-                var cartesianFlag;
-                var polarFlag;
-                if(newValue == 'Cartesian'){
-                    cartesianFlag = false;
-                    polarFlag = true;
-                }else if(newValue =='Polar'){
-                    cartesianFlag = true;
-                    polarFlag = false;
-                }
-                if(l==1){
-                    
-                    this.up('bladeform').seriesIndex = 0;
-                    fieldSet.insert(l-1,{
-                            xtype: 'seriesset',
-                            cartesianFlag : cartesianFlag,
-                            polarFlag : polarFlag,
-                            seriesIndex : 0
-
-                            
-                    });
-                }
-
-            if(newValue == 'Cartesian'){
-                   var CartesianLen = fieldSet.items.length;
-                   var items = fieldSet.items.items;
-                   fieldSet.setHidden(false);
-                   for(var i = 0;i<=CartesianLen-1;i++){
-                       if(items[i].xtype == 'seriesset'){
-                           var count = i;
-                           var yfield = 'yfield'+count;
-                           var cartesiantype = 'cartesiantype'+count;
-                           var polartype = 'polartype'+count;
-                           var fieldlabel = 'fieldlabel'+count;
-                           items[i].down('textfield[name='+yfield+']').setHidden(false);
-                           items[i].down('combo[name='+cartesiantype+']').setHidden(false);
-                           items[i].down('combo[name='+polartype+']').setHidden(true);
-                           items[i].down('textfield[name='+fieldlabel+']').setHidden(true);
-                       }
-                   }
-                   this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(false);
-                   this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(false);
-                   this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
-                   this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
-                   var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
-                   if(interactionCheck && interactionCheck.checked) {
-                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(false);
-                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(true);
-                   }
-               }else if(newValue == 'Polar'){
-                   var items = fieldSet.items.items;
-                   var polarLen = items.length;
-                   fieldSet.setHidden(false);
-                   for(var i = 0;i<=polarLen-1;i++){
-                       if(items[i].xtype == 'seriesset'){
-                           var count = i;
-                           var yfield = 'yfield'+count;
-                           var cartesiantype = 'cartesiantype'+count;
-                           var polartype = 'polartype'+count;
-                           var fieldlabel = 'fieldlabel'+count;
-                           items[i].down('textfield[name='+yfield+']').setHidden(true);
-                           items[i].down('combo[name='+cartesiantype+']').setHidden(true);
-                           items[i].down('combo[name='+polartype+']').setHidden(false);
-                           items[i].down('textfield[name='+fieldlabel+']').setHidden(false);
-                       }
-                   }
-                   this.up('fieldset').down('fieldset[title=X-Axis]').setHidden(true);
-                   this.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(true);
-                   this.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
-                   this.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
-                   var interactionCheck = this.up('fieldset').down('checkbox[name=showinteractions]');
-                   if(interactionCheck && interactionCheck.checked) {
-                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(true);
-                        interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
-                   }
-               }
-            }
+            change :'onChartTypeComboChange'
         }
     },{
-        xtype:'fieldset',
-        title: 'Chart Series',
-        name : 'chartSeries',
-        hidden :true,
-        items: [{
-            xtype: 'button',
-            text: 'Add Series',
-            cls: 'add-blade-btn',
-            icon: 'resources/images/add-16.png',
-            charttype : '',
-            ui: 'plain',
-            name : 'addSeries',
-            margin: '0 0 5 0',
-            handler: function(button,type){
-                var chartType = (this.up().up('fieldset').down('combobox').getValue())||this.up('bladeform').charttype;
-                fieldSet = this.up('fieldset'),
-                l = fieldSet.items.length;
-                var cartesianFlag;
-                var polarFlag;
-                if(chartType == 'Cartesian'){
-                    cartesianFlag = false;
-                    polarFlag = true;
-                }else if(chartType=='Polar'){
-                    cartesianFlag = true;
-                    polarFlag = false;
-                }
-                var seriesStartIndex = 1;
-                if(this.up('dbnewcard') && this.up('dbnewcard').originalContainerRef && !this.up('bladeform').seriesIndex && this.up('bladeform').seriesIndex != 0 ) {
-                        
-                        seriesStartIndex = 0;
-
-                }
-
-                this.up('bladeform').seriesIndex = this.up('bladeform').seriesIndex ? this.up('bladeform').seriesIndex+1 : seriesStartIndex ;
-                
-                fieldSet.insert(l-1,{
-                        xtype: 'seriesset',
-                        cartesianFlag : cartesianFlag,
-                        polarFlag : polarFlag,
-                        seriesIndex : this.up('bladeform').seriesIndex
-                        
-                });
-                var seriesLen = fieldSet.items.length;                 
-                for(var i=0; i<=seriesLen-2; i++){      
-                    var fielsetRef = fieldSet.items.items[i];       
-                    var delButtonRef = fielsetRef.down('button[text="Delete Series"]');     
-                    delButtonRef.enable();      
-                }
-            }
-        }]
-    },{
-        xtype:'fieldset',
-        title: 'X-Axis',
-        hidden :true,
-        items: [{
-            xtype: 'combobox',
-            fieldLabel: 'Type',
-            forceSelection :true,
-            store: Ext.create('Ext.data.Store', {
-                fields: ['name','type'],
-                data : [
-                    {name:"Category",type:"category"},
-                    {name:"Category3d",type:"category3d"},
-                    {name:"Numeric",type:"numeric"},
-                    {name:"Numeric3d",type:"numeric3d"},
-                    {name:"Time",type:"time"},
-                    {name:"Time3d",type:"time3d"}
-                ]
-            }),
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'type',
-            name:'xaxistype'
-        },{
-            xtype:"textfield",
-            fieldLabel: "Title",
-            name:'xaxistitle',
-            emptyText: "Enter the title for X-Axis"
-        },{
-            xtype: 'textfield',
-            fieldLabel: 'Field',
-            name:'xaxisfield'
-        },{
-            xtype: 'checkbox',
-            fieldLabel: 'Show Grid',
-            name:'xaxisgrid'
-        }]
-    },{
-        xtype:'fieldset',
-        title: 'Y-Axis',
-        hidden :true,
-        items: [{
-            xtype: 'combobox',
-            fieldLabel: 'Type',
-            forceSelection :true,
-            store: Ext.create('Ext.data.Store', {
-                fields: ['name','type'],
-                data : [
-                    {name:"Category",type:"category"},
-                    {name:"Category3d",type:"category3d"},
-                    {name:"Numeric",type:"numeric"},
-                    {name:"Numeric3d",type:"numeric3d"},
-                    {name:"Time",type:"time"},
-                    {name:"Time3d",type:"time3d"}
-                ]
-            }),
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'type',
-            name:'yaxisType'
-        },{
-            xtype:"textfield",
-            fieldLabel: "Title",
-            name:'yaxistitle',
-            emptyText: "Enter the title for Y-Axis"
-        },{
-            xtype: 'textfield',
-            fieldLabel: 'Field',
-            name:'yaxisfield'
-        },{
-            xtype: 'checkbox',
-            fieldLabel: 'Show Grid',
-            name:'yaxisgrid'
-        }]
-    },{
-        xtype:'fieldset',
-        title: 'Interactions',
-        hidden :true,
-        items: [{
-            xtype: 'checkbox',
-            fieldLabel: 'show Interactions',
-            name : 'showinteractions',
-            forceSelection :true,
-            listeners : {
-                change : function( field, newValue, oldValue, eOpts ) {
-                    var fieldset = field.up('fieldset[title=Interactions]');
-                    var settings = fieldset.up('fieldset[title=Settings]');
-                    var value = settings.down('combobox[name=charttype]').value;
-                    if(field.checked){
-                        if(value == "Cartesian") {
-                            fieldset.down('combobox[name=cartesianinteractions]').setHidden(false);
-                        } else {
-                            fieldset.down('combobox[name=polarinteractions]').setHidden(false);
-                        }
-                    } else {
-                        fieldset.down('combobox[name=cartesianinteractions]').setHidden(true);
-                        fieldset.down('combobox[name=polarinteractions]').setHidden(true);
-                    }
-                }
-            }
-        },{
-            xtype: 'combobox',
-            fieldLabel: 'Type',
-            hidden : true,
-            store: Ext.create('Ext.data.Store', {
-            fields: ['name','type'],
-            data : [
-                {name:"Crosshair",type:"crosshair"},
-                {name:"Crosszoom",type:"crosszoom"},
-                {name:"Panzoom",type:"panzoom"}
-            ]
-            }),
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'type',
-            forceSelection :true,
-            name : 'cartesianinteractions'
-        },{
-            xtype: 'combobox',
-            fieldLabel: 'Type',
-            hidden : true,
-            store: Ext.create('Ext.data.Store', {
-            fields: ['name','type'],
-            data : [
-                {name:"Rotate",type:"rotate"},
-                {name:"RotatePie3d",type:"rotatePie3d"}
-            ]
-            }),
-            forceSelection :true,
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'type',
-            name : 'polarinteractions'
-        }]
-    },{
-        xtype:'fieldset',
-        title: 'Legend',
-        hidden :true,
-        items : [{
-            xtype: 'checkbox',
-            fieldLabel: 'show Legend',
-            reference : 'legendcheck',
-            name : 'showlegend'
-        },{
-            xtype: 'combobox',
-            fieldLabel: 'Legend Position',
-            bind : {
-                hidden : '{!legendcheck.checked}'
-            },
-            store: Ext.create('Ext.data.Store', {
-            fields: ['name','type'],
-            data : [
-                {name:"Bottom",type:"bottom"},
-                {name:"Top",type:"top"},
-                {name:"Right",type:"right"},
-                {name:"Left",type:"left"}
-            ]
-            }),
-            forceSelection :true,
-            queryMode: 'local',
-            displayField: 'name',
-            valueField: 'type',
-            name : 'chartLegend'
-        }]
+        xtype: 'settingschart'
     }],
     config: {
-       // height: 400
+        layout:'fit'
     },
     setBladeData: function(dataCfg) {
         var url = dataCfg.url;
@@ -360,8 +70,8 @@ Ext.define('Arbela.view.blades.Chart', {
                 method: 'POST',
                 success: function(response){
                     var me = this,
-                        responseData = Ext.decode(response.responseText);
-                    me.settingBarData(dataCfg,responseData);
+                    responseData = Ext.decode(response.responseText);
+                    me.processingCustomChart(dataCfg,responseData);
                 },
                 failure: function(error) {
                     return Ext.Msg.show({
@@ -382,27 +92,29 @@ Ext.define('Arbela.view.blades.Chart', {
             });
         }
     },
-    settingBarData: function(dataCfg,responseData){
+    processingCustomChart: function(dataCfg,responseData){
         
         if(dataCfg.charttype == 'Cartesian'){
             var chartSeries = 'cartesian';
             this.add({
                 xtype: chartSeries,
                 height: 350,
-                innerPadding: '0 10 0 10'
+                innerPadding: '0 10 0 10'//,
+                //theme : dataCfg.theme
             });
         }else if(dataCfg.charttype == 'Polar'){
             var chartSeries = 'polar';
             this.add({
                 xtype: chartSeries,
-                height: 350,
-                width: 350,
-                padding: 5,
+                height: 400,
+                width: 400,
+                padding: 20,
+                //theme:dataCfg.theme,
                 store: "", 
-                series: "", 
-                interactions: 'rotate'
+                series: ""
             });
         }
+
         var fieldArray = [];
         var a = responseData.data[0];
         var yAxisFields = dataCfg.yaxisfield;
@@ -414,11 +126,21 @@ Ext.define('Arbela.view.blades.Chart', {
         chartStore.setData(responseData.data);
         var seriesCount = dataCfg.seriesIndex;
         var chartSeriesArr=[];
+
+         /************************** Cartesian Chart feature *************************************/
+
         if(chartSeries == "cartesian"){
             var cart = this.down('cartesian');
             cart.setStore(chartStore);
             if(dataCfg.showinteractions == "on"){
-                cart.setInteractions(dataCfg.cartesianinteractions);
+                if(dataCfg.cartesianinteractions == 'panzoom'){
+                    cart.setInteractions({
+                        type:dataCfg.cartesianinteractions,
+                        zoomOnPanGesture:true
+                    });
+                }else{
+                    cart.setInteractions(dataCfg.cartesianinteractions);
+                }
             }
             if(dataCfg.showlegend == "on"){
                 cart.setLegend({docked:dataCfg.chartLegend});
@@ -446,61 +168,103 @@ Ext.define('Arbela.view.blades.Chart', {
                     grid : dataCfg.yaxisgrid=="on" ? true :false
                 }
             ]);
+            /************************* Implementing delete series feature ********************************/
+
+            var loopseriesIndexValue = 0;
             for(var i=0; i<=seriesCount; i++){
-                var cartesiantype = 'cartesiantype'+i;
-                var xfield = 'xfield'+i;
-                var yfield = 'yfield'+i;
-                var legendtitle = 'legendtitle'+i;
-                var marker = 'marker'+i;
-                var style = 'style'+i;
+                while(!dataCfg.hasOwnProperty('xfield'+loopseriesIndexValue)){
+                    if(loopseriesIndexValue>100){
+                    }
+                   loopseriesIndexValue++;
+                }
+                
+                var cartesiantype = 'cartesiantype'+loopseriesIndexValue;
+                var xfield = 'xfield'+loopseriesIndexValue;
+                var yfield = 'yfield'+loopseriesIndexValue;
+                var legendtitle = 'legendtitle'+loopseriesIndexValue;
+                var marker = 'marker'+loopseriesIndexValue;
+                var style = 'style'+loopseriesIndexValue;
+                loopseriesIndexValue++;
+
+            /************************** Done delete series feature *************************************/
+
                 if(dataCfg[cartesiantype]){
                     chartSeriesArr.push({
                         type: dataCfg[cartesiantype],
                         stacked : false,
                         xField: dataCfg[xfield],
                         yField: dataCfg[yfield],
-                        title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                        showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
+                        title : dataCfg.showlegend ? dataCfg[yfield]:null,
+                        showInLegend : dataCfg.showlegend ? true : false,
                         showMarkers : dataCfg[marker] == "on" ? true : false,
                         marker : dataCfg[marker] == "on" ? true : false,
-                        //style : eval('({' + dataCfg[style] + '})')
-                        style : Ext.dom.Element.parseStyles(dataCfg[style])
+                       style : Ext.Element.parseStyles(dataCfg[style])
                     });
                 }
             }
             cart.setSeries(chartSeriesArr);
             
-        }else if(chartSeries == "polar"){
+        } 
+
+         /************************** Polar Chart feature *************************************/
+
+        else if(chartSeries == "polar"){
             var cart = this.down('polar');
             cart.setStore(chartStore);
             if(dataCfg.showinteractions == "on"){
                 cart.setInteractions(dataCfg.polarinteractions);
             }
             if(dataCfg.showlegend == "on"){
-                cart.setLegend({docked:dataCfg.chartLegend});
+                cart.setLegend({
+                    docked:dataCfg.chartLegend
+                });
             }
+
+            /************************* Implementing delete series feature ********************************/
+            var loopseriesIndexValue = 0;
             for(var i=0; i<=seriesCount; i++){
-                var polartype = 'polartype'+i;
-                var xfield = 'xfield'+i;
-                var yfield = 'yfield'+i;
-                var legendtitle = 'legendtitle'+i;
-                var marker = 'marker'+i;
-                var fieldlabel = 'fieldlabel'+i;
-                var style = 'style'+i;
+                while(!dataCfg.hasOwnProperty('xfield'+loopseriesIndexValue)){
+                    if(loopseriesIndexValue>100){
+                    }
+                   loopseriesIndexValue++;
+                }
+                
+                var polartype = 'polartype'+loopseriesIndexValue;
+                var xfield = 'xfield'+loopseriesIndexValue;
+                var yfield = 'yfield'+loopseriesIndexValue;
+                var legendtitle = 'legendtitle'+loopseriesIndexValue;
+                var marker = 'marker'+loopseriesIndexValue;
+                var fieldlabel = 'fieldlabel'+loopseriesIndexValue;
+                var style = 'style'+loopseriesIndexValue;
+                var needlecolor = 'needlecolor'+loopseriesIndexValue;
+                var sectorscolor = 'sectorscolor'+loopseriesIndexValue;
+                loopseriesIndexValue++;
+            /************************** Done delete series feature *************************************/
+
+             /************************** Gauge series feature *************************************/
                 if(dataCfg[polartype] == 'gauge'){
                     chartSeriesArr.push({
                     type: 'gauge',
-                    colors: ['#1F6D91', '#90BCC9'],
+                    colors: [dataCfg[needlecolor],dataCfg[sectorscolor]],//['#1F6D91', '#90BCC9'],
                     field: dataCfg[xfield],
-                    title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                    showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
-                    showMarkers : dataCfg[marker] == "on" ? true : false,
-                    marker : dataCfg[marker] == "on" ? true : false,
-                    style : Ext.dom.Element.parseStyles(dataCfg[style]),
                     needle: true,
                     donut: 30
                     });
-                } else if(dataCfg[polartype] == 'radar'){
+                    cart.setAxes({
+                        title: {
+                            text: dataCfg.xaxistitle,
+                            fontSize: 15
+                        },
+                        type: dataCfg.xaxistype,
+                        position: 'gauge'
+                    });
+
+                } 
+
+                /************************** Radar series feature *************************************/
+
+                else if(dataCfg[polartype] == 'radar'){
+
                     cart.setAxes([
                     {
                         type:dataCfg.xaxistype,
@@ -526,36 +290,55 @@ Ext.define('Arbela.view.blades.Chart', {
                     type: dataCfg[polartype],
                     xField: dataCfg[xfield],
                     yField: dataCfg[yfield],
-                    title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                    showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
-                    showMarkers : dataCfg[marker] == "on" ? true : false,
-                    marker : dataCfg[marker] == "on" ? true : false,
-                    style : Ext.dom.Element.parseStyles(dataCfg[style]),
-                    style: {
-                       fill: '#388FAD',
-                       fillOpacity: .1,
-                       stroke: '#388FAD',
-                       strokeOpacity: .8,
-                       lineWidth: 1
-                   }
-                });
-            } else {
-                chartSeriesArr.push({
-                    type: dataCfg[polartype],
-                    xField: dataCfg[xfield],
-                    title : dataCfg.showlegend ? dataCfg[legendtitle]:null,
-                    showInLegend : dataCfg[legendtitle] && dataCfg.showlegend ? true : false,
                     showMarkers : dataCfg[marker] == "on" ? true : false,
                     marker : dataCfg[marker] == "on" ? true : false,
                     style : Ext.dom.Element.parseStyles(dataCfg[style]),
                     label: {
-                        field: dataCfg[fieldlabel],
-                        display: 'rotate'
+                        display: 'rotate',
+                        calloutLine: {
+                            length: 30,
+                            width: 3,
+                            // specifying 'color' is also possible here
+                        },
+                        renderer:function(text){
+                           return Ext.String.ellipsis(text,20) 
+                        }
                     }
                 });
+                
+            } 
+
+             /************************** Pie & Pie3D series feature *************************************/
+
+            else {
+                chartSeriesArr.push({
+                    donut: 30,
+                    type: dataCfg[polartype],
+                    xField: dataCfg[xfield],
+                    showInLegend : dataCfg.showlegend ? true : false,
+                    showMarkers : dataCfg[marker] == "on" ? true : false,
+                    marker : dataCfg[marker] == "on" ? true : false,
+                    subStyle : Ext.Element.parseStyles(dataCfg[style]),
+                    label: {
+                        field: dataCfg[fieldlabel],
+                        display: 'rotate',
+                        calloutLine: {
+                            length: 30,
+                            width: 3
+                            // specifying 'color' is also possible here
+                        },
+                        renderer:function(text){
+                           return Ext.String.ellipsis(text,20) 
+                        }
+                    }
+                });
+                //cart.innerPadding =20;
              }
+             cart.innerPadding =20;
         }
             cart.setSeries(chartSeriesArr);
+            cart.body.dom.style.marginTop ="15px";
+            cart.body.dom.style.marginBottom = "15px";
         }
     }
 });

@@ -5,7 +5,8 @@ Ext.define('Arbela.view.common.BladePanel', {
 	// name: 'bladeform',
 
 	bodyPadding: 10,
-	// height: 80,
+	 //height: 180,
+     //scrollable: 'vertical',
 	cls: 'blade-form',
 
 	config: {
@@ -30,6 +31,8 @@ Ext.define('Arbela.view.common.BladePanel', {
     frame: true,
     title: 'Blade',
     store: null,
+    layout:'anchor',
+    defaults: {anchor: '100%'},
     publishes: ['store'],
     reference: 'bladeform',
     items: {

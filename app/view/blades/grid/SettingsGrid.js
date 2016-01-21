@@ -7,6 +7,7 @@ Ext.define('Arbela.view.blades.grid.SettingsGrid',{
   controller: 'gridcontroller',
   ui:'gridcss',
   itemId: 'columnGrid',
+  layout:'fit',
   columns:[{ 
     text: 'Column Header', 
     dataIndex: 'ColumnHeader',
@@ -57,16 +58,12 @@ Ext.define('Arbela.view.blades.grid.SettingsGrid',{
     text:'Group Field',
     dataIndex:'GroupField',
     menuDisabled: true, 
-    bind:{
-      hidden:'{enableGroupColumns}'
-    }
+    hidden:true
   },{
       text:'Summary Type',
       dataIndex:'SummaryType',
       menuDisabled: true,
-      bind:{
-        hidden:'{enableSummeryColumns}'
-      }
+      hidden: true
   },{
       xtype: 'actioncolumn',
       //width: 0,
@@ -93,9 +90,9 @@ Ext.define('Arbela.view.blades.grid.SettingsGrid',{
       var store = Ext.create('Ext.data.Store',{
         storeId: 'settingGridStore'+count,
         fields: [
-        'ColumnHeader', 
-        'DataIndex','ColumnType',
-        'Format',
+          'ColumnHeader', 
+          'DataIndex','ColumnType',
+          'Format',
         {
            name : 'GroupField',
            defaultValue: false,

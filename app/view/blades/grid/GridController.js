@@ -103,8 +103,10 @@ Ext.define('Arbela.view.blades.grid.GridController', {
                     GroupField:undefined,
                     SummaryType:undefined
                 }
-                colgrid.add(records);
+                gridArr.push(records);
+                //colgrid.loadData(records , false);
             }
+            colgrid.loadData(gridArr , false);
         }
     },
 

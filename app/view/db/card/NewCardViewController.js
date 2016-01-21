@@ -7,12 +7,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         if(klass !== undefined){
             var md = (Ext.create(klass, {})).getSettings();
         }
-        if(combo.fieldLabel == "DataSources"){
-            var loadDataRef = combo.up().down('button[name="loaddata"]');
-            if(loadDataRef){
-                combo.up().down('button[name="loaddata"]').enable();
-            }
-        }
+        
         console.log('Meta Data: ', md);
 
         var win = this.getView();
@@ -34,52 +29,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     items: md,
                     layout:'anchor',
                     defaults: {anchor: '100%'},
-                    viewModel:{
-                        data: {
-                            summary: false,
-                            grouping:false,
-                            groupingsummary:false,
-                            summaryType:true,
-                            groupField:true,
-                            datasources:null
-                        },
-
-                        formulas: {
-                            enablegroupingsummary: function (get) {
-
-                                return !(get('summary') || get('grouping'));
-                            },
-                            enableSummeryColumns: function(get){
-                                if(get('summary') || get('groupingsummary')){
-                                    return false;
-                                }else{
-                                    return true;
-                                }
-                            },
-                            enableGroupColumns: function(get){
-                                if(get('groupingsummary') || get('grouping')){
-                                    return false;
-                                }else{
-                                    return true;
-                                }
-                            },
-                            enableDataSource: function(get){
-                                if(get('datasources') !== null){
-                                    return true;
-                                }else{
-                                    return false;
-                                }
-                            },
-                            enableTextFieldValue: function(get){
-                                if(get('datasources') == null){
-                                    return Arbela.util.Utility.api.summary;
-                                }else{
-                                    return null;
-                                }
-                            }
-
-                        }
-                    } ,
                     listeners: {
                         afterrender: {
                             fn: function(cmp) {
@@ -117,7 +66,24 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                 }
                 if(md[i].xtype == "settingsgrid"){
                    // md[i].store.removeAll();
-                    combo.setStore(store);
+                   var orField = form.down('fieldset').down('label[text=OR]');
+                   var urlField = form.down('fieldset').down('textfield[name=url]');
+                    var formItems = this.getView().down('form').items,
+                        formItemsLen = formItems.length;
+                   if(combo.getStore().data.items.length == 0){ 
+                        (store.data.items.length) ? combo.setStore(store) : combo.hide() && orField.hide(); //&& urlField.setValue(null)&& urlField.setDisabled(true); 
+                    }else{
+                        
+                        for(var i=0; i<= formItemsLen-1; i++){
+                            if(formItems.getAt(i).xtype == "bladeform"){
+                                var editBlade = formItems.getAt(i),
+                                    empDataSrc = editBlade.down('fieldset').down('combo[fieldLabel="DataSources"]');
+                                if(empDataSrc.getStore().getData().length == 0){
+                                    empDataSrc.setStore(store);
+                                }
+                            }
+                        }
+                    }
                 } 
             }
         }
@@ -126,6 +92,29 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     onComboboxChange: function(combo, newVal, oldVal, eOpts) {  
         var record = combo.getStore().findRecord('klass', newVal);
+        if(combo.up().up().down('combo[fieldLabel=Type]').getValue() == "Arbela.view.blades.Grid"){
+
+            if(combo.fieldLabel == "DataSources"){
+                if (combo.getValue() == null){
+                    combo.forceSelection = false;
+                    combo.setDisabled(true);
+                    combo.up().down('label[text=OR]').setHidden(false);
+                    combo.up().down('textfield[name=url]').setDisabled(false);
+                    combo.up().down('textfield[name=url]').setValue(Arbela.util.Utility.api.summary)
+                    
+                }else{
+                    combo.up().down('label[text=OR]').setHidden(true);
+                    combo.up().down('textfield[name=url]').setDisabled(true);
+                    combo.up().down('textfield[name=url]').setValue(null);
+
+                }
+                var loadDataRef = combo.up().down('button[name="loaddata"]');
+                if(loadDataRef){
+                    combo.up().down('button[name="loaddata"]').enable();
+                }
+            }  
+        }
+        
     },
 
     onToolbarBtnClick: function(btn, e, eOpts) {  
@@ -141,7 +130,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
 
     },
 
-    handleSaveBtnClick: function(btn, e, eOpts) {  
+    handleSaveBtnClick: function(btn, e, eOpts) {   
          
 
         var v = this.getView();
@@ -167,7 +156,7 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         values.titleStyle = cardVals.titleStyle;
         values.name = cardVals.name;
         values.colIdx = cardVals.colIdx;
-        //values.columnWidth = cardVals.columnWidth;
+        values.columnWidth = cardVals.columnWidth;
         //values.settingsData = cardVals.settingsData;
         if(!btn.blades){
             //there could be multiple blades in a card
@@ -351,6 +340,126 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var l = form.items.length;
 
         form.insert(l, {xtype: 'bladeform'});
-    }
+    },
+
+    onChartTypeComboChange :function(combo, newValue, oldValue, eOpts){
+        fieldSet = combo.up('fieldset').down('fieldset[name = chartSeries]');
+            l = fieldSet.items.length;
+            var cartesianFlag;
+            var polarFlag;
+            if(newValue == 'Cartesian'){
+                cartesianFlag = false;
+                polarFlag = true;
+            }else if(newValue =='Polar'){
+                cartesianFlag = true;
+                polarFlag = false;
+            }
+            if(l==1){
+                
+                combo.up('bladeform').seriesIndex = 0;
+                fieldSet.insert(l-1,{
+                        xtype: 'seriesset',
+                        //border:false,
+                        cartesianFlag : cartesianFlag,
+                        polarFlag : polarFlag,
+                        seriesIndex : 0        
+                });
+            }
+
+        if(newValue == 'Cartesian'){
+               var CartesianLen = fieldSet.items.length;
+               var items = fieldSet.items.items;
+               fieldSet.setHidden(false);
+               var loopseriesIndexValue = 0;
+                       for(var i = 0;i<=CartesianLen-1;i++){
+                           
+                           if(items[i].xtype == 'seriesset'){
+                               
+                                while(!items[i].down('textfield[name=xfield'+loopseriesIndexValue+']')){
+                                    if(loopseriesIndexValue>100){
+                                    }
+                                   loopseriesIndexValue++;
+                                }
+                               
+                               var count = loopseriesIndexValue;
+                               loopseriesIndexValue++;
+
+                       var yfield = 'yfield'+count;
+                       var cartesiantype = 'cartesiantype'+count;
+                       var polartype = 'polartype'+count;
+                       var fieldlabel = 'fieldlabel'+count;
+                       var needlecolor = 'needlecolor'+count;
+                       var sectorscolor = 'sectorscolor'+count;
+
+                       items[i].down('textfield[name='+yfield+']').setHidden(false);
+                       items[i].down('combo[name='+cartesiantype+']').setHidden(false);
+                       items[i].down('combo[name='+polartype+']').setHidden(true);
+                       items[i].down('textfield[name='+fieldlabel+']').setHidden(true);
+                       items[i].down('textfield[name='+needlecolor+']').setHidden(true);
+                       items[i].down('textfield[name='+sectorscolor+']').setHidden(true);
+                   }
+               }
+               combo.up('fieldset').down('fieldset[title=X-Axis]').setHidden(false);
+               combo.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(false);
+               combo.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
+               combo.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
+
+               var interactionCheck = combo.up('fieldset').down('checkbox[name=showinteractions]');
+
+               if(interactionCheck && interactionCheck.checked) {
+                    interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(false);
+                    interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(true);
+               }
+
+           }else if(newValue == 'Polar'){
+
+               var items = fieldSet.items.items;
+               var polarLen = items.length;
+               fieldSet.setHidden(false);
+               var loopseriesIndexValue = 0;
+
+                       for(var i = 0;i<=polarLen-1;i++){
+                           
+                           if(items[i].xtype == 'seriesset'){
+                               
+                                while(!items[i].down('textfield[name=xfield'+loopseriesIndexValue+']')){
+
+                                    if(loopseriesIndexValue>100){
+                                    }
+
+                                   loopseriesIndexValue++;
+                                }
+                               
+                               var count = loopseriesIndexValue;
+                               loopseriesIndexValue++;
+
+                       var yfield = 'yfield'+count;
+                       var cartesiantype = 'cartesiantype'+count;
+                       var polartype = 'polartype'+count;
+                       var fieldlabel = 'fieldlabel'+count;
+                       var needlecolor = 'needlecolor'+count;
+                       var sectorscolor = 'sectorscolor'+count;
+
+                       items[i].down('textfield[name='+yfield+']').setHidden(true);
+                       items[i].down('combo[name='+cartesiantype+']').setHidden(true);
+                       items[i].down('combo[name='+polartype+']').setHidden(false);
+                       items[i].down('textfield[name='+fieldlabel+']').setHidden(false);
+                       items[i].down('textfield[name='+needlecolor+']').setHidden(false);
+                       items[i].down('textfield[name='+sectorscolor+']').setHidden(false);
+                   }
+               }
+               combo.up('fieldset').down('fieldset[title=X-Axis]').setHidden(true);
+               combo.up('fieldset').down('fieldset[title=Y-Axis]').setHidden(true);
+               combo.up('fieldset').down('fieldset[title=Interactions]').setHidden(false);
+               combo.up('fieldset').down('fieldset[title=Legend]').setHidden(false);
+
+               var interactionCheck = combo.up('fieldset').down('checkbox[name=showinteractions]');
+               
+               if(interactionCheck && interactionCheck.checked) {
+                    interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=cartesianinteractions]').setHidden(true);
+                    interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
+               }
+           }
+    },
    
 });

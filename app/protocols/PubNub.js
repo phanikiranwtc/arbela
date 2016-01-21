@@ -4,7 +4,8 @@ Ext.define('Arbela.protocols.PubNub', {
 	mixins: ['Ext.mixin.Mashup'],
 
 	requiredScripts: [
-		'https://cdn.pubnub.com/pubnub-dev.js'
+		'./lib/pubnub-dev.js'
+		//'https://cdn.pubnub.com/pubnub-dev.js'
 	],
 
 	singleton: true,

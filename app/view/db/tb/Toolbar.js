@@ -12,7 +12,7 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
     items: [
         {
             xtype: 'button',
-            icon: 'resources/images/add-16.png',
+            icon: 'resources/images/add1.png',
             text: 'Add Card',
             tooltip: 'Add Card',
             ui: 'plain',
@@ -24,9 +24,17 @@ Ext.define('Arbela.view.db.tb.Toolbar', {
             xtype: 'button',
             ui: 'plain',
             text: 'Save',
-            icon: 'resources/images/download-16.png',
+            icon: 'resources/images/save.png',
             listeners: {
                 click: 'onCloneBtnClick'
+            }
+        },{
+            xtype: 'button',
+            ui: 'plain',
+            text: 'Load',
+            icon: 'resources/images/load1.png',
+            listeners: {
+                click: 'onLoadeBtnClick'
             }
         }/*, '->', {
             xtype: 'button',

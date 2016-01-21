@@ -29,9 +29,9 @@ Ext.define('Arbela.view.blades.Grid', {
         displayField: 'name',
         triggerAction: 'all',
         forceSelection :true,
-        bind: {
-            value: '{datasources}'
-        },
+        // bind: {
+        //     value: '{datasources}'
+        // },
         listeners: {
             select: 'onComboboxSelect',
             change: 'onComboboxChange'
@@ -40,19 +40,32 @@ Ext.define('Arbela.view.blades.Grid', {
         xtype: 'label',
         forId: 'myFieldId',
         text: 'OR',
-        cls:'orlabel',
-        bind : {
-             hidden : '{enableDataSource}'
-        }
+        cls:'orlabel'
+        // bind : {
+        //      hidden : '{enableDataSource}'
+        // }
     },{
         xtype: 'textfield',
         fieldLabel: 'URL',
         value: Arbela.util.Utility.api.summary, //'http://192.168.1.54/steven/arbela-product/resources/data/summary.json',
         name: 'url',
-        bind : {
-             disabled: '{enableDataSource}',
-             value:'{enableTextFieldValue}'
+        listeners:{
+            change:function( check, newValue, oldValue, eOpts ){
+                if(this.up().down('combobox[name=datasources]').getStore().data.items.length != 0){
+                    if(this.getValue() == ""){
+                        this.up().down('combobox[name=datasources]').setDisabled(false);
+                        //this.up().down('label[text=OR]').setHidden(false);
+                    }else{
+                        this.up().down('combobox[name=datasources]').setDisabled(true);
+                        this.up().down('label[text=OR]').setHidden(true);
+                    }
+                }
+            }
         }
+        // bind : {
+        //      disabled: '{enableDataSource}',
+        //      value:'{enableTextFieldValue}'
+        // }
     },{
         xtype:'gridtoolbar'
     },{
@@ -64,27 +77,71 @@ Ext.define('Arbela.view.blades.Grid', {
             name: 'summary',
             boxLabel: 'Summary',
             reference: 'summaryRef',
-            bind : {
-                value:'{summary}',
-                disabled : '{groupingsummary}'
+            // bind : {
+            //     value:'{summary}',
+            //     disabled : '{groupingsummary}'
+            // }
+            listeners:{
+                change:function( check, newValue, oldValue, eOpts ){
+                    var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
+                    if(newValue == true){
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].show();
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setValue(false);
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(true);
+                    }else{
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].hide();
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(false);
+                    }
+                }
             }
         },{
             xtype: 'checkboxfield',
             name: 'grouping',
             boxLabel: 'Grouping',
             reference: 'groupingRef',
-            bind : {
-                value:'{grouping}',
-                disabled : '{groupingsummary}'
+            // bind : {
+            //     value:'{grouping}',
+            //     disabled : '{groupingsummary}'
+            // }
+            listeners:{
+                change:function( check, newValue, oldValue, eOpts ){
+                    var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
+                    if(newValue == true){
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].show();
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setValue(false);
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(true);
+                    }else{
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].hide();
+                        this.up('fieldset').down('checkboxfield[name=groupingsummary]').setDisabled(false);
+                    }
+                }
             }
         },{
             xtype: 'checkboxfield',
             name: 'groupingsummary',
             boxLabel: 'Grouping Summary',
             reference: 'groupingsummaryRef',
-            bind: {
-                value:'{groupingsummary}',
-                disabled: '{!enablegroupingsummary}'
+            // bind: {
+            //     value:'{groupingsummary}',
+            //     disabled: '{!enablegroupingsummary}'
+            // }
+            listeners:{
+                change:function( check, newValue, oldValue, eOpts ){
+                    var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
+                    if(newValue == true){
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].show();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].show();
+                        this.up('fieldset').down('checkboxfield[name=summary]').setValue(false);
+                        this.up('fieldset').down('checkboxfield[name=summary]').setDisabled(true);
+                        this.up('fieldset').down('checkboxfield[name=grouping]').setValue(false);
+                        this.up('fieldset').down('checkboxfield[name=grouping]').setDisabled(true);
+                    }else{
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-2].hide();
+                        this.up('fieldset').up('fieldset').down('grid').columns[l-3].hide();
+                        this.up('fieldset').down('checkboxfield[name=summary]').setDisabled(false);
+                        this.up('fieldset').down('checkboxfield[name=grouping]').setDisabled(false);
+                    }
+                }
             }
         }]
     },{

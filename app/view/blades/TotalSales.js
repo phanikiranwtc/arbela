@@ -65,12 +65,19 @@ Ext.define('Arbela.view.blades.TotalSales', {
 
     setBladeData: function(dataCfg) {
        console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
-       /*if(dataCfg.value1.length == 1 ){
-           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
-           if(tooltip ){
-               tooltip.update(null);
-           }
-       }*/
+       if(dataCfg.value1){
+            if(dataCfg.value1.length == 1 ){ //adding 0 value for single month value.
+                dataCfg.value1.push(0);
+                dataCfg.value1.sort();
+            }
+       }
+       
+       // if(dataCfg.value1.length == 1 ){
+       //     var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+       //     if(tooltip ){
+       //         tooltip.update(dataCfg.value1);
+       //     }
+       // }
        this.down('sparklineline').setValues(dataCfg.value1);
        this.getViewModel().setData(dataCfg);
    }

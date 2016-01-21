@@ -51,12 +51,16 @@ Ext.define('Arbela.view.blades.SupportTickets', {
         }]
     },
     setBladeData: function(dataCfg) {
-        if(dataCfg.value1.length == 1 ){
-           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
-           if(tooltip ){
-               tooltip.update(null);
-           }
-       }
+        if(dataCfg.value1.length == 1 ){ 
+            dataCfg.value1.push(0);
+            dataCfg.value1.sort();
+        }
+       //  if(dataCfg.value1.length == 1 ){
+       //     var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+       //     if(tooltip ){
+       //         tooltip.update(null);
+       //     }
+       // }
         this.down('sparklineline').setValues(dataCfg.value1);
     }
 });

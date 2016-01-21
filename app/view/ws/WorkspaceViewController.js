@@ -2,7 +2,7 @@ Ext.define('Arbela.view.ws.WorkspaceViewController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.workspaceviewcontroller',
 
-	onDatasourceAdded: function(cmp, record) {
+	onDatasourceAdded: function(cmp, record) { 
 		var data = this.getViewModel().getData();
 		/* deleting the oldRecord which was edited and identifying it using record.oldName */
 		if(record.oldName){

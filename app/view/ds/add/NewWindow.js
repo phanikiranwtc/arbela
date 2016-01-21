@@ -71,7 +71,7 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
                 listeners: {
                     click: 'onToolbarBtnClick'
                 },
-                formBind: true
+                //formBind: true
             }
         ]
     },
@@ -81,7 +81,7 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
         this.down('form').loadRecord(newValues);
     },
 
-    setTypeData: function(typeData) {
+    setTypeData: function(typeData) { 
         this.getViewModel().getStore('types').setData(typeData);
     }
 

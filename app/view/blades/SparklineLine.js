@@ -53,15 +53,24 @@ Ext.define('Arbela.view.blades.SparklineLine', {
             }
         }]
     },
-    setBladeData: function(dataCfg) {
+    setBladeData: function(dataCfg) { 
         console.log('=====> SETTING BLADE DATA <====== ', dataCfg);
         var values = this.down('sparklineline').getValues();
-        if(dataCfg.value1.length == 1 ){
-           var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
-           if(tooltip ){
-               tooltip.update(null);
-           }
+        
+        if(dataCfg.value1.length == undefined && values.length ==0){ //adding 0 value for single month value.
+            var arr = [];
+            arr.push(0);
+            arr.push(dataCfg.value1);
+            arr.sort();
+            dataCfg.value1 =arr;
         }
+
+        // if(dataCfg.value1.length == 1 ){
+        //    var tooltip = this.down('sparklineline').tooltip;// Fixed tooltip issue
+        //    if(tooltip ){
+        //        tooltip.update(null);
+        //    }
+        // }
         if(dataCfg.value1.length){
             var valueLength = dataCfg.value1.length;
 

@@ -83,7 +83,7 @@ Ext.define('Arbela.view.ds.List', {
                 {
                     xtype: 'button',
                     ui: 'plain',
-                    icon: 'resources/images/add-16.png',
+                    icon: 'resources/images/add1.png',
                     text: 'Add Datasource',
                     tooltip: 'Add Datasource',
                     listeners: {

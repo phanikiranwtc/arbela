@@ -26,6 +26,7 @@ Ext.define('Arbela.view.blades.grid.GridToolbar', {
             xtype: 'button',
             name: 'loaddata',
             text: 'Load Meta-data',
+            disabled: true,
             bind: {
                 disabled: '{!enableDataSource}'
             },

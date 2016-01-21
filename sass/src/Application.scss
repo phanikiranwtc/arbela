@@ -96,15 +96,16 @@ small {
     background-color: transparent!important; 
 }
 .arbelaCard .x-panel-header-default-framed-horizontal .x-tool-after-title {
-top: 0px!important;
+  top: 6px !important;
+ /* margin: 0 0 0 -6px !important;*/
 }
 .arbelaCard .x-panel-header-default-framed-top {
-padding:0px!important;
-background-color: transparent!important;
-border-bottom: none!important;
+  padding:0px!important;
+  background-color: transparent!important;
+  border-bottom: none!important;
 }
 .arbelaCard .x-panel-header-title-default-framed > .x-title-text-default-framed {
-padding: 5px!important;
+  padding: 5px!important;
 }
 /*
 Grid Css Starts Here

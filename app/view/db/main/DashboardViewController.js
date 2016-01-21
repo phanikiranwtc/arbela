@@ -54,9 +54,18 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         var bladeForms = form.query('bladeform'); 
         for (var is = 0 ; is < bladeForms.length ; is++){
             var formBladePanels = panel.formvalues.blades[is];
+            bladeForms[is].charttype = formBladePanels.charttype;
             var seriesIndexblade = formBladePanels.seriesIndex+1;
+            var loopseriesIndexValue = 0;
             for(var xy=0; xy< seriesIndexblade ; xy++){
-                bladeForms[is].charttype = formBladePanels.charttype;        
+                while(!formBladePanels.hasOwnProperty('xfield'+loopseriesIndexValue)){
+                    if(loopseriesIndexValue>100){
+                    }
+                   loopseriesIndexValue++;
+                }
+                bladeForms[is].presentSeriesIndex = loopseriesIndexValue;
+                loopseriesIndexValue++;  
+                        
                 bladeForms[is].query('button[name=addSeries]')[0].el.dom.click();
             } 
             if(formBladePanels.type=="Arbela.view.blades.Grid"){
@@ -93,7 +102,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                 'showTitle':false
             });
         }
-    if(panel.formvalues.hideTitleBar =='on'){
+        if(panel.formvalues.hideTitleBar =='on'){
             newCard.down('form').getForm().setValues({
                 'name' : panel.formvalues.name,
                 'hideTitleBar':true
@@ -107,9 +116,16 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
         var newCardFBLen =  newCard.down('form').items.length;
         var pfbl = panel.formvalues.blades.length;
         for(var p = 0; p<=pfbl-1; p++){
+            
             var panelValues = panel.formvalues.blades[p];
             //this.setGridColumnType(newCard);
             arr[p].getForm().setValues(panelValues);
+            /****** following code for polar field value setting ****/
+            // var polartype = 'polartype'+p
+            // if(panelValues[polartype] != ""){
+            //     newCard.getViewModel().data.polartype = panelValues[polartype];
+            // }
+            /*************************ending*******************/
             var setRef = arr[p].down('fieldset'),
             store = Ext.ComponentQuery.query('dslist')[0].getStore(); 
             if(setRef !== null){
@@ -185,11 +201,13 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             if (classes.hasOwnProperty(key)) {
                 if (Ext.String.startsWith(key, 'Arbela.view.blades')) {
                     var arr = key.split('.');
-                    blades.push({
-                        klass: key, 
-                        name: arr[arr.length - 1],
-                        niceName: classes[key].niceName
-                    });
+                    if(classes[key].niceName){  //added condition for only valid blades
+                        blades.push({
+                            klass: key, 
+                            name: arr[arr.length - 1],
+                            niceName: classes[key].niceName
+                        });
+                    }
                 }
             }
         }
@@ -251,60 +269,86 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             }
              
             //var columnIndex = values.colIdx ? values.colIdx : me.columnIdx;
-            if(!Ext.isEmpty(values.colIdx)){
+
+            /*
+            *  validating values coming from Saved dashboard card or Newly added card.
+            *
+            */
+
+            if(!Ext.isEmpty(values.colIdx)){  
                if(me.getView().items.items.length == 0) {
-                 
-                var card = me.getView().addView({
-                    title : values.showTitle ? values.name : '',
-                    type: 'card',
-                    columnIndex: values.colIdx
-                    //columnWidth:values.columnWidth
-                }, values.colIdx);
+
+                    me.getView().columnWidths.push(values.columnWidth);
+                    var card = me.getView().addView({
+                        title : values.showTitle ? values.name : '',
+                        type: 'card',
+                        columnIndex: values.colIdx
+                        //columnWidth:values.columnWidth
+                    }, values.colIdx);
                    
-                card.add(items);
-                   //card.up('container').columnWidth = values.columnWidth;
-                card.formvalues = values;
-            } else {
-                me.getView().on('add', function(ct, cmp, idx) {
-                    cmp.add(items);
-                    cmp.formvalues = values;
-                   // cmp.up('container').columnWidth = values.columnWidth;
-                    //cmp.up('conatiner').setColumnWidth(values.columnWidth);
-                }, this, {single: true});
-                var card = me.getView().addView({
-                    title : values.showTitle ? values.name : '',
-                    type: 'card',
-                    columnIndex: values.colIdx
-                    //columnWidth:values.columnWidth
-                }, values.colIdx);
-                card.formvalues = values;
+                    card.add(items);
+                       //card.up('container').columnWidth = values.columnWidth;
+                    card.formvalues = values;
+
+                } else {
+                    
+                    me.getView().columnWidths.push(values.columnWidth);
+                    me.getView().on('add', function(ct, cmp, idx) {
+                        cmp.add(items);
+                        cmp.formvalues = values;
+                       // cmp.up('container').columnWidth = values.columnWidth;
+                        //cmp.up('conatiner').setColumnWidth(values.columnWidth);
+                    }, this, {single: true});
+
+                    var card = me.getView().addView({
+                        title : values.showTitle ? values.name : '',
+                        type: 'card',
+                        columnIndex: values.colIdx
+                        //columnWidth:values.columnWidth
+                    }, values.colIdx);
+
+                    card.formvalues = values;
+                }
+
+                card.applyTitleStyles(card, values);
+
+            }else{
+        
+                if(me.getView().items.items.length == 0) {
+                    me.getView().columnWidths.push(0.3333333333);
+                    var card = me.getView().addView({
+                        title : values.showTitle ? values.name : '',
+                        type: 'card',
+                         columnIndex: me.columnIdx,
+                        // columnWidth:0.3
+                    }, 0);
+
+                    card.add(items);
+                    values.colIdx = me.columnIdx;
+                    card.formvalues = values;
+
+                } else {
+
+                    me.getView().columnWidths.push(0.3333333333);
+                    me.getView().on('add', function(ct, cmp, idx) {
+                        cmp.add(items);
+                        cmp.formvalues = values;
+                    }, this, {single: true});
+
+                    var card = me.getView().addView({
+                        title : values.showTitle ? values.name : '',
+                        type: 'card',
+                        columnIndex: me.columnIdx,
+                        // columnWidth:0.3
+                    }, me.columnIdx);
+
+                    values.colIdx = me.columnIdx;
+                    card.formvalues = values;
+                }
+
+                card.applyTitleStyles(card, values);
+                me.columnIdx++;
             }
-            card.applyTitleStyles(card, values);
-        }else{
-            if(me.getView().items.items.length == 0) {
-             
-            var card = me.getView().addView({
-                title : values.showTitle ? values.name : '',
-                type: 'card',
-                columnIndex: me.columnIdx
-            }, 0);
-            card.add(items);
-            card.formvalues = values;
-        } else {
-            me.getView().on('add', function(ct, cmp, idx) {
-                cmp.add(items);
-                cmp.formvalues = values;
-            }, this, {single: true});
-            var card = me.getView().addView({
-                title : values.showTitle ? values.name : '',
-                type: 'card',
-                columnIndex: me.columnIdx
-            }, 0);
-            card.formvalues = values;
-        }
-        card.applyTitleStyles(card, values);
-        me.columnIdx++;
-        }
 
         }
     },
@@ -329,9 +373,9 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             //var cardsLen = v.items.items[j].items.items.length;
             var cards = v.query('panel[cls=arbelaCard]');
             var cardsLen = cards.length;
-
+            var dashboardColumns = v.query("[initialCls=x-dashboard-column]");
                 
-                
+            var columnWidth = [];  
             for(var i=0; i<=cardsLen-1; i++){
                 var bladeData = cards[i].formvalues;
                 var colIndex = cards[i].columnIndex;
@@ -357,7 +401,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     }
                 }
                 bladeData.colIdx = colIndex;
-               // bladeData.columnWidth = columnWidth;
+                bladeData.columnWidth = dashboardColumns[i].columnWidth;
                 cardsArray.push(bladeData);
             }
         
@@ -385,16 +429,33 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
             //     }
             // },scope=this);
             Ext.Ajax.request({
-                url: 'http://192.168.1.54/steven/Arbela-Product/json.php',
+                //url: 'http://192.168.1.54/steven/Arbela-ProductApps/Arbela-Product/json.php',
+                url: 'http://arbela.walkingtree.in/json.php',
                 method: 'POST',
                 //Send the query as the message body
                 //jsonData: jsonStr,
                 params: {
                     json: jsonString,
                     title:title
-                }
+                },
+                success: function(response) {
+                    return Ext.Msg.show({
+                        title: 'Custom Dashboard',
+                        message: 'Saved your\'s dashboard',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.INFO
+                    });
+                },
+                failure: function(error) {
+                    return Ext.Msg.show({
+                        title: 'Custom Dashboard',
+                        message: 'Failed to save your\'s dashboard',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.ERROR
+                    });
+                },
             });
-            //Ext.Msg.alert("INFO",jsonString);
+            //Ext.Msg.alert("INFO",'success');
         }else{
             Ext.Msg.alert("INFO",'We could not save your data because you did not provide any cards on dashboard');
         }
@@ -407,33 +468,35 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
     },
 
     settingCards: function(board){  
-        // 
+         
         if(!board.flag){
         var str = window.location.href;
         var db = str.indexOf('=')+1;
         var dashboardName = str.substr(db);
-        board.setTitle(dashboardName);
-        Ext.Ajax.request({
-            url: "resources/data/"+dashboardName+".json",
-            //params: params,
-            success: function(response){
-                var me = this,
-                    responseData = Ext.decode(response.responseText);
-                me.settingCardsData(responseData);
-            },
-            failure: function(error) {
-                            return Ext.Msg.show({
-                                title: 'Custom Dashboard',
-                                message: 'You did not save dashboard before!',
-                                buttons: Ext.Msg.OK,
-                                icon: Ext.Msg.ERROR
-                            });
-                        },
-            scope:this
-        },this);
+        //board.setTitle(dashboardName);
+        if(db != 0){
+                Ext.Ajax.request({
+                    url: "resources/data/"+dashboardName+".json",
+                    //params: params,
+                    success: function(response){
+                        var me = this,
+                            responseData = Ext.decode(response.responseText);
+                        me.settingCardsData(responseData);
+                    },
+                    failure: function(error) {
+                        return Ext.Msg.show({
+                            title: 'Custom Dashboard',
+                            message: 'You did not save dashboard before!',
+                            buttons: Ext.Msg.OK,
+                            icon: Ext.Msg.ERROR
+                        });
+                    },
+                    scope:this
+                },this);
+            }
         }
     },
-    settingCardsData: function(responseData) {  
+    settingCardsData: function(responseData) {   
         var cardsData = responseData.data,
             cardsLen = cardsData.length;
         if(responseData.datasource){

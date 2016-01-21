@@ -26,7 +26,7 @@ Ext.define('Arbela.view.db.card.NewCard', {
         type: 'dbnewcard'
     },
     autoShow: true,
-    scrollable: true,
+    //scrollable: true,
     autoHeight: true,
     height: 400,
     width: 400,
@@ -38,10 +38,12 @@ Ext.define('Arbela.view.db.card.NewCard', {
 
     items: {
         xtype: 'form',
-        scrollable: 'vertical',
+        layout:'anchor',
+        defaults: {anchor: '100%'},
+        scrollable: true,//'vertical',
         items: [{
                 xtype: 'checkbox',
-                fieldLabel: 'Show Title?',
+                fieldLabel: 'Show Title',
                 name: 'showTitle',
 		        reference: 'isTitleShow',
                 checked: true
@@ -54,7 +56,7 @@ Ext.define('Arbela.view.db.card.NewCard', {
                 }
             },{
                 xtype: 'checkbox',
-                fieldLabel: 'Auto Hide?',
+                fieldLabel: 'Auto Hide',
                 name: 'hideTitleBar',
                 checked: false
             }, {

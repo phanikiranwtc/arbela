@@ -40,7 +40,10 @@ Ext.define('Arbela.view.ds.ListViewController', {
                     if(selectedRec){
                         v.getStore().setAutoSync(true);
                         values.oldName = selectedRec.data.name; //saving the oldrecord name as "oldName" for its use in WorkspaceViewController
+                        values.oldType = selectedRec.data.type;
                         selectedRec.set('name',values.name);
+                        selectedRec.set('type',values.type);
+                        selectedRec.set('typeObj',values.typeObj);
                         selectedRec.set('updatedOn',values.updatedOn);
                         selectedRec.data.isSelected = false;
                         v.getView().refresh();
@@ -84,7 +87,39 @@ Ext.define('Arbela.view.ds.ListViewController', {
             e.preventDefault();
             var win = this.showWindow();
             record.data.isSelected = true;
-            win.setValues(record);            
+            win.setValues(record); 
+            var md = record.data.typeObj.getSettings();
+            var fs = win.down('fieldset');
+            var form = win.down('form');
+
+            if (fs) {
+                form.remove(fs);
+                fs = null;            
+            }
+
+            if (md && md.length > 0) {
+
+                form.add({
+                xtype: 'fieldset',
+                title: 'Settings',
+                layout:'anchor',
+                defaults: {anchor: '100%'},
+                items: md,
+                // listeners: {
+                //     afterrender: {
+                //         fn: function(cmp) {
+                //             var values = this.getView().getValues();
+                //             console.log('FieldSet afterrender: ', values);
+                //             if (values) {
+                //                 cmp.up('form').loadRecord(values);
+                //             }
+                //         },
+                //         single: true
+                //     },
+                //     scope: this
+                // }
+                });
+            }           
         }
 
     }

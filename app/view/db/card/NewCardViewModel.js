@@ -19,7 +19,100 @@ Ext.define('Arbela.view.db.card.NewCardViewModel', {
 
     data: {
     	typeData: [],
-        datasources: null
-    }
+        datasources: null,
+        // summary: false,
+        // grouping:false,
+        // groupingsummary:false,
+        // summaryType:true,
+        // groupField:true,
+        // datasources:null,
+        // charttype:null,
+        // chartseries:true,
+        // polartype:null,
+        // markerfield:false,
+        // interactions:false,
+
+    },
+
+    // formulas: {
+    //     enablegroupingsummary: function (get) {
+
+    //         return !(get('summary') || get('grouping'));
+    //     },
+    //     enableSummeryColumns: function(get){
+
+    //         return !(get('summary') || get('groupingsummary'));
+    //     },
+
+    //     enableGroupColumns: function(get){
+
+    //         return !(get('groupingsummary') || get('grouping'));
+    //     },
+
+    //     enableDataSource: function(get){
+
+    //         return (get('datasources') !== null);
+    //     },
+
+    //     enableTextFieldValue: function(get){
+
+    //         if(get('datasources') == null){
+    //             return Arbela.util.Utility.api.summary;
+    //         }else{
+    //             return null;
+    //         }
+    //     },
+
+    //     enableCartesianInteractions: function(get){
+
+    //         return !(get('interactions') && get('charttype')=='Cartesian');
+    //     },
+
+    //     enablePolarInteractions: function(get){
+
+    //          return !(get('interactions') && get('charttype')=='Polar');
+    //     },
+
+    //     enableLegendFieldset: function(get){
+
+    //          return (!get('charttype') || get('polartype')=='pie3d' || get('polartype') == 'gauge');
+    //     },
+
+    //     enableXAxisFieldset: function(get){
+
+    //         return !(get('charttype')=='Cartesian' || get('polartype')=='radar' || get('polartype') == 'gauge');
+    //     },
+
+    //     enableYAxisFieldset: function(get){
+
+    //         return !(get('charttype')=='Cartesian' || get('polartype')=='radar');
+    //     },
+    //     enableInteractionsFieldset: function(get){
+
+    //         return !(get('charttype'));
+    //     },
+
+    //     enableMarkerField: function(get){
+
+    //     	return (get('polartype')== 'pie'||get('polartype')== 'pie3d'||get('polartype')== 'gauge');
+    //     },
+
+    //     enableXaxisgrid: function(get){
+    //         return get('polartype')== 'gauge' ? true : false;
+    //     },
+
+    //     enableXaxisfield: function(get){
+    //         return get('polartype')== 'gauge' ? true : false;
+    //     },
+    //     enablePolarFieldlabel: function(get){
+    //         return !(get('charttype') == 'Polar' && get('polartype') == 'pie'|| get('polartype') =='pie3d' || get('polartype') == 'gauge')
+    //     },
+    //     enableColorfield: function(get){
+    //         return !(get('polartype')=='gauge')
+    //     },
+    //     enableStylefield: function(get){
+    //         return (get('polartype')=='gauge' || get('polartype') == 'pie3d')
+    //     }
+    // }
 
 });

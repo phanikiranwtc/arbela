@@ -6,7 +6,7 @@
 var loader=function(){
    setTimeout(function(){
        preloader();
-   },1000);
+   },500);
 }
 
 var preloader=function(){

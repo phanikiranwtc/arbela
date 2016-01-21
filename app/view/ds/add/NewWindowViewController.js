@@ -2,7 +2,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.commonnewwindow',
 
-    onComboboxSelect: function(combo, record, eOpts) { 
+    onComboboxSelect: function(combo, record, eOpts) {  
         var klass = record.data.klass;
         var md = (Ext.create(klass, {})).getSettings();
         console.log('Meta Data: ', md);
@@ -16,7 +16,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
             fs = null;            
         }
 
-        if (md && md.length > 0) {
+        if (md && md.length > 0) { 
 
             form.add({
                 xtype: 'fieldset',
@@ -24,19 +24,19 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
                 layout:'anchor',
                 defaults: {anchor: '100%'},
                 items: md,
-                listeners: {
-                    afterrender: {
-                        fn: function(cmp) {
-                            var values = this.getView().getValues();
-                            console.log('FieldSet afterrender: ', values);
-                            if (values) {
-                                cmp.up('form').loadRecord(values);
-                            }
-                        },
-                        single: true
-                    },
-                    scope: this
-                }
+                // listeners: {
+                //     afterrender: {
+                //         fn: function(cmp) {
+                //             var values = this.getView().getValues();
+                //             console.log('FieldSet afterrender: ', values);
+                //             if (values) {
+                //                 cmp.up('form').loadRecord(values);
+                //             }
+                //         },
+                //         single: true
+                //     },
+                //     scope: this
+                // }
             });
         }
 

@@ -19,9 +19,8 @@ Ext.define('Arbela.Application', {
         'Arbela.view.datasources.MQTT',
         'Arbela.view.datasources.PubNub',
 	    'Arbela.view.datasources.GridData',
-        'Arbela.view.blades.grid.GridColumnWindow',
-        'Arbela.view.blades.grid.GridToolbar',
-        'Arbela.util.Utility'
+        'Arbela.util.Utility',
+        'Arbela.overrides.layout.container.Dashboard'
     ],
     views: [
         'MyViewport',
@@ -43,7 +42,11 @@ Ext.define('Arbela.Application', {
         'blades.SparklineLine',
         'blades.Chart',
         'blades.Grid',
-        'blades.grid.SettingsGrid'
+        'blades.chart.SeriesSet',
+        'blades.grid.GridColumnWindow',
+        'blades.grid.GridToolbar',
+        'blades.grid.SettingsGrid',
+        'blades.chart.SettingsChart'
     ],
 
 
