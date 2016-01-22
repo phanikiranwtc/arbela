@@ -57,6 +57,15 @@ Ext.define('Arbela.view.blades.chart.SeriesSet', {
 					var itemsLen = this.up().up().items.length-1;
 					for(var i=0;i<=itemsLen-1;i++){
 						var polarType = this.up().up().items.items[0].items.items[1].getValue();
+						if(newValue == 'gauge' && polarType !='gauge'){
+							Ext.Msg.show({
+		                        title: 'Selection Failed',
+		                        message: 'Error: cannot load gauge with other series',
+		                        buttons: Ext.Msg.OK,
+		                        icon: Ext.Msg.ERROR
+		                    });
+							combo.setValue(null);
+						}
 						if(polarType == "pie3d" || polarType == 'gauge' || newValue == 'pie3d' || newValue =='gauge'){
 							this.up().up().up('fieldset').down('fieldset[title=Legend]').setHidden(true);
 						}

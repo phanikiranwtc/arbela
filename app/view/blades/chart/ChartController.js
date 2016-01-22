@@ -3,6 +3,15 @@ Ext.define('Arbela.view.blades.chart.ChartController', {
     alias: 'controller.chartcontroller',
 
     onAddSeriesBtnClick: function(button,type){
+        if(button.up().down('fieldset').down('combobox[hidden=false]').getValue() == 'gauge'){
+            Ext.Msg.show({
+                title: 'Selection Failed',
+                message: 'Error: cannot load gauge with other series',
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.ERROR
+            });
+            return false;
+        }
         var chartType = (button.up().up('fieldset').down('combobox').getValue())||button.up('bladeform').charttype;
         fieldSet = button.up('fieldset'),
         l = fieldSet.items.length;
