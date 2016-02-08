@@ -19,7 +19,7 @@ Ext.define('Arbela.view.db.card.NewCardViewModel', {
 
     data: {
     	typeData: [],
-        datasources: null,
+        datasources: null
         // summary: false,
         // grouping:false,
         // groupingsummary:false,
@@ -32,7 +32,7 @@ Ext.define('Arbela.view.db.card.NewCardViewModel', {
         // markerfield:false,
         // interactions:false,
 
-    },
+    }
 
     // formulas: {
     //     enablegroupingsummary: function (get) {

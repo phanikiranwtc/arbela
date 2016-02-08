@@ -65,11 +65,11 @@ extend:'Ext.form.Panel',
         },{
             xtype: 'textfield',
             fieldLabel: 'Field',
-            name:'xaxisfield',
+            name:'xaxisfield'
         },{
             xtype: 'checkbox',
             fieldLabel: 'Show Grid',
-            name:'xaxisgrid',
+            name:'xaxisgrid'
         }]
     },{
         xtype:'fieldset',

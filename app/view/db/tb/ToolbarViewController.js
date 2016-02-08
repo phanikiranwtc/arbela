@@ -72,10 +72,8 @@ Ext.define('Arbela.view.db.tb.ToolbarViewController', {
                             button.up('panel').up('form').up('window').close();
                         }
                     }]
-                }],
-                
+                }]  
             }
-
         }).show();
     }
 });

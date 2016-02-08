@@ -23,7 +23,7 @@ Ext.define('Arbela.view.ds.add.NewWindowViewController', {
                 title: 'Settings',
                 layout:'anchor',
                 defaults: {anchor: '100%'},
-                items: md,
+                items: md
                 // listeners: {
                 //     afterrender: {
                 //         fn: function(cmp) {

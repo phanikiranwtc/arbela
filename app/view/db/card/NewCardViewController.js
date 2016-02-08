@@ -460,6 +460,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
                }
            }
-    },
+    }
    
 });

@@ -70,7 +70,7 @@ Ext.define('Arbela.view.ds.add.NewWindow', {
                 dock: 'bottom',
                 listeners: {
                     click: 'onToolbarBtnClick'
-                },
+                }
                 //formBind: true
             }
         ]

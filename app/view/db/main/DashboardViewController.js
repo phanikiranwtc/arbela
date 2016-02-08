@@ -319,7 +319,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     var card = me.getView().addView({
                         title : values.showTitle ? values.name : '',
                         type: 'card',
-                         columnIndex: me.columnIdx,
+                         columnIndex: me.columnIdx
                         // columnWidth:0.3
                     }, 0);
 
@@ -338,7 +338,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                     var card = me.getView().addView({
                         title : values.showTitle ? values.name : '',
                         type: 'card',
-                        columnIndex: me.columnIdx,
+                        columnIndex: me.columnIdx
                         // columnWidth:0.3
                     }, me.columnIdx);
 
@@ -453,7 +453,7 @@ Ext.define('Arbela.view.db.main.DashboardViewController', {
                         buttons: Ext.Msg.OK,
                         icon: Ext.Msg.ERROR
                     });
-                },
+                }
             });
             //Ext.Msg.alert("INFO",'success');
         }else{

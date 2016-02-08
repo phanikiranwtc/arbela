@@ -297,7 +297,7 @@ Ext.define('Arbela.view.blades.Chart', {
                         display: 'rotate',
                         calloutLine: {
                             length: 30,
-                            width: 3,
+                            width: 3
                             // specifying 'color' is also possible here
                         },
                         renderer:function(text){
@@ -315,7 +315,7 @@ Ext.define('Arbela.view.blades.Chart', {
                     donut: 30,
                     type: dataCfg[polartype],
                     xField: dataCfg[xfield],
-                    showInLegend : dataCfg.showlegend ? true : false,
+                    showInLegend : dataCfg.showlegend && dataCfg[polartype] == 'pie'? true : false,
                     showMarkers : dataCfg[marker] == "on" ? true : false,
                     marker : dataCfg[marker] == "on" ? true : false,
                     subStyle : Ext.Element.parseStyles(dataCfg[style]),

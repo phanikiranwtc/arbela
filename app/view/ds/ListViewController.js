@@ -86,6 +86,7 @@ Ext.define('Arbela.view.ds.ListViewController', {
 
             e.preventDefault();
             var win = this.showWindow();
+            win.setTitle('Edit Datasource');
             record.data.isSelected = true;
             win.setValues(record); 
             var md = record.data.typeObj.getSettings();
@@ -100,24 +101,24 @@ Ext.define('Arbela.view.ds.ListViewController', {
             if (md && md.length > 0) {
 
                 form.add({
-                xtype: 'fieldset',
-                title: 'Settings',
-                layout:'anchor',
-                defaults: {anchor: '100%'},
-                items: md,
-                // listeners: {
-                //     afterrender: {
-                //         fn: function(cmp) {
-                //             var values = this.getView().getValues();
-                //             console.log('FieldSet afterrender: ', values);
-                //             if (values) {
-                //                 cmp.up('form').loadRecord(values);
-                //             }
-                //         },
-                //         single: true
-                //     },
-                //     scope: this
-                // }
+                    xtype: 'fieldset',
+                    title: 'Settings',
+                    layout:'anchor',
+                    defaults: {anchor: '100%'},
+                    items: md
+                    // listeners: {
+                    //     afterrender: {
+                    //         fn: function(cmp) {
+                    //             var values = this.getView().getValues();
+                    //             console.log('FieldSet afterrender: ', values);
+                    //             if (values) {
+                    //                 cmp.up('form').loadRecord(values);
+                    //             }
+                    //         },
+                    //         single: true
+                    //     },
+                    //     scope: this
+                    // }
                 });
             }           
         }
