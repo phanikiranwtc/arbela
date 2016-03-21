@@ -46,8 +46,7 @@
      */
     "requires": [
         "sencha-charts",
-        "font-awesome",
-        "ext-ux",
+        "ext-ux"
     ],
 
     /**

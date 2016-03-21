@@ -136,7 +136,6 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
         var v = this.getView();
         var form = v.down('form');
         var blades;
-        //var actualGridData = Ext.ComponentQuery.query('#columnGrid')[0];
 
         var values = {};
         if(btn.url){
@@ -460,6 +459,32 @@ Ext.define('Arbela.view.db.card.NewCardViewController', {
                     interactionCheck.up('fieldset[title=Interactions]').down('combobox[name=polarinteractions]').setHidden(false);
                }
            }
+    },
+    onSavePickerDataBtnClick:function(btn){
+        var pickervalues = btn.up('form').getValues();
+        btn.up('form').pickerData = pickervalues;
+        var pickerString = '',
+        keyArr=[];
+
+        /***** setting form data to picker field as string ****/
+
+        Ext.Object.each(pickervalues, function(key, value, object) {
+            if(key== 'color' || key== 'background-color' && Ext.isDefined(value)){ 
+                value = "#"+ value;
+            }
+            if(key== 'height' || key== 'font-size' && Ext.isDefined(value)){ 
+                value = value+"px";
+            }
+            keyArr.push(key+":" + value +";");
+        });
+        for(var i=0;i<=keyArr.length-1;i++){pickerString+=keyArr[i]}
+        var titlestyleclass = Ext.ComponentQuery.query('[name=titleStyle]')[0];
+        titlestyleclass.setValue(pickerString);
+        titlestyleclass.pickerData = pickervalues;
+        btn.up('form').hide();
+    },
+    onCancelPickerBtnClick:function(btn){
+        btn.up('form').hide();
     }
    
 });
