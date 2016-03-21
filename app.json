@@ -45,7 +45,9 @@
      *      ]
      */
     "requires": [
-      "sencha-charts"
+        "sencha-charts",
+        "font-awesome",
+        "ext-ux",
     ],
 
     /**
@@ -188,6 +190,21 @@
      * settings.
      */
     "production": {
+        "output": {
+            "appCache": {
+                "enable": true,
+                "path": "cache.appcache"
+            }
+        },
+        "loader": {
+            "cache": "${build.timestamp}"
+        },
+        "cache": {
+            "enable": true
+        },
+        "compressor": {
+            "type": "yui"
+        }
     },
     
     "testing": {

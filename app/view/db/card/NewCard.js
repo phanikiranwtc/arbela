@@ -7,6 +7,8 @@ Ext.define('Arbela.view.db.card.NewCard', {
         'Arbela.view.db.card.NewCardViewController',
         'Arbela.view.common.WindowToolbar',
         'Arbela.view.common.BladePanel',
+        'Arbela.view.common.CalculatedField',
+        'Arbela.view.common.TitleStyling',
         'Ext.form.field.ComboBox',
         'Ext.toolbar.Toolbar'
     ],
@@ -48,9 +50,8 @@ Ext.define('Arbela.view.db.card.NewCard', {
 		        reference: 'isTitleShow',
                 checked: true
             },{
-                xtype: 'textfield',
-                fieldLabel: 'Title Style',
-                name: 'titleStyle',
+                xtype: 'titlestyling',
+                
                 bind:{
                     hidden : '{!isTitleShow.checked}'
                 }

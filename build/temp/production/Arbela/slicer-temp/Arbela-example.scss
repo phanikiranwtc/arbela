@@ -29,6 +29,7 @@ $include-arbela-view-common-bladepanel: true;
 $include-arbela-view-common-calculatedfield: true;
 $include-arbela-view-common-exprparser: true;
 $include-arbela-view-common-expressionfield: true;
+$include-arbela-view-common-titlestyling: true;
 $include-arbela-view-common-windowtoolbar: true;
 $include-arbela-view-datasources-dummy: true;
 $include-arbela-view-datasources-dweetio: true;
@@ -1061,6 +1062,23 @@ $include-ext-ux-ajax-simmanager: true;
 $include-ext-ux-ajax-simxhr: true;
 $include-ext-ux-ajax-simlet: true;
 $include-ext-ux-ajax-xmlsimlet: true;
+$include-ext-ux-colorpick-button: true;
+$include-ext-ux-colorpick-buttoncontroller: true;
+$include-ext-ux-colorpick-colormap: true;
+$include-ext-ux-colorpick-colormapcontroller: true;
+$include-ext-ux-colorpick-colorpreview: true;
+$include-ext-ux-colorpick-colorutils: true;
+$include-ext-ux-colorpick-field: true;
+$include-ext-ux-colorpick-selection: true;
+$include-ext-ux-colorpick-selector: true;
+$include-ext-ux-colorpick-selectorcontroller: true;
+$include-ext-ux-colorpick-selectormodel: true;
+$include-ext-ux-colorpick-slider: true;
+$include-ext-ux-colorpick-slideralpha: true;
+$include-ext-ux-colorpick-slidercontroller: true;
+$include-ext-ux-colorpick-sliderhue: true;
+$include-ext-ux-colorpick-slidersaturation: true;
+$include-ext-ux-colorpick-slidervalue: true;
 $include-ext-ux-dashboard-googlersspart: true;
 $include-ext-ux-dashboard-googlerssview: true;
 $include-ext-ux-data-pagingmemoryproxy: true;
@@ -1089,6 +1107,7 @@ $include-ext-ux-google-feeds: true;
 $include-ext-ux-grid-subtable: true;
 $include-ext-ux-grid-transformgrid: true;
 $include-ext-ux-layout-center: true;
+$include-ext-ux-rating-picker: true;
 $include-ext-ux-statusbar-statusbar: true;
 $include-ext-ux-statusbar-validationstatus: true;
 $include-ext-view-abstractview: true;
@@ -1128,6 +1147,8 @@ $include-extthemeneptune-toolbar-toolbar: true;
 @import '../../../../../ext/packages/ext-theme-neptune/sass/etc/all';
 /* including package ext-theme-crisp */
 @import '../../../../../ext/packages/ext-theme-crisp/sass/etc/all';
+/* including package ext-ux */
+@import '../../../../../ext/packages/ext-ux/sass/etc/all';
 /* including package Arbela */
 @import '../../../../../sass/var/Application';
 /* including package ext-theme-crisp */
@@ -1252,6 +1273,8 @@ $include-extthemeneptune-toolbar-toolbar: true;
 @import '../../../../../ext/packages/ext-theme-base/sass/var/Component';
 /* including package sencha-charts */
 @import '../../../../../ext/packages/sencha-charts/sass/var/chart/AbstractChart';
+/* including package ext-ux */
+@import '../../../../../ext/packages/ext-ux/sass/var/rating/Picker';
 /* including package ext-theme-base */
 $ext-theme-base-resource-path: 'images' !default;
 $relative-image-path-for-uis: $ext-theme-base-resource-path;
@@ -1407,6 +1430,13 @@ $relative-image-path-for-uis: $ext-theme-neptune-resource-path;
 $sencha-charts-resource-path: 'sencha-charts/images' !default;
 $relative-image-path-for-uis: $sencha-charts-resource-path;
 @import '../../../../../ext/packages/sencha-charts/sass/src/chart/AbstractChart';
+/* including package ext-ux */
+$ext-ux-resource-path: 'ext-ux/images' !default;
+$relative-image-path-for-uis: $ext-ux-resource-path;
+@import '../../../../../ext/packages/ext-ux/sass/src/colorpick/Selector';
+@import '../../../../../ext/packages/ext-ux/sass/src/colorpick/Button';
+@import '../../../../../ext/packages/ext-ux/sass/src/colorpick/Field';
+@import '../../../../../ext/packages/ext-ux/sass/src/rating/Picker';
 /* including package Arbela */
 $Arbela-resource-path: 'images' !default;
 $relative-image-path-for-uis: $Arbela-resource-path;

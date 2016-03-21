@@ -20,14 +20,14 @@ Ext.define('Arbela.view.db.tb.ToolbarViewController', {
     onLoadeBtnClick: function(button, e, eOpts){
         Ext.create('Ext.window.Window', {
             title: 'Please enter saved dashboard name',
-            height: 90,
-            width: 300,
+            //height: 90,
+            //width: 300,
             modal:true,
             layout: 'fit',
             items: {  // Let's put an empty grid in just to illustrate fit layout
                 xtype:'form',
                 items:[{
-                    width: 298,
+                    //width: 298,
                     xtype: 'textfield',
                     allowBlank:false,
                     //hasFocus: true,

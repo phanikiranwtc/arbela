@@ -5,13 +5,17 @@ Ext.define('Arbela.util.Utility', {
     completeLocation : '',
     api: {},
     constructor: function() {
-        this.completeLocation = this.mainHost+this.dataLocation;
-         this.api.summary = this.completeLocation+'summary.json';
-         this.api.inventoryData = this.completeLocation+'inventorydata.json';
-         this.api.booksList = this.completeLocation+'senchabooks.json';
-
-
-
+        var appinstance = window.location.href;
+        var appparam = appinstance.substr(appinstance.indexOf('?'));
+        if(Ext.isDefined(appparam)){
+            this.completeLocation = appinstance.replace(appparam, '');
+        }else{
+            this.completeLocation = window.location.href;
+        }
+        //this.completeLocation = this.mainHost+this.dataLocation;
+        this.api.summary = this.completeLocation+'summary.json';
+        this.api.inventoryData = this.completeLocation+'inventorydata.json';
+        this.api.booksList = this.completeLocation+'senchabooks.json';
     }
 
 });
