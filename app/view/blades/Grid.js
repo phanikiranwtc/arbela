@@ -15,9 +15,7 @@ Ext.define('Arbela.view.blades.Grid', {
         niceName: 'Grid',
         desc: 'Shows the list to create a dynamic grid'
     },
-    config: {
-        //width: 300
-    },
+    config: {},
     settings: [{
         xtype: 'combobox',
         itemId:'dataCombo',
@@ -29,9 +27,6 @@ Ext.define('Arbela.view.blades.Grid', {
         displayField: 'name',
         triggerAction: 'all',
         forceSelection :true,
-        // bind: {
-        //     value: '{datasources}'
-        // },
         listeners: {
             select: 'onComboboxSelect',
             change: 'onComboboxChange'
@@ -41,20 +36,16 @@ Ext.define('Arbela.view.blades.Grid', {
         forId: 'myFieldId',
         text: 'OR',
         cls:'orlabel'
-        // bind : {
-        //      hidden : '{enableDataSource}'
-        // }
     },{
         xtype: 'textfield',
         fieldLabel: 'URL',
-        value: Arbela.util.Utility.api.summary, //'http://192.168.1.54/steven/arbela-product/resources/data/summary.json',
+        value: Arbela.util.Utility.api.summary,
         name: 'url',
         listeners:{
             change:function( check, newValue, oldValue, eOpts ){
                 if(this.up().down('combobox[name=datasources]').getStore().data.items.length != 0){
                     if(this.getValue() == ""){
                         this.up().down('combobox[name=datasources]').setDisabled(false);
-                        //this.up().down('label[text=OR]').setHidden(false);
                     }else{
                         this.up().down('combobox[name=datasources]').setDisabled(true);
                         this.up().down('label[text=OR]').setHidden(true);
@@ -62,10 +53,6 @@ Ext.define('Arbela.view.blades.Grid', {
                 }
             }
         }
-        // bind : {
-        //      disabled: '{enableDataSource}',
-        //      value:'{enableTextFieldValue}'
-        // }
     },{
         xtype:'gridtoolbar'
     },{
@@ -77,10 +64,6 @@ Ext.define('Arbela.view.blades.Grid', {
             name: 'summary',
             boxLabel: 'Summary',
             reference: 'summaryRef',
-            // bind : {
-            //     value:'{summary}',
-            //     disabled : '{groupingsummary}'
-            // }
             listeners:{
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
@@ -99,10 +82,6 @@ Ext.define('Arbela.view.blades.Grid', {
             name: 'grouping',
             boxLabel: 'Grouping',
             reference: 'groupingRef',
-            // bind : {
-            //     value:'{grouping}',
-            //     disabled : '{groupingsummary}'
-            // }
             listeners:{
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
@@ -121,10 +100,6 @@ Ext.define('Arbela.view.blades.Grid', {
             name: 'groupingsummary',
             boxLabel: 'Grouping Summary',
             reference: 'groupingsummaryRef',
-            // bind: {
-            //     value:'{groupingsummary}',
-            //     disabled: '{!enablegroupingsummary}'
-            // }
             listeners:{
                 change:function( check, newValue, oldValue, eOpts ){
                     var  l = this.up('fieldset').up('fieldset').down('grid').columns.length;
@@ -218,6 +193,7 @@ Ext.define('Arbela.view.blades.Grid', {
                         items.ColumnType = 'datecolumn';
                         break;
                 }
+
                 if(items.DataIndex){
 
                     fields.push(items.DataIndex);
@@ -294,6 +270,7 @@ Ext.define('Arbela.view.blades.Grid', {
     },
 
     processingURLRequest:function(url, grid, fields){
+
         var me = this;
         Ext.Ajax.request({
             url: url,
@@ -314,44 +291,12 @@ Ext.define('Arbela.view.blades.Grid', {
         },scope=this);
     },
     
-    processingURLRespondedText: function(responceText, grid, fields) {
-        var me = this;
-        me.processingfindindBuckets(responceText, grid, fields);
-        var buckets = this.value;
-        var values = [];
-        var val;
-        for (i = 0; i < buckets.length; i++) {
+    processingURLRespondedText: function(responseText, grid, fields) {
+        
+        var formattedData = Arbela.util.Utility.dataformatter(responseText);
 
-            var objectData = buckets[i];
-            Ext.Object.each(objectData, function(key, value, myself) {
-                if (Ext.isObject(value)) {
-                    var keys = key;
-                    Ext.Object.each(value, function(key, value, myself) {
-                        var inKey = keys + "." + key;
-                        objectData[inKey] = value;
-                    });
-                }
-            });
-
-            values.push(objectData);
-        }
-        me.processingDynamicGrid(values,grid,fields);
-    },
-    processingfindindBuckets:function(data, grid, fields) {
-        var me = this;
-        Ext.Object.each(data, function(key, value, myself) {
-            if (key == 'buckets') {
-                me.value = value; // stop the iteration
-            } else {
-                me.processingURLRespondedText(value, grid, fields);
-            }
-        });
-    },
-    processingDynamicGrid:function(data, grid, fields){
-        var me = this;
         var store = Ext.create('Ext.data.Store',{
-            //pageSize:10,
-            data: data,
+            data: formattedData,
             fields: fields,
             groupField:grid.presentGroupField,
             proxy:{
@@ -365,9 +310,9 @@ Ext.define('Arbela.view.blades.Grid', {
               }
             }
         });
+
         grid.reconfigure(store);
-        //grid.setStore(store);
-        me.add(grid);
+        this.add(grid);
     }
     
 });

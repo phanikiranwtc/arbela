@@ -90,7 +90,7 @@ Ext.define('Arbela.view.common.TitleStyling', {
                         text: 'Cancel',
                         width: 60,
                         handler:'onCancelPickerBtnClick'
-                    }],
+                    }]
 
                 }]
             });

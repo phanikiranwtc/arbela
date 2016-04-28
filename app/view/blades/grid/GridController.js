@@ -14,6 +14,8 @@ Ext.define('Arbela.view.blades.grid.GridController', {
                     'type': 'rownumberer'
                 },{
                     'type': 'date'
+            // },{
+            //         'type': 'check'
             });
             var formateArr = [];
             formateArr.push({

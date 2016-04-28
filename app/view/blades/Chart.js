@@ -35,7 +35,7 @@ Ext.define('Arbela.view.blades.Chart', {
         fieldLabel: 'URL',
         name: 'url',
         allowBlank:false,
-        value:Arbela.util.Utility.api.inventoryData//'resources/data/inventorydata.json'
+        value:Arbela.util.Utility.api.inventoryData
     },{
         xtype: 'combobox',
         fieldLabel: 'Select Chart Type',
@@ -71,7 +71,8 @@ Ext.define('Arbela.view.blades.Chart', {
                 success: function(response){
                     var me = this,
                     responseData = Ext.decode(response.responseText);
-                    me.processingCustomChart(dataCfg,responseData);
+                    var formattedData = Arbela.util.Utility.dataformatter(responseData);
+                    me.processingCustomChart(dataCfg,formattedData);
                 },
                 failure: function(error) {
                     return Ext.Msg.show({
