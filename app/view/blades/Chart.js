@@ -117,14 +117,14 @@ Ext.define('Arbela.view.blades.Chart', {
         }
 
         var fieldArray = [];
-        var a = responseData.data[0];
+        var a = responseData;//responseData.data[0];
         var yAxisFields = dataCfg.yaxisfield;
         var yAxisFieldsArr = yAxisFields.split(",");
         fieldArray = Ext.Object.getAllKeys(a);
         var chartStore = Ext.create('Ext.data.Store', {
             fields:fieldArray
         });
-        chartStore.setData(responseData.data);
+        chartStore.setData(responseData);//(responseData.data);
         var seriesCount = dataCfg.seriesIndex;
         var chartSeriesArr=[];
 

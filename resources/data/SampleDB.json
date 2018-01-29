@@ -1,0 +1,359 @@
+{
+    "data": [
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#aa9819;background-color:#453e3e;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Total Sales",
+        "colIdx": 0,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.TotalSales",
+            "value1": [
+              "80",
+              "40",
+              "20",
+              "60",
+              "100",
+              "120"
+            ],
+            "value3": 40000,
+            "datasources": "",
+            "exprVal": "20000*2"
+          }
+        ],
+        "updatedOn": "03:57:32 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#5a2424;background-color:#cb8585;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Apple Sales",
+        "colIdx": 0,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/inventorydata.json",
+            "charttype": "Cartesian",
+            "xaxistype": "category",
+            "xaxistitle": "Customer",
+            "xaxisfield": "name",
+            "yaxisType": "numeric",
+            "yaxistitle": "Count",
+            "yaxisfield": "apples",
+            "yaxisgrid": "on",
+            "showinteractions": "on",
+            "cartesianinteractions": "crosshair",
+            "polarinteractions": "",
+            "showlegend": "on",
+            "chartLegend": "bottom",
+            "cartesiantype0": "bar",
+            "polartype0": "",
+            "xfield0": "name",
+            "yfield0": "apples",
+            "fieldlabel0": "",
+            "needlecolor0": "",
+            "sectorscolor0": "",
+            "style0": "fill:#5a2424;fillOpacity:0.6;",
+            "marker0": "on",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "02:43:55 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#ffffff;background-color:#161818;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Tables",
+        "colIdx": 1,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Grid",
+            "datasources": "",
+            "url": "./resources/data/inventorydata.json",
+            "summary": "on",
+            "settingsData": [
+              {
+                "ColumnHeader": "Serial No.",
+                "ColumnType": "rownumberer",
+                "GroupField": false,
+                "id": "extModel3441-4"
+              },
+              {
+                "ColumnHeader": "Customer",
+                "DataIndex": "name",
+                "ColumnType": "gridcolumn",
+                "GroupField": false,
+                "SummaryType": "",
+                "id": "extModel3441-5"
+              },
+              {
+                "ColumnHeader": "Apples",
+                "DataIndex": "apples",
+                "ColumnType": "numbercolumn",
+                "GroupField": false,
+                "SummaryType": "sum",
+                "id": "extModel3441-6"
+              },
+              {
+                "ColumnHeader": "Oranges",
+                "DataIndex": "oranges",
+                "ColumnType": "numbercolumn",
+                "GroupField": false,
+                "SummaryType": "sum",
+                "id": "extModel3441-7"
+              },
+              {
+                "ColumnHeader": "Grapes",
+                "DataIndex": "grapes",
+                "ColumnType": "numbercolumn",
+                "GroupField": false,
+                "SummaryType": "sum",
+                "id": "extModel3441-8"
+              }
+            ]
+          }
+        ],
+        "updatedOn": "03:09:15 PM"
+      },
+      {
+        "showTitle": "on",
+        "titleStyle": "color:#630d0d;background-color:#d8834a;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Books List",
+        "colIdx": 0,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.BooksList",
+            "url": "./resources/data/senchabooks.json"
+          }
+        ],
+        "updatedOn": "04:04:37 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#ceddd6;background-color:#375407;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Website Traffics",
+        "colIdx": 1,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.WebsiteTraffics",
+            "value1": [
+              59,
+              49,
+              39,
+              26
+            ],
+            "value2": "99865"
+          }
+        ],
+        "updatedOn": "04:00:44 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#177b56;background-color:#8effd5;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Grape Sales",
+        "colIdx": 1,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/inventorydata.json",
+            "charttype": "Cartesian",
+            "xaxistype": "category",
+            "xaxistitle": "Customer",
+            "xaxisfield": "name",
+            "xaxisgrid": "on",
+            "yaxisType": "numeric",
+            "yaxistitle": "Count",
+            "yaxisfield": "grapes",
+            "yaxisgrid": "on",
+            "showinteractions": "on",
+            "cartesianinteractions": "crosszoom",
+            "polarinteractions": "",
+            "showlegend": "on",
+            "chartLegend": "bottom",
+            "cartesiantype0": "area",
+            "polartype0": "",
+            "xfield0": "name",
+            "yfield0": "grapes",
+            "fieldlabel0": "",
+            "needlecolor0": "",
+            "sectorscolor0": "",
+            "style0": "fill:#177b56;fillOpacity:0.6;",
+            "marker0": "on",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "02:39:38 PM"
+      },
+      {
+        "showTitle": "on",
+        "titleStyle": "color:#59066d;background-color:#c6a4d6;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Orange Sales - 3D",
+        "colIdx": 0,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/inventorydata.json",
+            "charttype": "Cartesian",
+            "xaxistype": "category",
+            "xaxistitle": "Customer",
+            "xaxisfield": "name",
+            "yaxisType": "numeric",
+            "yaxistitle": "Count",
+            "yaxisfield": "orange",
+            "showinteractions": "on",
+            "cartesianinteractions": "crosshair",
+            "polarinteractions": "",
+            "showlegend": "on",
+            "chartLegend": "right",
+            "cartesiantype0": "bar3d",
+            "polartype0": "",
+            "xfield0": "name",
+            "yfield0": "oranges",
+            "fieldlabel0": "",
+            "needlecolor0": "",
+            "sectorscolor0": "",
+            "style0": "fill:#9954A9",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "02:52:35 PM"
+      },
+      {
+        "showTitle": "on",
+        "titleStyle": "color:#551010;background-color:#e2c2c2;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Polar",
+        "colIdx": 1,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/iotbooks.json",
+            "charttype": "Polar",
+            "xaxistype": "category",
+            "xaxistitle": "",
+            "xaxisfield": "title",
+            "yaxisType": "numeric",
+            "yaxistitle": "",
+            "yaxisfield": "id",
+            "showinteractions": "on",
+            "cartesianinteractions": "",
+            "polarinteractions": "rotatePie3d",
+            "chartLegend": "",
+            "cartesiantype0": "",
+            "polartype0": "gauge",
+            "xfield0": "id",
+            "yfield0": "id",
+            "fieldlabel0": "",
+            "needlecolor0": "red",
+            "sectorscolor0": "blue",
+            "style0": "",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "04:17:03 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#fafaf8;background-color:#99927e;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Sales - Line",
+        "colIdx": 2,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.SparklineLine",
+            "value1": 60,
+            "datasources": "",
+            "exprVal": "60"
+          }
+        ],
+        "updatedOn": "04:03:22 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#082563;background-color:#8287c5;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "Orange Sales",
+        "colIdx": 2,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/inventorydata.json",
+            "charttype": "Cartesian",
+            "xaxistype": "category",
+            "xaxistitle": "Customer",
+            "xaxisfield": "name",
+            "xaxisgrid": "on",
+            "yaxisType": "numeric",
+            "yaxistitle": "Count",
+            "yaxisfield": "oranges",
+            "yaxisgrid": "on",
+            "showinteractions": "on",
+            "cartesianinteractions": "panzoom",
+            "polarinteractions": "",
+            "showlegend": "on",
+            "chartLegend": "bottom",
+            "cartesiantype0": "scatter",
+            "polartype0": "",
+            "xfield0": "name",
+            "yfield0": "oranges",
+            "fieldlabel0": "",
+            "needlecolor0": "",
+            "sectorscolor0": "",
+            "style0": "fill:#082563;fillOpacity:0.6",
+            "marker0": "on",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "02:45:06 PM"
+      },
+      {
+        "showTitle": "on",
+        "hideTitleBar": "on",
+        "titleStyle": "color:#000000;background-color:#4195af;height:40px;font-size:15px;font-family:sans-serif;",
+        "name": "IOT - Books",
+        "colIdx": 2,
+        "columnWidth": 0.3333333333,
+        "blades": [
+          {
+            "type": "Arbela.view.blades.Chart",
+            "url": "./resources/data/iotbooks.json",
+            "charttype": "Polar",
+            "xaxistype": "",
+            "xaxistitle": "",
+            "xaxisfield": "",
+            "yaxisType": "",
+            "yaxistitle": "",
+            "yaxisfield": "",
+            "showinteractions": "on",
+            "cartesianinteractions": "",
+            "polarinteractions": "rotate",
+            "chartLegend": "left",
+            "cartesiantype0": "",
+            "polartype0": "pie",
+            "xfield0": "id",
+            "yfield0": "",
+            "fieldlabel0": "title",
+            "needlecolor0": "",
+            "sectorscolor0": "",
+            "style0": "",
+            "seriesIndex": 0
+          }
+        ],
+        "updatedOn": "04:01:25 PM"
+      }
+    ],
+    "datasource": []
+  }
