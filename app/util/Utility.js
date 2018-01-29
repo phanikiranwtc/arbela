@@ -2,6 +2,7 @@ Ext.define('Arbela.util.Utility', {
     singleton: true,
     mainHost: "http://arbela.walkingtree.in/",
     dataLocation :"resources/data/",
+    resourcesData :"./resources/data/",
     completeLocation : '',
     api: {},
     arr:[],
@@ -15,7 +16,7 @@ Ext.define('Arbela.util.Utility', {
         }
         //this.completeLocation = this.mainHost+this.dataLocation;
         this.api.summary = this.completeLocation+this.dataLocation+'summary.json';
-        this.api.inventoryData = this.completeLocation+this.dataLocation+'inventorydata.json';
+        this.api.inventoryData = this.resourcesData+'inventorydata.json';
         this.api.booksList = this.completeLocation+this.dataLocation+'senchabooks.json';
     },
     dataformatter:function(data){//constructor with responsive text parameter
